@@ -2,6 +2,7 @@ import {FastRender} from 'meteor/staringatlights:fast-render';
 import ServerStyleSheets from "@material-ui/styles/ServerStyleSheets";
 import React from "react";
 import ReactDOMServer from 'react-dom/server'
+import '../imports/api/groups';
 
 Meteor.users.allow({
     update: function(userId, doc, fields, modifier) {

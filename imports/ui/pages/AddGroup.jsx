@@ -6,9 +6,14 @@ import {TextField} from "formik-material-ui";
 import {Field, Form, Formik} from "formik";
 import Button from "@material-ui/core/Button";
 import {DatePicker} from "@material-ui/pickers";
+import { schema as GroupSchema, Groups } from '/imports/api/groups';
+import moment from "moment";
+import { withSnackbar } from 'notistack';
 
+@withSnackbar
 export default class extends React.Component {
     render() {
+        const { enqueueSnackbar } = this.props;
         return(
             <Grid container spacing={2} justify={"center"}>
                 <Grid item xs={12} md={6}>
@@ -17,13 +22,25 @@ export default class extends React.Component {
                         <Formik
                             initialValues={{
                                 name: "",
-                                startDate: new Date(),
+                                startDate: moment().toISOString(),
                             }}
+                            validationSchema={GroupSchema}
                             onSubmit={(values, { setSubmitting }) => {
-                                setSubmitting(true);
+                                Groups.insert({
+                                    values
+                                }, err => {
+                                    if(err) {
+                                        console.error(err);
+                                        enqueueSnackbar("Something went wrong, please try again", { variant: "error" })
+                                    } else {
+                                        enqueueSnackbar("Secret Santa created!", { variant: "success" });
+                                    }
+                                    setSubmitting(false);
+                                });
+
                             }}
                         >
-                            {({ errors, touched }) => (
+                            {({ errors, touched, values }) => (
                                 <Form>
                                     <Field
                                         name="name"
@@ -41,8 +58,8 @@ export default class extends React.Component {
                                                 label="Signups Close"
                                                 margin="normal"
                                                 helperText={errors.startDate && touched.startDate ? errors.startDate : null}
-                                                value={field.value}
-                                                onChange={v => form.setFieldValue('startDate', v)}
+                                                value={moment(field.value)}
+                                                onChange={v => form.setFieldValue('startDate', v.toString())}
                                             />
                                         }}
                                     />
