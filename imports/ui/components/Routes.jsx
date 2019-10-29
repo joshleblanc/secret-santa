@@ -1,12 +1,14 @@
 import React from 'react';
 import Navbar from './Navbar';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import Index from '../pages/Index';
 import { SnackbarProvider } from 'notistack';
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Profile from "../pages/Profile";
+import Groups from '../pages/Groups';
+import AddGroup from "../pages/AddGroup";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -33,6 +35,8 @@ export default () => {
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/profile" component={Profile} />
+                        <Route exact path="/groups" component={Groups} />
+                        <Route exact path={"/groups/add"} component={AddGroup} />
                     </Switch>
                 </SnackbarProvider>
             </main>
