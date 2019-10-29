@@ -14,6 +14,9 @@ import { withSnackbar } from 'notistack';
 export default class extends React.Component {
     render() {
         const { enqueueSnackbar } = this.props;
+        if(!Meteor.user()) {
+          return null;
+        }
         return(
             <Grid container spacing={2} justify={"center"}>
                 <Grid item xs={12} md={6}>
@@ -23,19 +26,19 @@ export default class extends React.Component {
                             initialValues={{
                                 name: "",
                                 startDate: moment().toISOString(),
+                                endDate: moment().toISOString()
                             }}
                             validationSchema={GroupSchema}
                             onSubmit={(values, { setSubmitting }) => {
-                                Groups.insert({
-                                    values
-                                }, err => {
+                                Groups.insert(values, (err, res) => {
                                     if(err) {
                                         console.error(err);
                                         enqueueSnackbar("Something went wrong, please try again", { variant: "error" })
+                                        setSubmitting(false);
                                     } else {
                                         enqueueSnackbar("Secret Santa created!", { variant: "success" });
+                                        this.props.history.push(`/groups/${res.toHexString()}`);
                                     }
-                                    setSubmitting(false);
                                 });
 
                             }}
@@ -59,7 +62,20 @@ export default class extends React.Component {
                                                 margin="normal"
                                                 helperText={errors.startDate && touched.startDate ? errors.startDate : null}
                                                 value={moment(field.value)}
-                                                onChange={v => form.setFieldValue('startDate', v.toString())}
+                                                onChange={v => form.setFieldValue('startDate', v.toISOString())}
+                                            />
+                                        }}
+                                    />
+                                    <Field
+                                        name="endDate"
+                                        component={({field, form, ...props}) => {
+                                            return <DatePicker
+                                                fullWidth
+                                                label="Shipping Deadline"
+                                                margin="normal"
+                                                helperText={errors.endDate && touched.endDate ? errors.endDate : null}
+                                                value={moment(field.value)}
+                                                onChange={v => form.setFieldValue('endDate', v.toISOString())}
                                             />
                                         }}
                                     />
