@@ -25,13 +25,19 @@ export default class extends React.Component {
         const { classes } = this.props;
         const subscription = Meteor.subscribe('groups', Meteor.userId());
         const loading = !subscription.ready();
-        const groups = Groups.find({}).fetch();
+        const groups = Groups.find({
+          participants: {
+            $elemMatch: {
+              $eq: Meteor.userId()
+            }
+          }
+        }).fetch();
         if(loading) {
           return <LinearProgress />
         }
         return(
             <Grid container spacing={2} justify={"center"}>
-                <Grid item xs={12} md={6} flex>
+                <Grid item xs={12} md={6}>
                     <PaddedPaper>
                         <div className={classes.header}>
                           <Typography variant={"h4"}>Secret Santas</Typography>
@@ -61,7 +67,11 @@ export default class extends React.Component {
                                   groups.map(g => {
                                     return(
                                       <TableRow key={g._id.toHexString()}>
-                                        <TableCell>{g.name}</TableCell>
+                                        <TableCell>
+                                          <Link to={`/groups/${g._id.toHexString()}`}>
+                                            {g.name}
+                                          </Link>
+                                        </TableCell>
                                         <TableCell>{g.startDate}</TableCell>
                                         <TableCell>{g.endDate}</TableCell>
                                       </TableRow>
