@@ -18,7 +18,6 @@ export default class extends React.Component {
                             initialValues={{
                                 name: "",
                                 startDate: new Date(),
-                                endDate: new Date()
                             }}
                             onSubmit={(values, { setSubmitting }) => {
                                 setSubmitting(true);
@@ -35,11 +34,11 @@ export default class extends React.Component {
                                         helperText={errors.name && touched.name ? errors.name : null}
                                     />
                                     <Field
+                                        name="startDate"
                                         component={({field, form, ...props}) => {
                                             return <DatePicker
-                                                name="startDate"
                                                 fullWidth
-                                                label="Start Date"
+                                                label="Signups Close"
                                                 margin="normal"
                                                 helperText={errors.startDate && touched.startDate ? errors.startDate : null}
                                                 value={field.value}
@@ -47,19 +46,9 @@ export default class extends React.Component {
                                             />
                                         }}
                                     />
-                                    <Field
-                                        component={({field, form, ...props}) => {
-                                            return <DatePicker
-                                                onChange={v => form.setFieldValue('endDate', v)}
-                                                name="endDate"
-                                                fullWidth
-                                                value={field.value}
-                                                margin="normal"
-                                                label="End Date"
-                                                helperText={errors.endDate && touched.endDate ? errors.endDate : null}
-                                            />
-                                        }}
-                                    />
+                                    <Typography variant="caption" paragraph>
+                                        After sign ups close, pairs of people will be matched together to exchange gifts.
+                                    </Typography>
                                     <Button type="submit">Submit</Button>
                                 </Form>
                             )}
