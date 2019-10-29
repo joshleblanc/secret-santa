@@ -5,7 +5,6 @@ import PaddedPaper from '../components/PaddedPaper';
 import Typography from '@material-ui/core/Typography';
 import { Formik, Form, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
-import { schema as userSchema } from '/imports/api/users';
 import Button from '@material-ui/core/Button';
 import { withSnackbar } from 'notistack';
 import Grid from '@material-ui/core/Grid';
@@ -36,7 +35,6 @@ export default class extends React.Component {
                             initialValues={{
                                 email: Meteor.user().emails[0].address,
                             }}
-                            validationSchema={userSchema}
                             onSubmit={(values, { setSubmitting }) => {
                                 try {
                                     Meteor.users.update({ _id: Meteor.userId() }, {
