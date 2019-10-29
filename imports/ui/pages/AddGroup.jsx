@@ -26,7 +26,10 @@ export default class extends React.Component {
                             initialValues={{
                                 name: "",
                                 startDate: moment().toISOString(),
-                                endDate: moment().toISOString()
+                                endDate: moment().toISOString(),
+                                participants: [
+                                  Meteor.userId()
+                                ]
                             }}
                             validationSchema={GroupSchema}
                             onSubmit={(values, { setSubmitting }) => {
