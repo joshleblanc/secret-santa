@@ -5,30 +5,32 @@ export const shippingSchema = yup.object().shape({
 });
 
 if(Meteor.isServer) {
-  Meteor.publish('currentUser', function(id) {
-    return Meteor.users.find({
+  Meteor.publish('currentUser', function (id) {
+    const users = Meteor.users.find({
       _id: id
     }, {
       fields: {
         "services.discord.username": 1,
-        "shipping.address": 1
+        "shipping.address": 1,
+        "services.discord.id": 1
       }
-    })
+    });
+    console.log("??", users);
+    return users;
   });
+
   Meteor.users.allow({
-    update: function(userId, doc, fields, modifier) {
+    update: function (userId, doc, fields, modifier) {
       console.log(modifier, fields, doc);
       try {
         shippingSchema.validateSync({
           address: modifier['$set']['shipping.address']
         });
         return userId === doc._id;
-      } catch(e) {
+      } catch (e) {
         console.error(e);
         return false;
       }
     }
   })
-} else {
-  Meteor.subscribe('currentUser', Meteor.userId());
 }

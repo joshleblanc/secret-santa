@@ -4,6 +4,7 @@ import React from "react";
 import ReactDOMServer from 'react-dom/server'
 import '../imports/api/groups';
 import '../imports/api/users';
+import './api';
 
 ServiceConfiguration.configurations.upsert(
   { service: 'discord' },

@@ -6,15 +6,16 @@ export const schema = yup.object().shape({
     name: yup.string().required(),
     startDate: yup.date().required(),
     endDate: yup.date().required(),
-    participants: yup.array().of(yup.string().required()).required()
+    participants: yup.array().of(yup.number().required()).required()
 });
 
 if(Meteor.isServer) {
     Meteor.publish('groups', function(userId) {
+        const user = Meteor.users.findOne({ _id: userId });
         return Groups.find({
           participants: {
             $elemMatch: {
-              $eq: userId
+              $eq: user.services.discord.id
             }
           }
         });
@@ -28,12 +29,17 @@ if(Meteor.isServer) {
         _id: new Mongo.ObjectID(id)
       });
       const users = Meteor.users.find({
-        _id: {
+        "services.discord.id": {
           $in: group.participants
         }
+      }, {
+          fields: {
+              "services.discord.id": 1,
+              "services.discord.username": 1
+          }
       });
       return [groups, users];
-    })
+    });
 
     Groups.allow({
       insert: function(userId, doc) {

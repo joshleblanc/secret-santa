@@ -23,18 +23,23 @@ const styles = theme => ({
 export default class extends React.Component {
     render() {
         const { classes } = this.props;
-        const subscription = Meteor.subscribe('groups', Meteor.userId());
-        const loading = !subscription.ready();
-        const groups = Groups.find({
-          participants: {
-            $elemMatch: {
-              $eq: Meteor.userId()
-            }
-          }
-        }).fetch();
-        if(loading) {
+        const user = Meteor.user();
+        if(!user) {
+            return null;
+        }
+        const userSub = Meteor.subscribe('currentUser', user._id);
+        const groupsSub = Meteor.subscribe('groups', user._id);
+
+        if(!groupsSub.ready() || !userSub.ready()) {
           return <LinearProgress />
         }
+        const groups = Groups.find({
+            participants: {
+                $elemMatch: {
+                    $eq:  user.services.discord.id
+                }
+            }
+        }).fetch();
         return(
             <Grid container spacing={2} justify={"center"}>
                 <Grid item xs={12} md={6}>

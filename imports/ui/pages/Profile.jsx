@@ -14,14 +14,13 @@ import Grow from "../components/Grow";
 @withSnackbar
 @autorun
 export default class extends React.Component {
-
-
     logout = () => {
         Meteor.logout();
     };
 
     render() {
         const { enqueueSnackbar } = this.props;
+        Meteor.subscribe('currentUser', Meteor.userId());
         const user = Meteor.user();
         if(!user || !user.services || !user.services.discord) {
             return null;

@@ -9,13 +9,23 @@ import {DatePicker} from "@material-ui/pickers";
 import { schema as GroupSchema, Groups } from '/imports/api/groups';
 import moment from "moment";
 import { withSnackbar } from 'notistack';
+import {LinearProgress} from "@material-ui/core";
+import {Meteor} from "meteor/meteor";
+import { autorun } from 'meteor/cereal:reactive-render';
 
 @withSnackbar
+@autorun
 export default class extends React.Component {
     render() {
         const { enqueueSnackbar } = this.props;
+        const subscription = Meteor.subscribe('currentUser', Meteor.userId());
+        const loading = !subscription.ready();
+        console.log(loading);
         if(!Meteor.user()) {
           return null;
+        }
+        if(loading) {
+            return <LinearProgress />
         }
         return(
             <Grid container spacing={2} justify={"center"}>
@@ -28,7 +38,7 @@ export default class extends React.Component {
                                 startDate: moment().toISOString(),
                                 endDate: moment().toISOString(),
                                 participants: [
-                                  Meteor.userId()
+                                  Meteor.user().services.discord.id
                                 ]
                             }}
                             validationSchema={GroupSchema}

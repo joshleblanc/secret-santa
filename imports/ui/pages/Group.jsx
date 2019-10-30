@@ -14,7 +14,6 @@ import TableBody from '@material-ui/core/TableBody';
 @autorun
 export default class extends React.Component {
   render() {
-    console.log(this.props);
     const { match: { params: { id } } } = this.props;
     const subscription = Meteor.subscribe('group', id);
     const loading = !subscription.ready();
@@ -22,7 +21,7 @@ export default class extends React.Component {
       return <LinearProgress />
     }
     const group = Groups.findOne({ _id: new Mongo.ObjectID(id) });
-    const users = Meteor.users.find({ _id: {
+    const users = Meteor.users.find({ "services.discord.id": {
       $in: group.participants
     }}).fetch();
 

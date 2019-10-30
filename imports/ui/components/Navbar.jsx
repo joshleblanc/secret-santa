@@ -47,7 +47,7 @@ export default class extends React.Component {
                         Secret Santa
                     </Typography>
                     <Button className={classes.button} color="inherit" component={Link} to="/">Home</Button>
-                    <Button className={classes.button} color="inherit" component={Link} to="/groups">Secret Santas</Button>
+                    { Meteor.user() && <Button className={classes.button} color="inherit" component={Link} to="/groups">Secret Santas</Button> }
                     <div className={classes.grow} />
                     <AccountButtons />
                 </Toolbar>
