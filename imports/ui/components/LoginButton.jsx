@@ -18,7 +18,7 @@ export default class extends React.Component {
 
   render() {
     return(
-      <Button onClick={this.handleClick}>Login</Button>
+      <Button color="inherit" onClick={this.handleClick}>Login</Button>
     )
   }
 }
