@@ -3,6 +3,7 @@ import ServerStyleSheets from "@material-ui/styles/ServerStyleSheets";
 import React from "react";
 import ReactDOMServer from 'react-dom/server'
 import '../imports/api/groups';
+import '../imports/api/users';
 
 ServiceConfiguration.configurations.upsert(
   { service: 'discord' },
@@ -14,13 +15,6 @@ ServiceConfiguration.configurations.upsert(
       }
   }
 );
-
-Meteor.users.allow({
-    update: function(userId, doc, fields, modifier) {
-        const target = modifier['$set']['emails.0.address'];
-        return userId === doc._id && fields.includes("emails") && target && target.length < 100;
-    }
-});
 
 FastRender.onPageLoad(async sink => {
     const ServerEntryPoint = (await import('../imports/ui/entry_points/ServerEntryPoint')).default;
