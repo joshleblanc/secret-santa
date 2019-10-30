@@ -23,7 +23,7 @@ export default class extends React.Component {
     render() {
         const { enqueueSnackbar } = this.props;
         const user = Meteor.user();
-        if(!user || !user.services) {
+        if(!user || !user.services || !user.services.discord) {
             return null;
         }
         console.log(user);
