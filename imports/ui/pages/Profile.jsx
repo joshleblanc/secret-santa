@@ -39,7 +39,7 @@ export default class extends React.Component {
                         </Typography>
                         <Formik
                             initialValues={{
-                                address: user.shipping.address || ""
+                                address: user.shipping && user.shipping.address || ""
                             }}
                             validationSchema={shippingSchema}
                             onSubmit={(values, { setSubmitting }) => {
