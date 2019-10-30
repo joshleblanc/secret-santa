@@ -26,3 +26,5 @@ meteortesting:mocha
 cereal:reactive-render
 staringatlights:fast-render
 reactive-dict
+lichthagel:accounts-discord
+service-configuration

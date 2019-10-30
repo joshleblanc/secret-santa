@@ -4,6 +4,7 @@ import { autorun } from 'meteor/cereal:reactive-render';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
+import LoginButton from "./LoginButton";
 
 @autorun
 export default class extends React.Component {
@@ -13,7 +14,7 @@ export default class extends React.Component {
         } else if(Meteor.isClient && Meteor.loggingIn()) {
             return <LinearProgress />
         } else {
-            return <Button color="inherit" component={Link} to="/login">Login</Button>
+            return <LoginButton />
         }
     }
 }

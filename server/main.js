@@ -4,6 +4,17 @@ import React from "react";
 import ReactDOMServer from 'react-dom/server'
 import '../imports/api/groups';
 
+ServiceConfiguration.configurations.upsert(
+  { service: 'discord' },
+  {
+      $set: {
+          loginStyle: "popup",
+          clientId: "639045709819019264",
+          secret: Meteor.settings.discord.secret
+      }
+  }
+);
+
 Meteor.users.allow({
     update: function(userId, doc, fields, modifier) {
         const target = modifier['$set']['emails.0.address'];

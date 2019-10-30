@@ -1,4 +1,5 @@
 accounts-base@1.4.4
+accounts-oauth@1.1.16
 accounts-password@1.5.1
 accounts-ui@1.3.1
 accounts-ui-unstyled@1.4.2
@@ -44,6 +45,8 @@ jquery@1.11.11
 lamhieu:meteorx@2.0.1
 launch-screen@1.1.1
 less@2.8.0
+lichthagel:accounts-discord@0.2.0
+lichthagel:discord-oauth@0.1.0
 livedata@1.0.18
 lmieulet:meteor-coverage@1.1.4
 localstorage@1.2.0
@@ -68,6 +71,8 @@ mongo-dev-server@1.1.0
 mongo-id@1.0.7
 npm-bcrypt@0.9.3
 npm-mongo@3.3.0-beta190.1
+oauth@1.2.8
+oauth2@1.2.1
 observe-sequence@1.0.16
 ordered-dict@1.1.0
 promise@0.11.2
