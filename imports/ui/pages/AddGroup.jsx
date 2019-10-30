@@ -43,7 +43,7 @@ export default class extends React.Component {
                             }}
                             validationSchema={GroupSchema}
                             onSubmit={(values, { setSubmitting }) => {
-                                Groups.insert(values, (err, res) => {
+                                Meteor.call('groups.create', values, (err, res) => {
                                     if(err) {
                                         console.error(err);
                                         enqueueSnackbar("Something went wrong, please try again", { variant: "error" })
@@ -53,7 +53,6 @@ export default class extends React.Component {
                                         this.props.history.push(`/groups/${res.toHexString()}`);
                                     }
                                 });
-
                             }}
                         >
                             {({ errors, touched, values }) => (

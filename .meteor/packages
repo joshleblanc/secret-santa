@@ -28,3 +28,5 @@ staringatlights:fast-render
 reactive-dict
 lichthagel:accounts-discord
 service-configuration
+simple:json-routes
+http
