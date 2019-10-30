@@ -2,16 +2,19 @@ import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import PaddedPaper from "../components/PaddedPaper";
 import Typography from "@material-ui/core/Typography";
-import {TextField} from "formik-material-ui";
+import {Select, TextField} from "formik-material-ui";
 import {Field, Form, Formik} from "formik";
 import Button from "@material-ui/core/Button";
 import {DatePicker} from "@material-ui/pickers";
-import { schema as GroupSchema, Groups } from '/imports/api/groups';
+import { insertSchema, Groups } from '/imports/api/groups';
 import moment from "moment";
 import { withSnackbar } from 'notistack';
 import {LinearProgress} from "@material-ui/core";
 import {Meteor} from "meteor/meteor";
 import { autorun } from 'meteor/cereal:reactive-render';
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
 
 @withSnackbar
 @autorun
@@ -20,8 +23,8 @@ export default class extends React.Component {
         const { enqueueSnackbar } = this.props;
         const subscription = Meteor.subscribe('currentUser', Meteor.userId());
         const loading = !subscription.ready();
-        console.log(loading);
-        if(!Meteor.user()) {
+        const user = Meteor.user();
+        if(!user) {
           return null;
         }
         if(loading) {
@@ -37,11 +40,9 @@ export default class extends React.Component {
                                 name: "",
                                 startDate: moment().toISOString(),
                                 endDate: moment().toISOString(),
-                                participants: [
-                                  Meteor.user().services.discord.id
-                                ]
+                                server: user.guilds[0].id
                             }}
-                            validationSchema={GroupSchema}
+                            validationSchema={insertSchema}
                             onSubmit={(values, { setSubmitting }) => {
                                 Meteor.call('groups.create', values, (err, res) => {
                                     if(err) {
@@ -65,6 +66,25 @@ export default class extends React.Component {
                                         label="Name"
                                         helperText={errors.name && touched.name ? errors.name : null}
                                     />
+                                    <FormControl fullWidth>
+                                        <InputLabel shrink={true} htmlFor="server">
+                                            Server
+                                        </InputLabel>
+                                        <Field
+                                            name="server"
+                                            component={Select}
+                                            inputProps={{ name: 'server', id: 'server' }}
+                                        >
+                                            {
+                                                user.guilds.map(g => {
+                                                    return(
+                                                        <MenuItem value={g.id}>{g.name}</MenuItem>
+                                                    )
+                                                })
+                                            }
+                                        </Field>
+                                    </FormControl>
+
                                     <Field
                                         name="startDate"
                                         component={({field, form, ...props}) => {

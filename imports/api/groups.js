@@ -33,6 +33,7 @@ if(Meteor.isServer) {
       const group = Groups.findOne({
         _id: new Mongo.ObjectID(id)
       });
+      
       const users = Meteor.users.find({
         "services.discord.id": {
           $in: group.participants

@@ -6,7 +6,7 @@ export const shippingSchema = yup.object().shape({
 
 if(Meteor.isServer) {
   Meteor.publish('currentUser', function (id) {
-    const users = Meteor.users.find({
+    return Meteor.users.find({
       _id: id
     }, {
       fields: {
@@ -16,7 +16,6 @@ if(Meteor.isServer) {
         "guilds": 1
       }
     });
-    return users;
   });
 
   Meteor.methods({

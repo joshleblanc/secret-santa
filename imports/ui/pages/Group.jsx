@@ -16,11 +16,12 @@ export default class extends React.Component {
   render() {
     const { match: { params: { id } } } = this.props;
     const subscription = Meteor.subscribe('group', id);
-    const loading = !subscription.ready();
-    if(loading) {
+    const userSubscription = Meteor.subscribe('currentUser', Meteor.userId());
+    if(!subscription.ready() || !userSubscription.ready()) {
       return <LinearProgress />
     }
     const group = Groups.findOne({ _id: new Mongo.ObjectID(id) });
+    const server = Meteor.user().guilds.find(g => g.id === group.server);
     const users = Meteor.users.find({ "services.discord.id": {
       $in: group.participants
     }}).fetch();
@@ -30,6 +31,7 @@ export default class extends React.Component {
         <Grid item xs={12} md={6}>
           <PaddedPaper>
             <Typography variant="h4">{group.name}</Typography>
+            <Typography variant="subtitle1">{server.name}</Typography>
             <Grid container spacing={2} justify="center">
               <Grid item xs={6}>
                 <Typography variant="h6" align="center">Signups Deadline</Typography>
