@@ -20,6 +20,21 @@ if(Meteor.isServer) {
         });
     });
 
+    Meteor.publish('group', function(id) {
+      const groups = Groups.find({
+        _id: new Mongo.ObjectID(id)
+      });
+      const group = Groups.findOne({
+        _id: new Mongo.ObjectID(id)
+      });
+      const users = Meteor.users.find({
+        _id: {
+          $in: group.participants
+        }
+      });
+      return [groups, users];
+    })
+
     Groups.allow({
       insert: function(userId, doc) {
         try {

@@ -9,6 +9,7 @@ import Register from "../pages/Register";
 import Profile from "../pages/Profile";
 import Groups from '../pages/Groups';
 import AddGroup from "../pages/AddGroup";
+import Group from '../pages/Group';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -36,7 +37,8 @@ export default () => {
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/profile" component={Profile} />
                         <Route exact path="/groups" component={Groups} />
-                        <Route exact path={"/groups/add"} component={AddGroup} />
+                        <Route exact path="/groups/add" component={AddGroup} />
+                        <Route exact path="/groups/:id" component={Group} />
                     </Switch>
                 </SnackbarProvider>
             </main>
