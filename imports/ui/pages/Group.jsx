@@ -15,6 +15,7 @@ import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/styles/withStyles";
 import {withSnackbar} from "notistack";
 import Container from "../components/Container";
+import moment from "moment";
 
 const styles = theme => ({
   titleRow: {
@@ -93,11 +94,11 @@ export default class extends React.Component {
             <Grid container spacing={2} justify="center">
               <Grid item xs={6}>
                 <Typography variant="h6" align="center">Signups Deadline</Typography>
-                <Typography align="center">{group.startDate}</Typography>
+                <Typography align="center">{moment(group.startDate).format("YYYY-MM-DD")}</Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="h6" align="center">Shipping Deadline</Typography>
-                <Typography align="center">{group.endDate}</Typography>
+                <Typography align="center">{moment(group.endDate).format("YYYY-MM-DD")}</Typography>
               </Grid>
             </Grid>
             <Typography variant="h6">Participants</Typography>
