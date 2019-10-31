@@ -7,7 +7,7 @@ ServiceConfiguration.configurations.upsert(
   { service: 'discord' },
   {
       $set: {
-          loginStyle: "popup",
+          loginStyle: "redirect",
           clientId: "639045709819019264",
           secret: Meteor.settings.discord.secret
       }
