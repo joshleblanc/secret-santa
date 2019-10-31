@@ -35,6 +35,9 @@ export default class extends React.Component {
                         <Typography variant="h6">
                             Shipping Address
                         </Typography>
+                        <Typography variant="caption">
+                            Don't forget to include your name and country!
+                        </Typography>
                         <Formik
                             initialValues={{
                                 address: user.shipping && user.shipping.address || ""
