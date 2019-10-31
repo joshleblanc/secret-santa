@@ -46,9 +46,11 @@ export default class extends React.Component {
                                         $set: {
                                             "shipping.address": values.address
                                         }
-                                    })
+                                    });
+                                    enqueueSnackbar("Profile updated!", { variant: "success" });
                                 } catch(e) {
-                                    console.log(e);
+                                    console.error(e);
+                                    enqueueSnackbar("Something went wrong D:", { variant: "error" });
                                 }
                                 setSubmitting(false);
                             }}
