@@ -14,6 +14,7 @@ import Grow from "../components/Grow";
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/styles/withStyles";
 import {withSnackbar} from "notistack";
+import Container from "../components/Container";
 
 const styles = theme => ({
   titleRow: {
@@ -51,6 +52,16 @@ export default class extends React.Component {
 
   render() {
     const { classes, match: { params: { id } } } = this.props;
+    const user = Meteor.user();
+    if(!user) {
+      return(
+        <Container>
+          <Typography variant={"h4"}>Hold on!</Typography>
+          <Typography variant="subtitle1">You need to sign in first!</Typography>
+        </Container>
+      )
+    }
+
     const subscription = Meteor.subscribe('group', id);
     const userSubscription = Meteor.subscribe('currentUser', Meteor.userId());
     if(!subscription.ready() || !userSubscription.ready()) {
@@ -61,7 +72,6 @@ export default class extends React.Component {
     const users = Meteor.users.find({ "services.discord.id": {
       $in: group.participants
     }}).fetch();
-    const user = Meteor.user();
 
     return(
       <Grid container spacing={2} justify="center">
