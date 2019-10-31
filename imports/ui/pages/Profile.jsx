@@ -13,10 +13,6 @@ import { shippingSchema } from "../../api/users";
 @withSnackbar
 @autorun
 export default class extends React.Component {
-    logout = () => {
-        Meteor.logout();
-    };
-
     render() {
         const { enqueueSnackbar } = this.props;
         Meteor.subscribe('currentUser', Meteor.userId());
@@ -72,7 +68,6 @@ export default class extends React.Component {
                                       helperText={errors.address && touched.address ? errors.address : null}
                                     />
                                     <Button type="submit">Submit</Button>
-                                    <Button onClick={this.logout}>Logout</Button>
                                 </Form>
                             )}
                         </Formik>

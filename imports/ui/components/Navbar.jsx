@@ -10,6 +10,8 @@ import { autorun } from 'meteor/cereal:reactive-render';
 import AccountButtons from './AccountButtons';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import NavbarButton from "./NavbarButton";
+import AuthenticatedNavbarItems from "./AuthenticatedNavbarItems";
 
 const styles = theme => ({
     menuButton: {
@@ -17,9 +19,6 @@ const styles = theme => ({
         [theme.breakpoints.up('sm')]: {
             display: 'none',
         },
-    },
-    button: {
-        marginLeft: theme.spacing(1)
     },
     grow: {
         flexGrow: 1
@@ -46,8 +45,8 @@ export default class extends React.Component {
                     <Typography variant="h6" noWrap>
                         Secret Santa
                     </Typography>
-                    <Button className={classes.button} color="inherit" component={Link} to="/">Home</Button>
-                    { Meteor.user() && <Button className={classes.button} color="inherit" component={Link} to="/groups">Secret Santas</Button> }
+                    <NavbarButton to="/">Home</NavbarButton>
+                    <AuthenticatedNavbarItems />
                     <div className={classes.grow} />
                     <AccountButtons />
                 </Toolbar>
