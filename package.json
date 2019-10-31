@@ -20,7 +20,7 @@
     "classnames": "^2.2.6",
     "formik": "^2.0.3",
     "formik-material-ui": "0.0.22",
-    "meteor-node-stubs": "^0.4.1",
+    "meteor-node-stubs": "^1.0.0",
     "moment": "^2.24.0",
     "notistack": "^0.9.5",
     "react": "^16.11.0",
