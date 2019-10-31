@@ -10,11 +10,35 @@ import TableHead from '@material-ui/core/TableHead';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
+import Grow from "../components/Grow";
+import Button from "@material-ui/core/Button";
+import withStyles from "@material-ui/styles/withStyles";
+import {withSnackbar} from "notistack";
 
+const styles = theme => ({
+  titleRow: {
+    display: 'flex'
+  }
+});
+
+@withSnackbar
+@withStyles(styles)
 @autorun
 export default class extends React.Component {
+  handleSignup = () => {
+    const { enqueueSnackbar, match: { params: { id } } } = this.props;
+    Meteor.call("groups.signup", id, (err, res) => {
+      if(err) {
+        console.error(err);
+        enqueueSnackbar("Error signing up! Please try again.", { variant: "error" });
+      } else {
+        enqueueSnackbar("You're all signed up!");
+      }
+    })
+  };
+
   render() {
-    const { match: { params: { id } } } = this.props;
+    const { classes, match: { params: { id } } } = this.props;
     const subscription = Meteor.subscribe('group', id);
     const userSubscription = Meteor.subscribe('currentUser', Meteor.userId());
     if(!subscription.ready() || !userSubscription.ready()) {
@@ -30,7 +54,14 @@ export default class extends React.Component {
       <Grid container spacing={2} justify="center">
         <Grid item xs={12} md={6}>
           <PaddedPaper>
-            <Typography variant="h4">{group.name}</Typography>
+            <div className={classes.titleRow}>
+              <Typography variant="h4">
+                {group.name}
+              </Typography>
+              <Grow />
+              <Button variant={"contained"} color="secondary" onClick={this.handleSignup}>Sign up!</Button>
+            </div>
+
             <Typography variant="subtitle1">{server.name}</Typography>
             <Grid container spacing={2} justify="center">
               <Grid item xs={6}>
