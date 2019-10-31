@@ -32,7 +32,19 @@ export default class extends React.Component {
         console.error(err);
         enqueueSnackbar("Error signing up! Please try again.", { variant: "error" });
       } else {
-        enqueueSnackbar("You're all signed up!");
+        enqueueSnackbar("You're all signed up!", { variant: "success" });
+      }
+    })
+  };
+
+  handleSignout = () => {
+    const { enqueueSnackbar, match: { params: { id } } } = this.props;
+    Meteor.call("groups.signout", id, (err, res) => {
+      if(err) {
+        console.error(err);
+        enqueueSnackbar("Error leaving secret santa! Please try again.", { variant: "error" });
+      } else {
+        enqueueSnackbar("You've left the secret santa", { variant: "success" });
       }
     })
   };
@@ -49,6 +61,7 @@ export default class extends React.Component {
     const users = Meteor.users.find({ "services.discord.id": {
       $in: group.participants
     }}).fetch();
+    const user = Meteor.user();
 
     return(
       <Grid container spacing={2} justify="center">
@@ -59,7 +72,11 @@ export default class extends React.Component {
                 {group.name}
               </Typography>
               <Grow />
-              <Button variant={"contained"} color="secondary" onClick={this.handleSignup}>Sign up!</Button>
+              {
+                group.participants.includes(user.services.discord.id)
+                  ? <Button variant={"contained"} color="secondary" onClick={this.handleSignout}>Leave Secret Santa</Button>
+                  : <Button variant={"contained"} color="secondary" onClick={this.handleSignup}>Sign up!</Button>
+              }
             </div>
 
             <Typography variant="subtitle1">{server.name}</Typography>

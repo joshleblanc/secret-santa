@@ -90,7 +90,7 @@ if (Meteor.isServer) {
         if(group.participants.includes(id)) {
           throw new Meteor.Error("User is already signed up");
         } else {
-          group.update({
+          Groups.update({ _id: new Mongo.ObjectID(groupId) }, {
             $push: {
               participants: id
             }
@@ -99,7 +99,27 @@ if (Meteor.isServer) {
       } else {
         throw new Meteor.Error("Group not found");
       }
-
+    },
+    'groups.signout'(groupId) {
+      const user = Meteor.user();
+      if (!user) {
+        throw new Meteor.Error("Not authorized");
+      }
+      const id = user.services.discord.id;
+      const group = Groups.findOne({ _id: new Mongo.ObjectID(groupId) });
+      if(group) {
+        if(group.participants.includes(id)) {
+          Groups.update({ _id: new Mongo.ObjectID(groupId) }, {
+            $pull: {
+              participants: id
+            }
+          });
+        } else {
+          throw new Meteor.Error("User isn't signed up");
+        }
+      } else {
+        throw new Meteor.Error("Group not found");
+      }
     }
   });
 }
