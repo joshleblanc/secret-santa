@@ -9,12 +9,12 @@ import {DatePicker} from "@material-ui/pickers";
 import { insertSchema, Groups } from '/imports/api/groups';
 import moment from "moment";
 import { withSnackbar } from 'notistack';
-import {LinearProgress} from "@material-ui/core";
 import {Meteor} from "meteor/meteor";
 import { autorun } from 'meteor/cereal:reactive-render';
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 @withSnackbar
 @autorun

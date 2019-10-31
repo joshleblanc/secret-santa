@@ -101,7 +101,7 @@ export default class extends React.Component {
                 {
                   users.map(u => {
                     return(
-                      <TableRow>
+                      <TableRow key={u._id}>
                         <TableCell>{u.services.discord.username}</TableCell>
                       </TableRow>
                     )

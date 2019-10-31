@@ -2,7 +2,10 @@ import React from 'react';
 import { autorun } from 'meteor/cereal:reactive-render';
 import Grid from "@material-ui/core/Grid";
 import PaddedPaper from "../components/PaddedPaper";
-import {Typography, LinearProgress, Table, TableHead} from "@material-ui/core";
+import Typography from '@material-ui/core/Typography';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
 import Grow from "../components/Grow";
 import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
@@ -16,7 +19,7 @@ const styles = theme => ({
   header: {
     display: 'flex'
   }
-})
+});
 
 @withStyles(styles)
 @autorun
