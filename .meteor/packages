@@ -24,3 +24,5 @@ lichthagel:accounts-discord
 service-configuration@1.0.11
 simple:json-routes
 http@1.4.2
+littledata:synced-cron
+percolate:migrations

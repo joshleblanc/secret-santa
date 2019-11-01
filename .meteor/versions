@@ -38,6 +38,7 @@ inter-process-messaging@0.1.0
 launch-screen@1.1.1
 lichthagel:accounts-discord@0.2.0
 lichthagel:discord-oauth@0.1.0
+littledata:synced-cron@1.5.1
 livedata@1.0.18
 localstorage@1.2.0
 logging@1.1.20
@@ -59,6 +60,7 @@ npm-mongo@3.2.0-rc182.4
 oauth@1.2.8
 oauth2@1.2.1
 ordered-dict@1.1.0
+percolate:migrations@1.0.2
 promise@0.11.2
 random@1.1.0
 rate-limit@1.0.9
