@@ -9,15 +9,10 @@ import Button from '@material-ui/core/Button';
 import { withSnackbar } from 'notistack';
 import Grid from '@material-ui/core/Grid';
 import { shippingSchema } from "../../api/users";
-import Grow from "../components/Grow";
 
 @withSnackbar
 @autorun
 export default class extends React.Component {
-    logout = () => {
-        Meteor.logout();
-    };
-
     render() {
         const { enqueueSnackbar } = this.props;
         Meteor.subscribe('currentUser', Meteor.userId());
@@ -36,6 +31,9 @@ export default class extends React.Component {
                         <Typography variant="h6">
                             Shipping Address
                         </Typography>
+                        <Typography variant="caption">
+                            Don't forget to include your name and country!
+                        </Typography>
                         <Formik
                             initialValues={{
                                 address: user.shipping && user.shipping.address || ""
@@ -47,9 +45,11 @@ export default class extends React.Component {
                                         $set: {
                                             "shipping.address": values.address
                                         }
-                                    })
+                                    });
+                                    enqueueSnackbar("Profile updated!", { variant: "success" });
                                 } catch(e) {
-                                    console.log(e);
+                                    console.error(e);
+                                    enqueueSnackbar("Something went wrong D:", { variant: "error" });
                                 }
                                 setSubmitting(false);
                             }}
@@ -68,7 +68,6 @@ export default class extends React.Component {
                                       helperText={errors.address && touched.address ? errors.address : null}
                                     />
                                     <Button type="submit">Submit</Button>
-                                    <Button onClick={this.logout}>Logout</Button>
                                 </Form>
                             )}
                         </Formik>

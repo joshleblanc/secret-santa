@@ -10,11 +10,59 @@ import TableHead from '@material-ui/core/TableHead';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
+import Grow from "../components/Grow";
+import Button from "@material-ui/core/Button";
+import withStyles from "@material-ui/styles/withStyles";
+import {withSnackbar} from "notistack";
+import Container from "../components/Container";
+import moment from "moment";
 
+const styles = theme => ({
+  titleRow: {
+    display: 'flex'
+  }
+});
+
+@withSnackbar
+@withStyles(styles)
 @autorun
 export default class extends React.Component {
+  handleSignup = () => {
+    const { enqueueSnackbar, match: { params: { id } } } = this.props;
+    Meteor.call("groups.signup", id, (err, res) => {
+      if(err) {
+        console.error(err);
+        enqueueSnackbar("Error signing up! Please try again.", { variant: "error" });
+      } else {
+        enqueueSnackbar("You're all signed up!", { variant: "success" });
+      }
+    })
+  };
+
+  handleSignout = () => {
+    const { enqueueSnackbar, match: { params: { id } } } = this.props;
+    Meteor.call("groups.signout", id, (err, res) => {
+      if(err) {
+        console.error(err);
+        enqueueSnackbar("Error leaving secret santa! Please try again.", { variant: "error" });
+      } else {
+        enqueueSnackbar("You've left the secret santa", { variant: "success" });
+      }
+    })
+  };
+
   render() {
-    const { match: { params: { id } } } = this.props;
+    const { classes, match: { params: { id } } } = this.props;
+    const user = Meteor.user();
+    if(!user) {
+      return(
+        <Container>
+          <Typography variant={"h4"}>Hold on!</Typography>
+          <Typography variant="subtitle1">You need to sign in first!</Typography>
+        </Container>
+      )
+    }
+
     const subscription = Meteor.subscribe('group', id);
     const userSubscription = Meteor.subscribe('currentUser', Meteor.userId());
     if(!subscription.ready() || !userSubscription.ready()) {
@@ -30,16 +78,27 @@ export default class extends React.Component {
       <Grid container spacing={2} justify="center">
         <Grid item xs={12} md={6}>
           <PaddedPaper>
-            <Typography variant="h4">{group.name}</Typography>
+            <div className={classes.titleRow}>
+              <Typography variant="h4">
+                {group.name}
+              </Typography>
+              <Grow />
+              {
+                group.participants.includes(user.services.discord.id)
+                  ? <Button variant={"contained"} color="secondary" onClick={this.handleSignout}>Leave Secret Santa</Button>
+                  : <Button variant={"contained"} color="secondary" onClick={this.handleSignup}>Sign up!</Button>
+              }
+            </div>
+
             <Typography variant="subtitle1">{server.name}</Typography>
             <Grid container spacing={2} justify="center">
               <Grid item xs={6}>
                 <Typography variant="h6" align="center">Signups Deadline</Typography>
-                <Typography align="center">{group.startDate}</Typography>
+                <Typography align="center">{moment(group.startDate).format("YYYY-MM-DD")}</Typography>
               </Grid>
               <Grid item xs={6}>
                 <Typography variant="h6" align="center">Shipping Deadline</Typography>
-                <Typography align="center">{group.endDate}</Typography>
+                <Typography align="center">{moment(group.endDate).format("YYYY-MM-DD")}</Typography>
               </Grid>
             </Grid>
             <Typography variant="h6">Participants</Typography>
@@ -53,8 +112,8 @@ export default class extends React.Component {
                 {
                   users.map(u => {
                     return(
-                      <TableRow>
-                        <TableCell>{u.name}</TableCell>
+                      <TableRow key={u._id}>
+                        <TableCell>{u.services.discord.username}</TableCell>
                       </TableRow>
                     )
                   })
