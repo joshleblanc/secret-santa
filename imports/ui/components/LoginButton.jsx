@@ -11,7 +11,7 @@ export default class extends React.Component {
       if(err) {
         console.error(err)
       } else {
-        console.log("Logged in")
+        console.log("Logged in");
         Meteor.call('currentUser.getGuilds');
       }
     })

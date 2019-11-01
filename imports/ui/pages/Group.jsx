@@ -65,11 +65,11 @@ export default class extends React.Component {
 
     const subscription = Meteor.subscribe('group', id);
     const userSubscription = Meteor.subscribe('currentUser', Meteor.userId());
-    if(!subscription.ready() || !userSubscription.ready()) {
+    if(!subscription.ready() || !userSubscription.ready() || !user.guilds) {
       return <LinearProgress />
     }
     const group = Groups.findOne({ _id: new Mongo.ObjectID(id) });
-    const server = Meteor.user().guilds.find(g => g.id === group.server);
+    const server = user.guilds.find(g => g.id === group.server);
     const users = Meteor.users.find({ "services.discord.id": {
       $in: group.participants
     }}).fetch();
