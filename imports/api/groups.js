@@ -69,6 +69,8 @@ if (Meteor.isServer) {
         insertSchema.validateSync(obj);
         return Groups.insert({
           ...obj,
+          startDate: new Date(obj.startDate),
+          endDate: new Date(obj.endDate),
           creator: user.services.discord.id,
           participants: [
             user.services.discord.id

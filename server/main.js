@@ -5,6 +5,7 @@ import './api';
 import {Groups} from "../imports/api/groups";
 import moment from "moment";
 import './migrations';
+import { match } from './lib/match';
 
 ServiceConfiguration.configurations.upsert(
   { service: 'discord' },
@@ -16,28 +17,6 @@ ServiceConfiguration.configurations.upsert(
       }
   }
 );
-
-/**
- * Randomize array element order in-place.
- * Using Durstenfeld shuffle algorithm.
- * https://stackoverflow.com/a/12646864/2424975
- */
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    let temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  }
-}
-
-function partition(arr, size) {
-  const ret = [];
-  for(let i = 0; i < arr.length; i++) {
-    ret.push(arr.slice(i, i + size));
-  }
-  return ret;
-}
 
 SyncedCron.add({
   name: 'Create matches',
@@ -61,13 +40,13 @@ SyncedCron.add({
     groups.forEach(group => {
       console.log(group);
       const participants = group.participants;
-      shuffleArray(participants);
-      const matches = partition(participants);
-      Groups.update({ _id: group._id }, {
-        $set: {
-          matches
-        }
-      })
+      const matches = match(participants);
+      console.log(matches);
+      // Groups.update({ _id: group._id }, {
+      //   $set: {
+      //     matches
+      //   }
+      // })
     });
   }
 });
