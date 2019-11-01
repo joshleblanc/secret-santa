@@ -13,3 +13,24 @@ ServiceConfiguration.configurations.upsert(
       }
   }
 );
+
+// get servers
+Accounts.onLogin(() => {
+    const user = Meteor.user();
+    if(!user) {
+        throw new Meteor.Error("Not authorized");
+    }
+    const api_url = "https://discordapp.com/api";
+    const response = HTTP.get(`${api_url}/users/@me/guilds`, {
+        headers: {
+            Authorization: `Bearer ${user.services.discord.accessToken}`
+        }
+    });
+    Meteor.users.update({
+        _id: user._id
+    }, {
+        $set: {
+            guilds: response.data
+        }
+    })
+});
