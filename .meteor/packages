@@ -26,3 +26,4 @@ simple:json-routes
 http@1.4.2
 littledata:synced-cron
 percolate:migrations
+email
