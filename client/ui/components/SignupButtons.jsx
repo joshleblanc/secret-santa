@@ -2,8 +2,7 @@ import React from 'react';
 import Button from "@material-ui/core/Button";
 import {withSnackbar} from "notistack";
 import { autorun } from 'meteor/cereal:reactive-render';
-import moment from "moment";
-import {signupsClosed} from "../../api/groups";
+import {signupsClosed} from "/imports/api/groups";
 
 @withSnackbar
 @autorun

@@ -8,7 +8,7 @@ import { TextField } from 'formik-material-ui';
 import Button from '@material-ui/core/Button';
 import { withSnackbar } from 'notistack';
 import Grid from '@material-ui/core/Grid';
-import { shippingSchema } from "../../api/users";
+import { shippingSchema } from "/imports/api/users";
 import LinearProgress from "@material-ui/core/LinearProgress";
 
 @withSnackbar
