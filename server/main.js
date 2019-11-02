@@ -68,7 +68,13 @@ SyncedCron.add({
       startDate: {
         $lte: new Date()
       },
-      hasMatches: false
+      hasMatches: false,
+      participants: {
+        $exists: true,
+        $not: {
+          $size: 0
+        }
+      }
     }).fetch();
     console.log(groups.length);
 
