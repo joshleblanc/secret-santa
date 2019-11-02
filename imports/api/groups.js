@@ -16,8 +16,8 @@ export const schema = insertSchema.concat(yup.object().shape({
   participants: yup.array().of(yup.number().required()).required()
 }));
 
-export function findMatchNeeded() {
-
+export function signupsClosed(group) {
+  return moment().diff(moment(group.startDate)) > 0;
 }
 
 if (Meteor.isServer) {
@@ -97,7 +97,7 @@ if (Meteor.isServer) {
       const id = user.discordId;
       const group = Groups.findOne({ _id: new Mongo.ObjectID(groupId) });
       if(group) {
-        if(moment().diff(moment(group.startDate)) > 0) {
+        if(signupsClosed(group)) {
           throw new Meteor.Error("Signups have already closed");
         } else if(group.participants.includes(id)) {
           throw new Meteor.Error("You're already signed up");
@@ -120,7 +120,9 @@ if (Meteor.isServer) {
       const id = user.services.discord.id;
       const group = Groups.findOne({ _id: new Mongo.ObjectID(groupId) });
       if(group) {
-        if(group.participants.includes(id)) {
+        if(signupsClosed(group)) {
+          throw new Meteor.Error("Signups have already closed");
+        } else if(group.participants.includes(id)) {
           Groups.update({ _id: new Mongo.ObjectID(groupId) }, {
             $pull: {
               participants: id

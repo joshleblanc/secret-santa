@@ -17,6 +17,7 @@ import {withSnackbar} from "notistack";
 import Container from "../components/Container";
 import moment from "moment";
 import Match from "../components/Match";
+import SignupButtons from "../components/SignupButtons";
 
 const styles = theme => ({
   titleRow: {
@@ -24,34 +25,9 @@ const styles = theme => ({
   }
 });
 
-@withSnackbar
 @withStyles(styles)
 @autorun
 export default class extends React.Component {
-  handleSignup = () => {
-    const { enqueueSnackbar, match: { params: { id } } } = this.props;
-    Meteor.call("groups.signup", id, (err, res) => {
-      if(err) {
-        console.error(err);
-        enqueueSnackbar("Error signing up! Please try again.", { variant: "error" });
-      } else {
-        enqueueSnackbar("You're all signed up!", { variant: "success" });
-      }
-    })
-  };
-
-  handleSignout = () => {
-    const { enqueueSnackbar, match: { params: { id } } } = this.props;
-    Meteor.call("groups.signout", id, (err, res) => {
-      if(err) {
-        console.error(err);
-        enqueueSnackbar("Error leaving secret santa! Please try again.", { variant: "error" });
-      } else {
-        enqueueSnackbar("You've left the secret santa", { variant: "success" });
-      }
-    })
-  };
-
   render() {
     const { classes, match: { params: { id } } } = this.props;
     const user = Meteor.user();
@@ -88,11 +64,7 @@ export default class extends React.Component {
                   {group.name}
                 </Typography>
                 <Grow />
-                {
-                  group.participants.includes(user.discordId)
-                    ? <Button variant={"contained"} color="secondary" onClick={this.handleSignout}>Leave Secret Santa</Button>
-                    : <Button variant={"contained"} color="secondary" onClick={this.handleSignup}>Sign up!</Button>
-                }
+                <SignupButtons group={group} />
               </div>
 
               <Typography variant="subtitle1">{server.name}</Typography>
