@@ -4,6 +4,10 @@ export const shippingSchema = yup.object().shape({
   address: yup.string().required().max(1000)
 });
 
+export function avatarUrl(user) {
+  return `https://cdn.discordapp.com/avatars/${user.discordId}/${user.avatar}.png`
+}
+
 if(Meteor.isServer) {
   Meteor.publish('currentUser', function (id) {
     return Meteor.users.find({
