@@ -55,7 +55,7 @@ Migrations.add({
   up: function() {
     const users = Meteor.users.find({}).fetch();
     users.forEach(u => {
-      Groups.update({ _id: u._id }, {
+      Meteor.users.update({ _id: u._id }, {
         $set: {
           avatar: u.services.discord.avatar,
           discordId: u.services.discord.id,
@@ -68,7 +68,7 @@ Migrations.add({
   down: function() {
     const users = Meteor.users.find({}).fetch();
     users.forEach(u => {
-      Groups.update({ _id: u._id }, {
+      Meteor.users.update({ _id: u._id }, {
         $unset: {
           avatar: "",
           discordId: "",
