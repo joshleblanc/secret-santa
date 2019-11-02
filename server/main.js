@@ -61,7 +61,7 @@ SyncedCron.add({
   name: 'Create matches',
   schedule: function (parser) {
     // parser is a later.parse object
-    return parser.text('every 1 minute');
+    return parser.text('every 1 day');
   },
   job: function () {
     const groups = Groups.find({
