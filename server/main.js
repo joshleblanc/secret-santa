@@ -20,23 +20,39 @@ ServiceConfiguration.configurations.upsert(
 
 // get servers
 Accounts.onLogin(() => {
-    const user = Meteor.user();
-    if(!user) {
-        throw new Meteor.Error("Not authorized");
+  const user = Meteor.user();
+  if (!user) {
+    throw new Meteor.Error("Not authorized");
+  }
+  if(user.lastSync) {
+    const lastUpdated = moment(user.lastSync);
+    if(moment().diff(lastUpdated, 'days') < 1) {
+      return;
     }
-    const api_url = "https://discordapp.com/api";
-    const response = HTTP.get(`${api_url}/users/@me/guilds`, {
-        headers: {
-            Authorization: `Bearer ${user.services.discord.accessToken}`
-        }
-    });
-    Meteor.users.update({
-        _id: user._id
-    }, {
-        $set: {
-            guilds: response.data
-        }
-    })
+  }
+  const api_url = "https://discordapp.com/api";
+  const response = HTTP.get(`${api_url}/users/@me/guilds`, {
+    headers: {
+      Authorization: `Bearer ${user.services.discord.accessToken}`
+    }
+  });
+  Meteor.users.update({
+    _id: user._id
+  }, {
+    $set: {
+      guilds: response.data,
+      /**
+       * We need to copy pertinent discord thing to the top level
+       * because meteor can't consolidate embeded documents when publishing
+       * cursors with different visibile fields
+       */
+      avatar: user.services.discord.avatar,
+      discordId: user.services.discord.id,
+      email: user.services.discord.email,
+      username: user.services.discord.username,
+      lastSync: new Date()
+    }
+  })
 });
 
 
