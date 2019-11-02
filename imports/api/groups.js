@@ -80,6 +80,7 @@ if (Meteor.isServer) {
           startDate: new Date(obj.startDate),
           endDate: new Date(obj.endDate),
           creator: user.services.discord.id,
+          hasMatches: false,
           participants: [
             user.services.discord.id
           ]
