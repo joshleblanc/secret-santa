@@ -14,6 +14,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import { withStyles } from '@material-ui/styles';
+import moment from "moment";
 
 const styles = theme => ({
   header: {
@@ -80,8 +81,8 @@ export default class extends React.Component {
                                             {g.name}
                                           </Link>
                                         </TableCell>
-                                        <TableCell>{g.startDate}</TableCell>
-                                        <TableCell>{g.endDate}</TableCell>
+                                        <TableCell>{moment(g.startDate).format("YYYY-MM-DD")}</TableCell>
+                                        <TableCell>{moment(g.endDate).format("YYYY-MM-DD")}</TableCell>
                                       </TableRow>
                                     )
                                   })

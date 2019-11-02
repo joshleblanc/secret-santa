@@ -12,11 +12,17 @@ function shuffleArray(array) {
   }
 }
 
-function partition(arr, size) {
+function partition(arr) {
   const ret = [];
+  let copy = arr.slice();
+
   for(let i = 0; i < arr.length; i++) {
-    ret.push(arr.slice(i, i + size));
+    const slice = arr.slice(i, i + 2);
+    ret.push(slice);
+    copy = copy.filter(el => el !== slice[1]);
   }
+  console.log(copy);
+  ret[ret.length - 1].push(copy[0]);
   return ret;
 }
 
