@@ -40,7 +40,7 @@ export default class extends React.Component {
         const groups = Groups.find({
             participants: {
                 $elemMatch: {
-                    $eq:  user.services.discord.id
+                    $eq:  user.discordId
                 }
             }
         }).fetch();

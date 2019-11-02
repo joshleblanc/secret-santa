@@ -17,7 +17,7 @@ export default class extends React.Component {
         const { enqueueSnackbar } = this.props;
         Meteor.subscribe('currentUser', Meteor.userId());
         const user = Meteor.user();
-        if(!user || !user.services || !user.services.discord) {
+        if(!user) {
             return null;
         }
         console.log(user);
@@ -26,7 +26,7 @@ export default class extends React.Component {
                 <Grid item xs={12} sm={10} md={8} lg={6} xl={4}>
                     <PaddedPaper>
                         <Typography variant="h4">
-                            {user.services.discord.username}
+                            {user.username}
                         </Typography>
                         <Typography variant="h6">
                             Shipping Address

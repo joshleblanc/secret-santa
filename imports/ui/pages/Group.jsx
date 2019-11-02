@@ -16,6 +16,7 @@ import withStyles from "@material-ui/styles/withStyles";
 import {withSnackbar} from "notistack";
 import Container from "../components/Container";
 import moment from "moment";
+import Match from "../components/Match";
 
 const styles = theme => ({
   titleRow: {
@@ -68,61 +69,72 @@ export default class extends React.Component {
     if(!subscription.ready() || !userSubscription.ready() || !user.guilds) {
       return <LinearProgress />
     }
+    console.log(user);
     const group = Groups.findOne({ _id: new Mongo.ObjectID(id) });
+    console.log(group);
     const server = user.guilds.find(g => g.id === group.server);
-    const users = Meteor.users.find({ "services.discord.id": {
+    const users = Meteor.users.find({ discordId: {
       $in: group.participants
     }}).fetch();
+    console.log(users);
 
     return(
-      <Grid container spacing={2} justify="center">
-        <Grid item xs={12} md={6}>
-          <PaddedPaper>
-            <div className={classes.titleRow}>
-              <Typography variant="h4">
-                {group.name}
-              </Typography>
-              <Grow />
-              {
-                group.participants.includes(user.services.discord.id)
-                  ? <Button variant={"contained"} color="secondary" onClick={this.handleSignout}>Leave Secret Santa</Button>
-                  : <Button variant={"contained"} color="secondary" onClick={this.handleSignup}>Sign up!</Button>
-              }
-            </div>
-
-            <Typography variant="subtitle1">{server.name}</Typography>
-            <Grid container spacing={2} justify="center">
-              <Grid item xs={6}>
-                <Typography variant="h6" align="center">Signups Deadline</Typography>
-                <Typography align="center">{moment(group.startDate).format("YYYY-MM-DD")}</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="h6" align="center">Shipping Deadline</Typography>
-                <Typography align="center">{moment(group.endDate).format("YYYY-MM-DD")}</Typography>
-              </Grid>
-            </Grid>
-            <Typography variant="h6">Participants</Typography>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
+      <React.Fragment>
+        <Grid container spacing={2} justify="center">
+          <Grid item xs={12} md={6}>
+            <PaddedPaper>
+              <div className={classes.titleRow}>
+                <Typography variant="h4">
+                  {group.name}
+                </Typography>
+                <Grow />
                 {
-                  users.map(u => {
-                    return(
-                      <TableRow key={u._id}>
-                        <TableCell>{u.services.discord.username}</TableCell>
-                      </TableRow>
-                    )
-                  })
+                  group.participants.includes(user.discordId)
+                    ? <Button variant={"contained"} color="secondary" onClick={this.handleSignout}>Leave Secret Santa</Button>
+                    : <Button variant={"contained"} color="secondary" onClick={this.handleSignup}>Sign up!</Button>
                 }
-              </TableBody>
-            </Table>
-          </PaddedPaper>
+              </div>
+
+              <Typography variant="subtitle1">{server.name}</Typography>
+              <Grid container spacing={2} justify="center">
+                <Grid item xs={6}>
+                  <Typography variant="h6" align="center">Signups Deadline</Typography>
+                  <Typography align="center">{moment(group.startDate).format("YYYY-MM-DD")}</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="h6" align="center">Shipping Deadline</Typography>
+                  <Typography align="center">{moment(group.endDate).format("YYYY-MM-DD")}</Typography>
+                </Grid>
+              </Grid>
+              <Typography variant="h6">Participants</Typography>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {
+                    users.map(u => {
+                      return(
+                        <TableRow key={u._id}>
+                          <TableCell>{u.username}</TableCell>
+                        </TableRow>
+                      )
+                    })
+                  }
+                </TableBody>
+              </Table>
+            </PaddedPaper>
+          </Grid>
         </Grid>
-      </Grid>
+        <Grid container spacing={2} justify={"center"}>
+          <Grid item xs={12} md={6}>
+            <Match group={group} />
+          </Grid>
+        </Grid>
+      </React.Fragment>
+
     )
   }
 }

@@ -3,18 +3,19 @@ import '../imports/api/groups';
 import '../imports/api/users';
 import './api';
 import {Groups} from "../imports/api/groups";
-import moment from "moment";
 import './migrations';
-import { match } from './lib/match';
+import {match} from './lib/match';
+import {Matches} from '../imports/api/matches';
+import moment from "moment";
 
 ServiceConfiguration.configurations.upsert(
-  { service: 'discord' },
+  {service: 'discord'},
   {
-      $set: {
-          loginStyle: "redirect",
-          clientId: "639045709819019264",
-          secret: Meteor.settings.discord.secret
-      }
+    $set: {
+      loginStyle: "redirect",
+      clientId: "639045709819019264",
+      secret: Meteor.settings.discord.secret
+    }
   }
 );
 
@@ -58,20 +59,16 @@ Accounts.onLogin(() => {
 
 SyncedCron.add({
   name: 'Create matches',
-  schedule: function(parser) {
+  schedule: function (parser) {
     // parser is a later.parse object
     return parser.text('every 1 minute');
   },
-  job: function() {
-    const start = moment().startOf('day');
-    const end = moment().endOf('day');
+  job: function () {
     const groups = Groups.find({
       startDate: {
         $lte: new Date()
       },
-      matches: {
-        $exists: false
-      }
+      hasMatches: false
     }).fetch();
     console.log(groups.length);
 
@@ -79,12 +76,32 @@ SyncedCron.add({
       console.log(group);
       const participants = group.participants;
       const matches = match(participants);
-      console.log(matches);
-      // Groups.update({ _id: group._id }, {
-      //   $set: {
-      //     matches
-      //   }
-      // })
+      const users = Meteor.users.find({
+        discordId: {
+          $in: participants
+        }
+      }).fetch();
+      Matches.remove({groupId: group._id});
+      matches.forEach(match => {
+        Matches.insert({
+          gifter: match[0],
+          receiver: match[1],
+          groupId: group._id
+        })
+      });
+      Groups.update({_id: group._id}, {
+        $set: {
+          hasMatches: true
+        }
+      });
+      console.log(users.map(u => u.email));
+      Email.send({
+        from: "secret-santa@grep.sh",
+        bcc: users.map(u => u.email),
+        subject: "Your secret santa match has been made!",
+        text: "You're a secret santa!\n" +
+          `Head over to ${Meteor.absoluteUrl(`/groups/${group._id.toHexString()}`)} to check it out!`
+      });
     });
   }
 });

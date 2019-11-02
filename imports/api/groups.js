@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { Matches } from './matches';
 
 export const Groups = new Mongo.Collection('groups', {idGeneration: "MONGO"});
 
@@ -14,19 +15,23 @@ export const schema = insertSchema.concat(yup.object().shape({
   participants: yup.array().of(yup.number().required()).required()
 }));
 
+export function findMatchNeeded() {
+
+}
+
 if (Meteor.isServer) {
   Meteor.publish('groups', function (userId) {
     const user = Meteor.users.findOne({_id: userId});
     return Groups.find({
       participants: {
         $elemMatch: {
-          $eq: user.services.discord.id
+          $eq: user.discordId
         }
       }
     });
   });
 
-  Meteor.publish('group', function (id) {
+  Meteor.publish('group', function (id, userDiscordId) {
     const groups = Groups.find({
       _id: new Mongo.ObjectID(id)
     });
@@ -35,15 +40,17 @@ if (Meteor.isServer) {
     });
 
     const users = Meteor.users.find({
-      "services.discord.id": {
+      discordId: {
         $in: group.participants
       }
     }, {
       fields: {
-        "services.discord.id": 1,
-        "services.discord.username": 1
+        discordId: 1,
+        username: 1,
+        avatar: 1
       }
     });
+
     return [groups, users];
   });
 
