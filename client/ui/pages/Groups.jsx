@@ -43,6 +43,10 @@ export default class extends React.Component {
                     $eq:  user.discordId
                 }
             }
+        }, {
+          sort: {
+            startDate: 1
+          }
         }).fetch();
         return(
             <Grid container spacing={2} justify={"center"}>
