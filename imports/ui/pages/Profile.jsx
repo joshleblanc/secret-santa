@@ -9,14 +9,19 @@ import Button from '@material-ui/core/Button';
 import { withSnackbar } from 'notistack';
 import Grid from '@material-ui/core/Grid';
 import { shippingSchema } from "../../api/users";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 @withSnackbar
 @autorun
 export default class extends React.Component {
     render() {
         const { enqueueSnackbar } = this.props;
-        Meteor.subscribe('currentUser', Meteor.userId());
+        const subscription = Meteor.subscribe('currentUser', Meteor.userId());
         const user = Meteor.user();
+        if(!subscription.ready()) {
+            return <LinearProgress />
+        }
+        console.log(user);
         if(!user) {
             return null;
         }
@@ -35,7 +40,7 @@ export default class extends React.Component {
                         </Typography>
                         <Formik
                             initialValues={{
-                                address: user.shipping && user.shipping.address || ""
+                                address: (user.shipping && user.shipping.address) || ""
                             }}
                             validationSchema={shippingSchema}
                             onSubmit={(values, { setSubmitting }) => {
