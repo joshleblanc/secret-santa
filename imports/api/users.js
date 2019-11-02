@@ -24,7 +24,6 @@ if(Meteor.isServer) {
 
   Meteor.users.allow({
     update: function (userId, doc, fields, modifier) {
-      console.log(modifier, fields, doc);
       try {
         shippingSchema.validateSync({
           address: modifier['$set']['shipping.address']

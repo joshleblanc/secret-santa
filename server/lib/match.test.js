@@ -8,7 +8,6 @@ describe("match", () => {
 
     assert(matches.length === 6, "it created the correct number of matches");
     assert(matches.every(m => m.length === 2), "every match has 2 elements");
-    console.log(matches);
   });
 
   it('creates matches for odd arrays', () => {

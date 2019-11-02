@@ -21,7 +21,6 @@ function partition(arr) {
     ret.push(slice);
     copy = copy.filter(el => el !== slice[1]);
   }
-  console.log(copy);
   ret[ret.length - 1].push(copy[0]);
   return ret;
 }

@@ -53,7 +53,6 @@ export default class extends React.Component {
       return null;
     }
 
-    console.log(receiver);
     return (
       <PaddedPaper>
         <Typography variant={"h4"} gutterBottom>

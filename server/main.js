@@ -76,10 +76,8 @@ SyncedCron.add({
         }
       }
     }).fetch();
-    console.log(groups.length);
 
     groups.forEach(group => {
-      console.log(group);
       const participants = group.participants;
       const matches = match(participants);
       const users = Meteor.users.find({
@@ -100,7 +98,6 @@ SyncedCron.add({
           hasMatches: true
         }
       });
-      console.log(users.map(u => u.email));
       Email.send({
         from: "secret-santa@grep.sh",
         bcc: users.map(u => u.email),

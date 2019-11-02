@@ -20,7 +20,6 @@ export default class extends React.Component {
         if(!user) {
             return null;
         }
-        console.log(user);
         return(
             <Grid container justify="center">
                 <Grid item xs={12} sm={10} md={8} lg={6} xl={4}>
