@@ -78,7 +78,7 @@ export default class extends React.Component {
                                             {
                                                 user.guilds.map(g => {
                                                     return(
-                                                        <MenuItem value={g.id}>{g.name}</MenuItem>
+                                                        <MenuItem value={g.id} key={g.id}>{g.name}</MenuItem>
                                                     )
                                                 })
                                             }
