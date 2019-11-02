@@ -28,15 +28,13 @@ export default () => {
             <Navbar />
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-                <SnackbarProvider>
-                    <Switch>
-                        <Route exact path="/" component={Index} />
-                        <Route exact path="/profile" component={Profile} />
-                        <Route exact path="/groups" component={Groups} />
-                        <Route exact path="/groups/add" component={AddGroup} />
-                        <Route exact path="/groups/:id" component={Group} />
-                    </Switch>
-                </SnackbarProvider>
+                <Switch>
+                    <Route exact path="/" component={Index} />
+                    <Route exact path="/profile" component={Profile} />
+                    <Route exact path="/groups" component={Groups} />
+                    <Route exact path="/groups/add" component={AddGroup} />
+                    <Route exact path="/groups/:id" component={Group} />
+                </Switch>
             </main>
         </div>
     )
