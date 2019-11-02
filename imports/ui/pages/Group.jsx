@@ -29,14 +29,9 @@ const styles = theme => ({
 export default class extends React.Component {
   handleSignup = () => {
     const { enqueueSnackbar, match: { params: { id } } } = this.props;
-    Meteor.call("groups.signup", id, (err, res) => {
-      if(err) {
-        console.error(err);
-        enqueueSnackbar("Error signing up! Please try again.", { variant: "error" });
-      } else {
-        enqueueSnackbar("You're all signed up!", { variant: "success" });
-      }
-    })
+    const res = Meteor.call("groups.signup", id);
+
+    console.log(res);
   };
 
   handleSignout = () => {

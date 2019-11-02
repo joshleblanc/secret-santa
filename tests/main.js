@@ -1,5 +1,5 @@
 import assert from "assert";
-import "../server/list/match.test.js"
+import "../server/lib/match.test"
 
 describe("simple-todos-react", function () {
   it("package.json has correct name", async function () {
