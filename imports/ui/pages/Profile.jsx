@@ -39,18 +39,16 @@ export default class extends React.Component {
                             }}
                             validationSchema={shippingSchema}
                             onSubmit={(values, { setSubmitting }) => {
-                                try {
-                                    Meteor.users.update({ _id: Meteor.userId() }, {
-                                        $set: {
-                                            "shipping.address": values.address
-                                        }
-                                    });
-                                    enqueueSnackbar("Profile updated!", { variant: "success" });
-                                } catch(e) {
-                                    console.error(e);
-                                    enqueueSnackbar("Something went wrong D:", { variant: "error" });
-                                }
-                                setSubmitting(false);
+                                setSubmitting(true);
+                                Meteor.call('users.updateShippingAddress', values.address, (err, res) => {
+                                    if(err) {
+                                        console.error(err);
+                                        enqueueSnackbar("Something went wrong D:", { variant: "error" });
+                                    } else {
+                                        enqueueSnackbar("Profile updated!", { variant: "success" });
+                                    }
+                                    setSubmitting(false);
+                                });
                             }}
                         >
                             {({ errors, touched }) => (

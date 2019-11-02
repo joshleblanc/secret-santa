@@ -55,18 +55,6 @@ if (Meteor.isServer) {
     return [groups, users];
   });
 
-  Groups.allow({
-    insert: function (userId, doc) {
-      try {
-        schema.validateSync(doc);
-        return userId === Meteor.userId();
-      } catch (e) {
-        console.error(e);
-        return false;
-      }
-    }
-  });
-
   Meteor.methods({
     'groups.create'(obj) {
       const user = Meteor.user();

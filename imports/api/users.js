@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import {Meteor} from "meteor/meteor";
 
 export const shippingSchema = yup.object().shape({
   address: yup.string().required().max(1000)
@@ -22,17 +23,23 @@ if(Meteor.isServer) {
     });
   });
 
-  Meteor.users.allow({
-    update: function (userId, doc, fields, modifier) {
+  Meteor.methods({
+    'users.updateShippingAddress'(address) {
       try {
         shippingSchema.validateSync({
-          address: modifier['$set']['shipping.address']
+          address: address
         });
-        return userId === doc._id;
-      } catch (e) {
+        console.log(address);
+        Meteor.users.update({ _id: Meteor.userId() }, {
+          $set: {
+            "shipping.address": address
+          }
+        });
+      } catch(e) {
         console.error(e);
-        return false;
+        throw new Meteor.Error("Invalid Document");
       }
+
     }
-  })
+  });
 }
