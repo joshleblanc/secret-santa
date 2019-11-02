@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 import { Matches } from './matches';
+import moment from "moment";
 
 export const Groups = new Mongo.Collection('groups', {idGeneration: "MONGO"});
 
@@ -93,11 +94,13 @@ if (Meteor.isServer) {
       if (!user) {
         throw new Meteor.Error("Not authorized");
       }
-      const id = user.services.discord.id;
+      const id = user.discordId;
       const group = Groups.findOne({ _id: new Mongo.ObjectID(groupId) });
       if(group) {
-        if(group.participants.includes(id)) {
-          throw new Meteor.Error("User is already signed up");
+        if(moment().diff(moment(group.startDate)) > 0) {
+          throw new Meteor.Error("Signups have already closed");
+        } else if(group.participants.includes(id)) {
+          throw new Meteor.Error("You're already signed up");
         } else {
           Groups.update({ _id: new Mongo.ObjectID(groupId) }, {
             $push: {
