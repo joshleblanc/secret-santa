@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 import { Matches } from './matches';
 import moment from "moment";
+import {match} from "../../server/lib/match";
 
 export const Groups = new Mongo.Collection('groups', {idGeneration: "MONGO"});
 
@@ -18,6 +19,51 @@ export const schema = insertSchema.concat(yup.object().shape({
 
 export function signupsClosed(group) {
   return moment().diff(moment(group.startDate)) > 0;
+}
+
+export function createMatches() {
+  const groups = Groups.find({
+    startDate: {
+      $lte: new Date()
+    },
+    hasMatches: false,
+    participants: {
+      $exists: true,
+      $not: {
+        $size: 0
+      }
+    }
+  }).fetch();
+
+  groups.forEach(group => {
+    const participants = group.participants;
+    const matches = match(participants);
+    const users = Meteor.users.find({
+      discordId: {
+        $in: participants
+      }
+    }).fetch();
+    Matches.remove({groupId: group._id});
+    matches.forEach(match => {
+      Matches.insert({
+        gifter: match[0],
+        receiver: match[1],
+        groupId: group._id
+      })
+    });
+    Groups.update({_id: group._id}, {
+      $set: {
+        hasMatches: true
+      }
+    });
+    Email.send({
+      from: "secret-santa@grep.sh",
+      bcc: users.map(u => u.email),
+      subject: "Your secret santa match has been made!",
+      text: "You're a secret santa!\n" +
+        `Head over to ${Meteor.absoluteUrl(`/groups/${group._id.toHexString()}`)} to check it out!`
+    });
+  });
 }
 
 if (Meteor.isServer) {
