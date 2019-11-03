@@ -2,7 +2,7 @@ import React from "react";
 import '../imports/api/groups';
 import '../imports/api/users';
 import './api';
-import {Groups} from "../imports/api/groups";
+import {createMatches, Groups} from "../imports/api/groups";
 import './migrations';
 import {match} from './lib/match';
 import {Matches} from '../imports/api/matches';
@@ -60,52 +60,10 @@ Accounts.onLogin(() => {
 SyncedCron.add({
   name: 'Create matches',
   schedule: function (parser) {
-    // parser is a later.parse object
-    return parser.text('every 1 day');
+    return parser.text('every day at midnight');
   },
   job: function () {
-    const groups = Groups.find({
-      startDate: {
-        $lte: new Date()
-      },
-      hasMatches: false,
-      participants: {
-        $exists: true,
-        $not: {
-          $size: 0
-        }
-      }
-    }).fetch();
-
-    groups.forEach(group => {
-      const participants = group.participants;
-      const matches = match(participants);
-      const users = Meteor.users.find({
-        discordId: {
-          $in: participants
-        }
-      }).fetch();
-      Matches.remove({groupId: group._id});
-      matches.forEach(match => {
-        Matches.insert({
-          gifter: match[0],
-          receiver: match[1],
-          groupId: group._id
-        })
-      });
-      Groups.update({_id: group._id}, {
-        $set: {
-          hasMatches: true
-        }
-      });
-      Email.send({
-        from: "secret-santa@grep.sh",
-        bcc: users.map(u => u.email),
-        subject: "Your secret santa match has been made!",
-        text: "You're a secret santa!\n" +
-          `Head over to ${Meteor.absoluteUrl(`/groups/${group._id.toHexString()}`)} to check it out!`
-      });
-    });
+    createMatches();
   }
 });
 
