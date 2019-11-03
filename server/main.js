@@ -2,10 +2,8 @@ import React from "react";
 import '../imports/api/groups';
 import '../imports/api/users';
 import './api';
-import {createMatches, Groups} from "../imports/api/groups";
+import {createMatches} from "../imports/api/groups";
 import './migrations';
-import {match} from './lib/match';
-import {Matches} from '../imports/api/matches';
 import moment from "moment";
 
 ServiceConfiguration.configurations.upsert(
