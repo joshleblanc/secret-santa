@@ -15,7 +15,7 @@ if(Meteor.isServer) {
       _id: id
     }, {
       fields: {
-        username: 1,
+        discordUsername: 1,
         "shipping.address": 1,
         discordId: 1,
         "guilds": 1

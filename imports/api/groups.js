@@ -93,7 +93,7 @@ if (Meteor.isServer) {
     }, {
       fields: {
         discordId: 1,
-        username: 1,
+        discordUsername: 1,
         avatar: 1
       }
     });
