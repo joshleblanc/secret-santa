@@ -48,7 +48,7 @@ Accounts.onLogin(() => {
       avatar: user.services.discord.avatar,
       discordId: user.services.discord.id,
       email: user.services.discord.email,
-      username: user.services.discord.username,
+      discordUsername: user.services.discord.username,
       lastSync: new Date()
     }
   })

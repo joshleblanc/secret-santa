@@ -79,3 +79,34 @@ Migrations.add({
     })
   }
 });
+
+Migrations.add({
+  version: 4,
+  up: function() {
+    const users = Meteor.users.find({}).fetch();
+    users.forEach(u => {
+      Meteor.users.update({ _id: u._id }, {
+        $set: {
+          discordUsername: u.username
+        },
+        $unset: {
+          username: ""
+        }
+      })
+    });
+  },
+  down: function() {
+    const users = Meteor.users.find({}).fetch();
+    users.forEach(u => {
+      Meteor.users.update({ _id: u._id }, {
+        $set: {
+          username: u.discordUsername
+        },
+        $unset: {
+          discordUsername: ""
+        }
+      })
+    });
+  }
+
+});

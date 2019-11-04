@@ -30,7 +30,7 @@ export default class extends React.Component {
                 <Grid item xs={12} sm={10} md={8} lg={6} xl={4}>
                     <PaddedPaper>
                         <Typography variant="h4">
-                            {user.username}
+                            {user.discordUsername}
                         </Typography>
                         <Typography variant="h6">
                             Shipping Address
