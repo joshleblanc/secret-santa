@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { Matches } from './matches';
 import moment from "moment";
-import {match} from "../../server/lib/match";
+import {match} from "../lib/match";
 
 export const Groups = new Mongo.Collection('groups', {idGeneration: "MONGO"});
 

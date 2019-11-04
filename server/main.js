@@ -42,8 +42,8 @@ Accounts.onLogin(() => {
       guilds: response.data,
       /**
        * We need to copy pertinent discord thing to the top level
-       * because meteor can't consolidate embeded documents when publishing
-       * cursors with different visibile fields
+       * because meteor can't consolidate embedded documents when publishing
+       * cursors with different visible fields
        */
       avatar: user.services.discord.avatar,
       discordId: user.services.discord.id,
@@ -58,7 +58,7 @@ Accounts.onLogin(() => {
 SyncedCron.add({
   name: 'Create matches',
   schedule: function (parser) {
-    return parser.text('every day at midnight');
+    return parser.text('at 0:00');
   },
   job: function () {
     createMatches();

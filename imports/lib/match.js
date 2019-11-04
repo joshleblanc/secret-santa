@@ -27,6 +27,5 @@ function partition(arr) {
 
 export function match(arr) {
   shuffleArray(arr);
-  const matches = partition(arr);
-  return matches;
+  return partition(arr);
 }

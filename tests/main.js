@@ -1,5 +1,5 @@
 import assert from "assert";
-import "../server/lib/match.test"
+import "../imports/lib/match.test"
 
 describe("secret-santa", function () {
   it("package.json has correct name", async function () {
