@@ -16,7 +16,6 @@ import Container from "../components/Container";
 import moment from "moment";
 import Match from "../components/Match";
 import SignupButtons from "../components/SignupButtons";
-import SendEmailsButton from "../components/SendEmailsButton";
 
 const styles = theme => ({
   titleRow: {
@@ -61,7 +60,6 @@ export default class extends React.Component {
                 </Typography>
                 <Grow />
                 <SignupButtons group={group} />
-                <SendEmailsButton group={group}/>
               </div>
 
               <Typography variant="subtitle1">{server.name}</Typography>

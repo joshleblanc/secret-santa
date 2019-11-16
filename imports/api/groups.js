@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 import { Matches } from './matches';
 import moment from "moment";
-import {match, sendEmails} from "../lib/match";
+import {match} from "../lib/match";
 
 export const Groups = new Mongo.Collection('groups', {idGeneration: "MONGO"});
 
@@ -38,7 +38,11 @@ export function createMatches() {
   groups.forEach(group => {
     const participants = group.participants;
     const matches = match(participants);
-
+    const users = Meteor.users.find({
+      discordId: {
+        $in: participants
+      }
+    }).fetch();
     Matches.remove({groupId: group._id});
     matches.forEach(match => {
       Matches.insert({
@@ -52,7 +56,13 @@ export function createMatches() {
         hasMatches: true
       }
     });
-    sendEmails(group);
+    Email.send({
+      from: "secret-santa@grep.sh",
+      bcc: users.map(u => u.email),
+      subject: "Your secret santa match has been made!",
+      text: "You're a secret santa!\n" +
+        `Head over to ${Meteor.absoluteUrl(`/groups/${group._id.toHexString()}`)} to check it out!`
+    });
   });
 }
 
@@ -92,16 +102,6 @@ if (Meteor.isServer) {
   });
 
   Meteor.methods({
-    'group.sendEmails'(id) {
-      const user = Meteor.user();
-      if(!user || !(user.discordId === "104628928781496320")) {
-         throw new Meteor.Error("Not authorized");
-      }
-      const group = Groups.findOne({ _id: new Mongo.ObjectID(id) });
-      if(group) {
-        sendEmails(group);
-      }
-    },
     'groups.create'(obj) {
       const user = Meteor.user();
       if (!user) {
