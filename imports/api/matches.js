@@ -26,7 +26,8 @@ if(Meteor.isServer) {
       fields: {
         avatar: 1,
         discordID: 1,
-        email: 1
+        email: 1,
+        profile: 1
       }
     });
     return [matches, users];
