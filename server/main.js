@@ -54,6 +54,7 @@ Accounts.onLogin(() => {
       }
     })
   } catch(e) {
+    console.log(e);
     console.error(`${user.discordId} needs to sign in again, can't sync servers`);
   }
 
