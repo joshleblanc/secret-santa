@@ -30,28 +30,33 @@ Accounts.onLogin(() => {
     }
   }
   const api_url = "https://discordapp.com/api";
-  const response = HTTP.get(`${api_url}/users/@me/guilds`, {
-    headers: {
-      Authorization: `Bearer ${user.services.discord.accessToken}`
-    }
-  });
-  Meteor.users.update({
-    _id: user._id
-  }, {
-    $set: {
-      guilds: response.data,
-      /**
-       * We need to copy pertinent discord thing to the top level
-       * because meteor can't consolidate embedded documents when publishing
-       * cursors with different visible fields
-       */
-      avatar: user.services.discord.avatar,
-      discordId: user.services.discord.id,
-      email: user.services.discord.email,
-      discordUsername: user.services.discord.username,
-      lastSync: new Date()
-    }
-  })
+  try {
+    const response = HTTP.get(`${api_url}/users/@me/guilds`, {
+      headers: {
+        Authorization: `Bearer ${user.services.discord.accessToken}`
+      }
+    });
+    Meteor.users.update({
+      _id: user._id
+    }, {
+      $set: {
+        guilds: response.data,
+        /**
+         * We need to copy pertinent discord thing to the top level
+         * because meteor can't consolidate embedded documents when publishing
+         * cursors with different visible fields
+         */
+        avatar: user.services.discord.avatar,
+        discordId: user.services.discord.id,
+        email: user.services.discord.email,
+        discordUsername: user.services.discord.username,
+        lastSync: new Date()
+      }
+    })
+  } catch(e) {
+    console.error(`${user.discordId} needs to sign in again, can't sync servers`);
+  }
+
 });
 
 
