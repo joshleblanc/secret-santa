@@ -28,7 +28,8 @@ if(Meteor.isServer) {
         discordID: 1,
         email: 1,
         "profile.name": 1,
-        "shipping.address": 1
+        "shipping.address": 1,
+        shirtSize: 1
       }
     });
     return [matches, users];

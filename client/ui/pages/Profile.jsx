@@ -8,8 +8,11 @@ import { TextField } from 'formik-material-ui';
 import Button from '@material-ui/core/Button';
 import { withSnackbar } from 'notistack';
 import Grid from '@material-ui/core/Grid';
-import { shippingSchema } from "/imports/api/users";
+import { profileSchema } from "/imports/api/users";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import {shirtSizes} from "../../../imports/lib/constants";
 
 @withSnackbar
 @autorun
@@ -40,12 +43,13 @@ export default class extends React.Component {
                         </Typography>
                         <Formik
                             initialValues={{
-                                address: (user.shipping && user.shipping.address) || ""
+                                address: (user.shipping && user.shipping.address) || "",
+                                shirtSize: (user.shirtSize) || "m"
                             }}
-                            validationSchema={shippingSchema}
+                            validationSchema={profileSchema}
                             onSubmit={(values, { setSubmitting }) => {
                                 setSubmitting(true);
-                                Meteor.call('users.updateShippingAddress', values.address, (err, res) => {
+                                Meteor.call('users.updateProfile', values.address, values.shirtSize, (err, res) => {
                                     if(err) {
                                         console.error(err);
                                         enqueueSnackbar("Something went wrong D:", { variant: "error" });
@@ -69,6 +73,25 @@ export default class extends React.Component {
                                       label="Address"
                                       helperText={errors.address && touched.address ? errors.address : null}
                                     />
+                                    <Field
+                                        type={"text"}
+                                        name={"shirtSize"}
+                                        label={"Shirt Size"}
+                                        fullWidth
+                                        select
+                                        variant={"standard"}
+                                        margin={"normal"}
+                                        component={TextField}
+                                        InputLabelProps={{
+                                            shrink: true
+                                        }}
+                                    >
+                                        {
+                                            Object.keys(shirtSizes).map(k => (
+                                                <MenuItem key={k} value={k}>{shirtSizes[k]}</MenuItem>
+                                            ))
+                                        }
+                                    </Field>
                                     <Button type="submit">Submit</Button>
                                 </Form>
                             )}

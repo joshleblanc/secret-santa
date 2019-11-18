@@ -7,6 +7,7 @@ import {Matches} from '/imports/api/matches';
 import Avatar from "@material-ui/core/Avatar";
 import {avatarUrl} from '/imports/api/users';
 import withStyles from "@material-ui/core/styles/withStyles";
+import { shirtSizes } from '/imports/lib/constants';
 
 const styles = theme => ({
   header: {
@@ -88,6 +89,18 @@ export default class extends React.Component {
             })
             : <Typography>User hasn't submitted a shipping address</Typography>
         }
+        {
+          receiver.shirtSize && receiver.shirtSize.length > 0
+              ?
+              <React.Fragment>
+                <Typography variant={"h6"}>
+                  Shirt Size
+                </Typography>
+                <Typography>{shirtSizes[receiver.shirtSize]}</Typography>
+              </React.Fragment>
+              : null
+        }
+
       </PaddedPaper>
     )
   }

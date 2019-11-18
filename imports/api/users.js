@@ -1,8 +1,10 @@
 import * as yup from 'yup';
 import {Meteor} from "meteor/meteor";
+import {shirtSizes} from "../lib/constants";
 
-export const shippingSchema = yup.object().shape({
-  address: yup.string().required().max(1000)
+export const profileSchema = yup.object().shape({
+  address: yup.string().required().max(1000),
+  shirtSize: yup.string().required().oneOf(Object.keys(shirtSizes))
 });
 
 export function avatarUrl(user) {
@@ -17,6 +19,7 @@ if(Meteor.isServer) {
       fields: {
         discordUsername: 1,
         "shipping.address": 1,
+        shirtSize: 1,
         discordId: 1,
         "guilds": 1
       }
@@ -24,15 +27,17 @@ if(Meteor.isServer) {
   });
 
   Meteor.methods({
-    'users.updateShippingAddress'(address) {
+    'users.updateProfile'(address, shirtSize) {
       try {
-        shippingSchema.validateSync({
-          address: address
+        profileSchema.validateSync({
+          address: address,
+          shirtSize: shirtSize
         });
         console.log(address);
         Meteor.users.update({ _id: Meteor.userId() }, {
           $set: {
-            "shipping.address": address
+            "shipping.address": address,
+            shirtSize: shirtSize
           }
         });
       } catch(e) {
