@@ -56,4 +56,17 @@ if(Meteor.isServer) {
     });
     return [matches, users];
   });
+
+  Meteor.publish('matches.shippingInfo', function(groupId) {
+    console.log(groupId);
+    return Matches.find({
+      groupId
+    }, {
+      fields: {
+        shipped: 1,
+        gifter: 1,
+        groupId: 1
+      }
+    });
+  });
 }

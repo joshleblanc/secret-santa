@@ -78,13 +78,9 @@ if (Meteor.isServer) {
     });
   });
 
-  Meteor.publish('group', function (id, userDiscordId) {
-    const groups = Groups.find({
-      _id: new Mongo.ObjectID(id)
-    });
-    const group = Groups.findOne({
-      _id: new Mongo.ObjectID(id)
-    });
+  Meteor.publish('group', function (id) {
+    const groups = Groups.find({ _id: id });
+    const group = Groups.findOne({ _id: id });
 
     const users = Meteor.users.find({
       discordId: {

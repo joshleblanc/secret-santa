@@ -1,5 +1,6 @@
 import React from 'react';
 import { Groups } from '/imports/api/groups';
+import { Matches } from '/imports/api/matches';
 import { autorun } from 'meteor/cereal:reactive-render';
 import Grid from '@material-ui/core/Grid';
 import PaddedPaper from '../components/PaddedPaper';
@@ -16,6 +17,7 @@ import Container from "../components/Container";
 import moment from "moment";
 import Match from "../components/Match";
 import SignupButtons from "../components/SignupButtons";
+import ShippedTableCell from "../components/ShippedTableCell";
 
 const styles = theme => ({
   titleRow: {
@@ -38,17 +40,20 @@ export default class extends React.Component {
       )
     }
 
-    const subscription = Meteor.subscribe('group', id);
+    const groupId = new Mongo.ObjectID(id);
+    const subscription = Meteor.subscribe('group', groupId);
     const userSubscription = Meteor.subscribe('currentUser', Meteor.userId());
-    if(!subscription.ready() || !userSubscription.ready() || !user.guilds) {
+    const matchesSubscription = Meteor.subscribe('matches.shippingInfo', groupId);
+    if(!subscription.ready() || !userSubscription.ready() || !user.guilds || !matchesSubscription.ready()) {
       return <LinearProgress />
     }
-    const group = Groups.findOne({ _id: new Mongo.ObjectID(id) });
+    const group = Groups.findOne({ _id: groupId });
     const server = user.guilds.find(g => g.id === group.server);
     const users = Meteor.users.find({ discordId: {
       $in: group.participants
     }}).fetch();
-
+    const matches = Matches.find({ groupId }).fetch();
+    console.log(matches);
     return(
       <React.Fragment>
         <Grid container spacing={2} justify={"center"}>
@@ -83,6 +88,7 @@ export default class extends React.Component {
                 <TableHead>
                   <TableRow>
                     <TableCell>Name</TableCell>
+                    <TableCell>Shipped</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -91,6 +97,7 @@ export default class extends React.Component {
                       return(
                         <TableRow key={u._id}>
                           <TableCell>{u.discordUsername}</TableCell>
+                          <ShippedTableCell user={u} group={group} />
                         </TableRow>
                       )
                     })
