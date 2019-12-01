@@ -86,14 +86,18 @@ Migrations.add({
   up: function() {
     const users = Meteor.users.find({}).fetch();
     users.forEach(u => {
-      Meteor.users.update({ _id: u._id }, {
-        $set: {
-          discordUsername: u.username
-        },
-        $unset: {
-          username: ""
-        }
-      })
+      try {
+        Meteor.users.update({ _id: u._id }, {
+          $set: {
+            discordUsername: u.username
+          },
+          $unset: {
+            username: ""
+          }
+        })
+      } catch(e) {
+        console.log(e.message);
+      }
     });
   },
   down: function() {
