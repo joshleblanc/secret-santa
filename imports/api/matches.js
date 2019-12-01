@@ -18,7 +18,6 @@ Meteor.methods({
       gifter: user.discordId,
       groupId
     });
-    console.log(match, Meteor.userId(), groupId);
     if(match) {
       Matches.update({
         _id: match._id
