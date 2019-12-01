@@ -51,6 +51,11 @@ export default class extends React.Component {
 
     return(
       <React.Fragment>
+        <Grid container spacing={2} justify={"center"}>
+          <Grid item xs={12} md={6}>
+            <Match group={group} />
+          </Grid>
+        </Grid>
         <Grid container spacing={2} justify="center">
           <Grid item xs={12} md={6}>
             <PaddedPaper>
@@ -93,11 +98,6 @@ export default class extends React.Component {
                 </TableBody>
               </Table>
             </PaddedPaper>
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} justify={"center"}>
-          <Grid item xs={12} md={6}>
-            <Match group={group} />
           </Grid>
         </Grid>
       </React.Fragment>
