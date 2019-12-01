@@ -3,7 +3,9 @@ import Button from "@material-ui/core/Button";
 
 export default ({ match }) => {
   const handleClick = React.useCallback(() => {
-    Meteor.call('matches.setShipped', match.groupId);
+    if(window.confirm("Are you sure you want to mark your gift as shipped?")) {
+      Meteor.call('matches.setShipped', match.groupId);
+    }
   }, []);
   let text;
   if(match.shipped) {
