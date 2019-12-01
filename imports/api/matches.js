@@ -8,6 +8,29 @@ export const schema = yup.object().shape({
   groupId: yup.string().required()
 });
 
+Meteor.methods({
+  "matches.setShipped"(groupId) {
+    const user = Meteor.user();
+    if(!user) {
+      throw new Meteor.Error("Not Authorized");
+    }
+    const match = Matches.findOne({
+      gifter: user.discordId,
+      groupId
+    });
+    console.log(match, Meteor.userId(), groupId);
+    if(match) {
+      Matches.update({
+        _id: match._id
+      }, {
+        $set: {
+          shipped: true
+        }
+      });
+    }
+  }
+});
+
 if(Meteor.isServer) {
   Meteor.publish('match', function(groupId, discordUserId) {
     const matches = Matches.find({

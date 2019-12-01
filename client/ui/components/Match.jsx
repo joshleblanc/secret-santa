@@ -8,11 +8,13 @@ import Avatar from "@material-ui/core/Avatar";
 import {avatarUrl} from '/imports/api/users';
 import withStyles from "@material-ui/core/styles/withStyles";
 import { shirtSizes } from '/imports/lib/constants';
+import Button from "@material-ui/core/Button";
+import Grow from "./Grow";
+import ShippedButton from "./ShippedButton";
 
 const styles = theme => ({
   header: {
     display: 'flex',
-    paddingBottom: theme.spacing(1)
   },
   username: {
     marginTop: 'auto',
@@ -24,6 +26,10 @@ const styles = theme => ({
 @withStyles(styles)
 @autorun
 export default class extends React.Component {
+  handleShippedClick = e => {
+
+  };
+
   render() {
     const {group, classes} = this.props;
     const user = Meteor.user();
@@ -56,16 +62,17 @@ export default class extends React.Component {
 
     return (
       <PaddedPaper>
-        <Typography variant={"h4"} gutterBottom>
+        <Typography variant={"h4"} className={classes.header}>
           Match
-          <Typography variant={"caption"} paragraph>
-            You're this person's secret santa!
-          </Typography>
+          <Grow />
+          <ShippedButton match={match} />
         </Typography>
-
+        <Typography variant={"caption"} paragraph>
+          You're this person's secret santa!
+        </Typography>
         <div className={classes.header}>
           <Avatar src={avatarUrl(receiver)}/>
-          <Typography variant={"subtitle1"} className={classes.username}>
+          <Typography variant={"subtitle1"} className={classes.username} gutterBottom>
             {receiver.profile.name}
           </Typography>
         </div>

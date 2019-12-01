@@ -1,4 +1,5 @@
 import { Groups } from '../imports/api/groups';
+import { Matches } from '../imports/api/matches';
 
 Migrations.add({
   version: 1,
@@ -108,5 +109,26 @@ Migrations.add({
       })
     });
   }
+});
 
+Migrations.add({
+  version: 5,
+  up: function() {
+    Matches.update({}, {
+      $set: {
+        shipped: false
+      }
+    }, {
+      multi: true
+    })
+  },
+  down: function() {
+    Matches.update({}, {
+      $unset: {
+        shipped: ""
+      }
+    }, {
+      multi: true
+    });
+  }
 });
