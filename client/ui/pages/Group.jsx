@@ -18,10 +18,15 @@ import moment from "moment";
 import Match from "../components/Match";
 import SignupButtons from "../components/SignupButtons";
 import ShipmentStatus from "../components/ShipmentStatus";
+import Avatar from "@material-ui/core/Avatar";
+import {avatarUrl} from "../../../imports/api/users";
 
 const styles = theme => ({
   titleRow: {
     display: 'flex'
+  },
+  avatar: {
+    width: 48
   }
 });
 
@@ -53,6 +58,7 @@ export default class extends React.Component {
     }}).fetch();
     const matches = Matches.find({ groupId }).fetch();
     const allShipped = matches.every(m => m.shipped);
+    console.log(users);
     console.log(allShipped);
     return(
       <React.Fragment>
@@ -88,7 +94,7 @@ export default class extends React.Component {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Name</TableCell>
+                    <TableCell colSpan={2}>Name</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -96,7 +102,10 @@ export default class extends React.Component {
                     users.map(u => {
                       return(
                         <TableRow key={u._id}>
-                          <TableCell>{u.discordUsername}</TableCell>
+                          <TableCell className={classes.avatar}><Avatar src={avatarUrl(u)} /></TableCell>
+                          <TableCell>
+                            {u.discordUsername}
+                          </TableCell>
                         </TableRow>
                       )
                     })
