@@ -42,6 +42,10 @@ export default class extends React.Component {
     }
 
     const matches = Matches.find({ groupId: group._id }).fetch();
+    if(matches.length === 0) {
+      return null;
+    }
+
     const allShipped = matches.every(m => m.shipped);
     const noneShipped = matches.every(m => !m.shipped);
     let text = "Shipments are starting to go out";
