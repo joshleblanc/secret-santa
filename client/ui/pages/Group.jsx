@@ -17,7 +17,7 @@ import Container from "../components/Container";
 import moment from "moment";
 import Match from "../components/Match";
 import SignupButtons from "../components/SignupButtons";
-import ShippedTableCell from "../components/ShippedTableCell";
+import ShipmentStatus from "../components/ShipmentStatus";
 
 const styles = theme => ({
   titleRow: {
@@ -43,8 +43,7 @@ export default class extends React.Component {
     const groupId = new Mongo.ObjectID(id);
     const subscription = Meteor.subscribe('group', groupId);
     const userSubscription = Meteor.subscribe('currentUser', Meteor.userId());
-    const matchesSubscription = Meteor.subscribe('matches.shippingInfo', groupId);
-    if(!subscription.ready() || !userSubscription.ready() || !user.guilds || !matchesSubscription.ready()) {
+    if(!subscription.ready() || !userSubscription.ready() || !user.guilds) {
       return <LinearProgress />
     }
     const group = Groups.findOne({ _id: groupId });
@@ -53,7 +52,8 @@ export default class extends React.Component {
       $in: group.participants
     }}).fetch();
     const matches = Matches.find({ groupId }).fetch();
-    console.log(matches);
+    const allShipped = matches.every(m => m.shipped);
+    console.log(allShipped);
     return(
       <React.Fragment>
         <Grid container spacing={2} justify={"center"}>
@@ -70,6 +70,7 @@ export default class extends React.Component {
                 </Typography>
                 <Grow />
                 <SignupButtons group={group} />
+                <ShipmentStatus group={group} />
               </div>
 
               <Typography variant="subtitle1">{server.name}</Typography>
@@ -88,7 +89,6 @@ export default class extends React.Component {
                 <TableHead>
                   <TableRow>
                     <TableCell>Name</TableCell>
-                    <TableCell>Shipped</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -97,7 +97,6 @@ export default class extends React.Component {
                       return(
                         <TableRow key={u._id}>
                           <TableCell>{u.discordUsername}</TableCell>
-                          <ShippedTableCell user={u} group={group} />
                         </TableRow>
                       )
                     })
