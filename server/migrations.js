@@ -1,6 +1,6 @@
 import { Groups } from '../imports/api/groups';
 import { Matches } from '../imports/api/matches';
-
+import {sync} from "../imports/api/users";
 Migrations.add({
   version: 1,
   up: function() {
@@ -130,6 +130,22 @@ Migrations.add({
     Matches.update({}, {
       $unset: {
         shipped: ""
+      }
+    }, {
+      multi: true
+    });
+  }
+});
+
+Migrations.add({
+  version: 6,
+  up: function() {
+    Meteor.users.find({}).fetch().forEach(u => sync(u));
+  },
+  down: function() {
+    Meteor.users.update({}, {
+      $unset: {
+        avatarUrl: ""
       }
     }, {
       multi: true

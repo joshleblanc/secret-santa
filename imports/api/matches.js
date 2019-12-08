@@ -58,7 +58,6 @@ if(Meteor.isServer) {
   });
 
   Meteor.publish('matches.shippingInfo', function(groupId) {
-    console.log(groupId);
     return Matches.find({
       groupId
     }, {

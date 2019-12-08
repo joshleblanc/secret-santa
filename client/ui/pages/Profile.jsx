@@ -24,7 +24,6 @@ export default class extends React.Component {
         if(!subscription.ready()) {
             return <LinearProgress />
         }
-        console.log(user);
         if(!user) {
             return null;
         }

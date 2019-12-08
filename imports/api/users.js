@@ -1,6 +1,8 @@
 import * as yup from 'yup';
 import {Meteor} from "meteor/meteor";
 import {shirtSizes} from "../lib/constants";
+import moment from "moment";
+import {cdnUrl, uploadImage} from "../lib/aws/s3";
 
 export const profileSchema = yup.object().shape({
   address: yup.string().required().max(1000),
@@ -8,8 +10,68 @@ export const profileSchema = yup.object().shape({
 });
 
 export function avatarUrl(user) {
-  console.log(user.avatarUrl);
   return user.avatarUrl;
+}
+
+export async function sync(user) {
+  // default update params
+  const updateParams = {
+    $set: {
+      /**
+       * We need to copy pertinent discord thing to the top level
+       * because meteor can't consolidate embedded documents when publishing
+       * cursors with different visible fields
+       */
+      avatar: user.services.discord.avatar,
+      discordId: user.services.discord.id,
+      email: user.services.discord.email,
+      discordUsername: user.services.discord.username,
+      lastSync: new Date(),
+    }
+  };
+
+  // download avatar
+  let uploadKey;
+  let file;
+  const avatarUrl = `https://cdn.discordapp.com/avatars/${user.services.discord.id}/${user.services.discord.avatar}.png`;
+  try {
+    file = HTTP.get(avatarUrl, {
+      npmRequestOptions: {
+        encoding: null
+      }
+    });
+    const result = await uploadImage(file.content, `${user.services.discord.id}.png`);
+    uploadKey = result.key;
+  } catch(e) {
+    console.log(`Error getting avatar for ${user._id}`);
+  }
+
+  if(uploadKey) {
+    updateParams["$set"].avatarUrl = cdnUrl(uploadKey);
+  }
+
+  // only get gets if they've never been gotten, or they haven't been updated in more than a day
+  const getGuilds = !user.lastSync || moment().diff(moment(user.lastSync), 'days') >= 1;
+
+  if (getGuilds) {
+    let guildsResponse;
+    const api_url = "https://discordapp.com/api";
+    try {
+      guildsResponse = HTTP.get(`${api_url}/users/@me/guilds`, {
+        headers: {
+          Authorization: `Bearer ${user.services.discord.accessToken}`
+        }
+      });
+      updateParams['$set'].guilds = guildsResponse.data;
+    } catch (e) {
+      console.log(e);
+      console.error(`${user.discordId} needs to sign in again, can't sync servers`);
+    }
+  }
+
+  Meteor.users.update({
+    _id: user._id
+  }, updateParams);
 }
 
 if(Meteor.isServer) {
@@ -35,7 +97,6 @@ if(Meteor.isServer) {
           address: address,
           shirtSize: shirtSize
         });
-        console.log(address);
         Meteor.users.update({ _id: Meteor.userId() }, {
           $set: {
             "shipping.address": address,

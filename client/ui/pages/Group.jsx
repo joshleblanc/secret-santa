@@ -58,8 +58,6 @@ export default class extends React.Component {
     }}).fetch();
     const matches = Matches.find({ groupId }).fetch();
     const allShipped = matches.every(m => m.shipped);
-    console.log(users);
-    console.log(allShipped);
     return(
       <React.Fragment>
         <Grid container spacing={2} justify={"center"}>
