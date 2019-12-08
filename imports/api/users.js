@@ -8,7 +8,8 @@ export const profileSchema = yup.object().shape({
 });
 
 export function avatarUrl(user) {
-  return `https://cdn.discordapp.com/avatars/${user.discordId}/${user.avatar}.png`
+  console.log(user.avatarUrl);
+  return user.avatarUrl;
 }
 
 if(Meteor.isServer) {
@@ -21,7 +22,8 @@ if(Meteor.isServer) {
         "shipping.address": 1,
         shirtSize: 1,
         discordId: 1,
-        "guilds": 1
+        "guilds": 1,
+        avatarUrl: 1
       }
     });
   });

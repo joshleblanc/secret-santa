@@ -5,6 +5,8 @@ import './api';
 import {createMatches} from "../imports/api/groups";
 import './migrations';
 import moment from "moment";
+import {cdnUrl, uploadImage} from "./lib/aws/s3";
+import {avatarUrl} from "../imports/api/users";
 
 ServiceConfiguration.configurations.upsert(
   {service: 'discord'},
@@ -18,14 +20,14 @@ ServiceConfiguration.configurations.upsert(
 );
 
 // get servers
-Accounts.onLogin(() => {
+Accounts.onLogin(async () => {
   const user = Meteor.user();
   if (!user) {
     throw new Meteor.Error("Not authorized");
   }
-  if(user.lastSync) {
+  if (user.lastSync) {
     const lastUpdated = moment(user.lastSync);
-    if(moment().diff(lastUpdated, 'days') < 1) {
+    if (moment().diff(lastUpdated, 'days') < 1) {
       return;
     }
   }
@@ -36,6 +38,22 @@ Accounts.onLogin(() => {
         Authorization: `Bearer ${user.services.discord.accessToken}`
       }
     });
+
+    const avatarUrl = `https://cdn.discordapp.com/avatars/${user.services.discord.id}/${user.services.discord.avatar}.png`;
+    const file = HTTP.get(avatarUrl, {
+      headers: {
+        'Content-Type': 'image/png'
+      }
+    });
+    let uploadKey;
+    try {
+      debugger;
+      const result = await uploadImage(file.content, `${user.services.discord.id}.png`);
+      uploadKey = result.key;
+    } catch(e) {
+      console.error(e);
+    }
+
     Meteor.users.update({
       _id: user._id
     }, {
@@ -50,10 +68,12 @@ Accounts.onLogin(() => {
         discordId: user.services.discord.id,
         email: user.services.discord.email,
         discordUsername: user.services.discord.username,
-        lastSync: new Date()
+        lastSync: new Date(),
+        avatarUrl: cdnUrl(uploadKey)
       }
-    })
-  } catch(e) {
+    });
+
+  } catch (e) {
     console.log(e);
     console.error(`${user.discordId} needs to sign in again, can't sync servers`);
   }
