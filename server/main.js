@@ -25,58 +25,66 @@ Accounts.onLogin(async () => {
   if (!user) {
     throw new Meteor.Error("Not authorized");
   }
-  if (user.lastSync) {
-    const lastUpdated = moment(user.lastSync);
-    if (moment().diff(lastUpdated, 'days') < 1) {
-      return;
+
+  // default update params
+  const updateParams = {
+    $set: {
+      /**
+       * We need to copy pertinent discord thing to the top level
+       * because meteor can't consolidate embedded documents when publishing
+       * cursors with different visible fields
+       */
+      avatar: user.services.discord.avatar,
+      discordId: user.services.discord.id,
+      email: user.services.discord.email,
+      discordUsername: user.services.discord.username,
+      lastSync: new Date(),
     }
-  }
-  const api_url = "https://discordapp.com/api";
+  };
+
+  // download avatar
+  let uploadKey;
+  const avatarUrl = `https://cdn.discordapp.com/avatars/${user.services.discord.id}/${user.services.discord.avatar}.png`;
+  const file = HTTP.get(avatarUrl, {
+    npmRequestOptions: {
+      encoding: null
+    }
+  });
+
+  // upload avatar
   try {
-    const response = HTTP.get(`${api_url}/users/@me/guilds`, {
-      headers: {
-        Authorization: `Bearer ${user.services.discord.accessToken}`
-      }
-    });
-
-    const avatarUrl = `https://cdn.discordapp.com/avatars/${user.services.discord.id}/${user.services.discord.avatar}.png`;
-    const file = HTTP.get(avatarUrl, {
-      headers: {
-        'Content-Type': 'image/png'
-      }
-    });
-    let uploadKey;
-    try {
-      debugger;
-      const result = await uploadImage(file.content, `${user.services.discord.id}.png`);
-      uploadKey = result.key;
-    } catch(e) {
-      console.error(e);
-    }
-
-    Meteor.users.update({
-      _id: user._id
-    }, {
-      $set: {
-        guilds: response.data,
-        /**
-         * We need to copy pertinent discord thing to the top level
-         * because meteor can't consolidate embedded documents when publishing
-         * cursors with different visible fields
-         */
-        avatar: user.services.discord.avatar,
-        discordId: user.services.discord.id,
-        email: user.services.discord.email,
-        discordUsername: user.services.discord.username,
-        lastSync: new Date(),
-        avatarUrl: cdnUrl(uploadKey)
-      }
-    });
-
+    const result = await uploadImage(file.content, `${user.services.discord.id}.png`);
+    uploadKey = result.key;
   } catch (e) {
-    console.log(e);
-    console.error(`${user.discordId} needs to sign in again, can't sync servers`);
+    console.error(e);
   }
+
+  if(uploadKey) {
+    updateParams["$set"].avatarUrl = cdnUrl(uploadKey);
+  }
+
+  // only get gets if they've never been gotten, or they haven't been updated in more than a day
+  const getGuilds = !user.lastSync || moment().diff(moment(user.lastSync), 'days') >= 1;
+
+  if (getGuilds) {
+    let guildsResponse;
+    const api_url = "https://discordapp.com/api";
+    try {
+      guildsResponse = HTTP.get(`${api_url}/users/@me/guilds`, {
+        headers: {
+          Authorization: `Bearer ${user.services.discord.accessToken}`
+        }
+      });
+      updateParams['$set'].guilds = guildsResponse.data;
+    } catch (e) {
+      console.log(e);
+      console.error(`${user.discordId} needs to sign in again, can't sync servers`);
+    }
+  }
+
+  Meteor.users.update({
+    _id: user._id
+  }, updateParams);
 
 });
 

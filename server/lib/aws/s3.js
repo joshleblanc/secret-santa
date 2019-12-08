@@ -18,5 +18,5 @@ export const uploadImage = (file, filename) => {
 };
 
 export const cdnUrl = (key) => {
-  return `https://secret-santa.nyc3.digitaloceanspaces.com/${key}`;
+  return `https://secret-santa.nyc3.cdn.digitaloceanspaces.com/${key}`;
 };
