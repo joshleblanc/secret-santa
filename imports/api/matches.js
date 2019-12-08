@@ -46,7 +46,7 @@ if(Meteor.isServer) {
       "services.discord.id": match.receiver
     }, {
       fields: {
-        avatar: 1,
+        avatarUrl: 1,
         discordID: 1,
         email: 1,
         "profile.name": 1,
