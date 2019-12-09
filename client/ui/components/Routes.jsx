@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from './Navbar';
+import Navbar from './navbar/Navbar';
 import { Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import Index from '../pages/Index';
@@ -7,6 +7,7 @@ import Profile from "../pages/Profile";
 import Groups from '../pages/Groups';
 import AddGroup from "../pages/AddGroup";
 import Group from '../pages/Group';
+import Drawer from "./drawer/Drawer";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -25,6 +26,7 @@ export default () => {
     return(
         <div className={classes.root}>
             <Navbar />
+            <Drawer />
             <main className={classes.content}>
                 <div className={classes.toolbar} />
                 <Switch>

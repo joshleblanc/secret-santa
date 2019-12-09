@@ -1,6 +1,7 @@
 import React from 'react';
 import { autorun } from 'meteor/cereal:reactive-render';
 import NavbarButton from "./NavbarButton";
+import { authenticatedRoutes } from '../../lib/constants';
 
 @autorun
 export default class extends React.Component {
@@ -10,8 +11,11 @@ export default class extends React.Component {
     }
     return(
       <React.Fragment>
-        <NavbarButton to="/groups">Secret Santas</NavbarButton>
-        <NavbarButton to="/profile">Profile</NavbarButton>
+        {
+          authenticatedRoutes.map(d => (
+            <NavbarButton key={d.name} to={d.href}>{d.name}</NavbarButton>
+          ))
+        }
       </React.Fragment>
     )
   }

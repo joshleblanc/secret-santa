@@ -1,12 +1,12 @@
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
-import Routes from './components/Routes';
 import MomentUtils from "@date-io/moment";
 import {ThemeProvider} from "@material-ui/styles";
 import theme from "./lib/theme";
 import {MuiPickersUtilsProvider} from "@material-ui/pickers";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {SnackbarProvider} from "notistack";
+import Layout from "./Layout";
 
 export default () => {
   return (
@@ -15,7 +15,7 @@ export default () => {
         <SnackbarProvider>
           <CssBaseline/>
           <BrowserRouter>
-            <Routes/>
+            <Layout />
           </BrowserRouter>
         </SnackbarProvider>
       </ThemeProvider>
