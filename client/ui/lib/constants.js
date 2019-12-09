@@ -1,5 +1,6 @@
 import HomeIcon from '@material-ui/icons/Home';
-
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import SantaIcon from "../components/SantaIcon";
 export const drawerWidth = 240;
 
 export const routes = [
@@ -14,11 +15,11 @@ export const authenticatedRoutes = [
   {
     name: "Secret Santas",
     href: "/groups",
-    Icon: HomeIcon
+    Icon: SantaIcon
   },
   {
     name: "Profile",
     href: "/profile",
-    Icon: HomeIcon
+    Icon: AccountBoxIcon
   }
-]
+];

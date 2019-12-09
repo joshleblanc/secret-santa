@@ -3,10 +3,13 @@ import Navbar from './components/navbar/Navbar';
 import { makeStyles } from '@material-ui/styles';
 import Drawer from "./components/drawer/Drawer";
 import Routes from "./Routes";
+import Footer from "./components/Footer";
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    minHeight: '100vh',
+    flexDirection: 'column'
   },
   content: {
     flexGrow: 1,
@@ -26,6 +29,7 @@ export default () => {
         <div className={classes.toolbar} />
         <Routes />
       </main>
+      <Footer />
     </div>
   )
 };
