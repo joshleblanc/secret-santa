@@ -9,7 +9,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     minHeight: '100vh',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    lineHeight: 1.65
   },
   content: {
     flexGrow: 1,
@@ -19,11 +20,11 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-export default () => {
+export default (props) => {
   const classes = useStyles();
   return(
     <div className={classes.root}>
-      <Navbar />
+      <Navbar themeToggleHandler={props.themeToggleHandler} />
       <Drawer />
       <main className={classes.content}>
         <div className={classes.toolbar} />

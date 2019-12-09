@@ -19,6 +19,11 @@ import moment from "moment";
 const styles = theme => ({
   header: {
     display: 'flex'
+  },
+  link: {
+    color: "#4285F4",
+    textDecoration: "none",
+    fontWeight: 500
   }
 });
 
@@ -56,6 +61,7 @@ export default class extends React.Component {
                           <Typography variant={"h4"}>Secret Santas</Typography>
                           <Grow />
                           <Button
+                              size="small"
                               component={Link}
                               variant="contained"
                               to="/groups/add"
@@ -81,7 +87,7 @@ export default class extends React.Component {
                                     return(
                                       <TableRow key={g._id.toHexString()}>
                                         <TableCell>
-                                          <Link to={`/groups/${g._id.toHexString()}`}>
+                                          <Link className={classes.link} to={`/groups/${g._id.toHexString()}`}>
                                             {g.name}
                                           </Link>
                                         </TableCell>

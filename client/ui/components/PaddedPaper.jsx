@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({children}) => {
+export default ({children, ...props}) => {
     const classes = useStyles();
-    return <Paper classes={classes}>{children}</Paper>
+    return <Paper classes={classes} {...props}>{children}</Paper>
 }

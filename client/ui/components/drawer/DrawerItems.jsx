@@ -2,13 +2,12 @@ import React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import HomeIcon from '@material-ui/icons/Home';
 import Divider from "@material-ui/core/Divider";
 import {Link} from "react-router-dom";
 import { autorun } from 'meteor/cereal:reactive-render';
 import List from "@material-ui/core/List";
 import {withStyles} from '@material-ui/core';
-import {authenticatedRoutes, routes} from '../../lib/constants';
+import { routes } from '../../lib/constants';
 import AuthenticatedDrawerItems from "./AuthenticatedDrawerItems";
 
 const styles = theme => ({
@@ -38,6 +37,12 @@ export default class extends React.Component {
               </ListItem>
             ))
           }
+          <ListItem button>
+            <ListItemIcon>
+              /
+            </ListItemIcon>
+            <ListItemText primary="Toggle Theme" />
+          </ListItem>
         </List>
         <AuthenticatedDrawerItems />
       </div>

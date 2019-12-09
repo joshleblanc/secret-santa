@@ -27,6 +27,13 @@ const styles = theme => ({
   },
   avatar: {
     width: 48
+  },
+  username: {
+    fontSize: '1rem',
+    fontWeight: 500
+  },
+  dateContainer: {
+    margin: '1rem'
   }
 });
 
@@ -80,12 +87,16 @@ export default class extends React.Component {
               <Typography variant="subtitle1">{server.name}</Typography>
               <Grid container spacing={2} justify="center">
                 <Grid item xs={6}>
-                  <Typography variant="h6" align="center">Signups Deadline</Typography>
-                  <Typography align="center">{moment(group.startDate).format("YYYY-MM-DD")}</Typography>
+                  <PaddedPaper className={classes.dateContainer} elevation={3}>
+                    <Typography variant="h6" align="center">Signups Deadline</Typography>
+                    <Typography align="center">{moment(group.startDate).format("YYYY-MM-DD")}</Typography>
+                  </PaddedPaper>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography variant="h6" align="center">Shipping Deadline</Typography>
-                  <Typography align="center">{moment(group.endDate).format("YYYY-MM-DD")}</Typography>
+                  <PaddedPaper className={classes.dateContainer} elevation={3}>
+                    <Typography variant="h6" align="center">Shipping Deadline</Typography>
+                    <Typography align="center">{moment(group.endDate).format("YYYY-MM-DD")}</Typography>
+                  </PaddedPaper>
                 </Grid>
               </Grid>
               <Typography variant="h6">Participants</Typography>
@@ -101,7 +112,7 @@ export default class extends React.Component {
                       return(
                         <TableRow key={u._id}>
                           <TableCell className={classes.avatar}><Avatar src={avatarUrl(u)} /></TableCell>
-                          <TableCell>
+                          <TableCell className={classes.username}>
                             {u.discordUsername}
                           </TableCell>
                         </TableRow>

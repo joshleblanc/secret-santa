@@ -12,6 +12,7 @@ import NavbarButton from "./NavbarButton";
 import AuthenticatedNavbarItems from "./AuthenticatedNavbarItems";
 import Hidden from "@material-ui/core/Hidden";
 import { routes } from '../../lib/constants';
+import ThemeToggle from "./ThemeToggle";
 
 const styles = theme => ({
     menuButton: {
@@ -55,6 +56,7 @@ export default class extends React.Component {
                     </Hidden>
                     <div className={classes.grow} />
                     <AccountButtons />
+                    <ThemeToggle themeToggleHandler={this.props.themeToggleHandler} />
                 </Toolbar>
             </AppBar>
         )

@@ -13,12 +13,20 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import {shirtSizes} from "../../../imports/lib/constants";
+import { withStyles } from '@material-ui/styles';
 
+const styles = theme => ({
+    submitButton: {
+        marginTop: '1rem'
+    }
+});
+
+@withStyles(styles)
 @withSnackbar
 @autorun
 export default class extends React.Component {
     render() {
-        const { enqueueSnackbar } = this.props;
+        const { enqueueSnackbar, classes } = this.props;
         const subscription = Meteor.subscribe('currentUser', Meteor.userId());
         const user = Meteor.user();
         if(!subscription.ready()) {
@@ -70,6 +78,7 @@ export default class extends React.Component {
                                       rows="6"
                                       margin="normal"
                                       label="Address"
+                                      variant="filled"
                                       helperText={errors.address && touched.address ? errors.address : null}
                                     />
                                     <Field
@@ -91,7 +100,7 @@ export default class extends React.Component {
                                             ))
                                         }
                                     </Field>
-                                    <Button type="submit">Submit</Button>
+                                    <Button type="submit" className={classes.submitButton}>Submit</Button>
                                 </Form>
                             )}
                         </Formik>
