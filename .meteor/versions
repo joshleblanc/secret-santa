@@ -57,7 +57,6 @@ mongo@1.7.0
 mongo-decimal@0.1.1
 mongo-dev-server@1.1.0
 mongo-id@1.0.7
-nathantreid:static-assets@0.1.0
 npm-mongo@3.2.0
 oauth@1.2.8
 oauth2@1.2.1

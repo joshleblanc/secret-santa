@@ -27,4 +27,3 @@ http@1.4.2
 littledata:synced-cron
 percolate:migrations
 email@1.2.3
-nathantreid:static-assets
