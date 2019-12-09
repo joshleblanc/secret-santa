@@ -9,6 +9,7 @@ import { autorun } from 'meteor/cereal:reactive-render';
 import List from "@material-ui/core/List";
 import {withStyles} from '@material-ui/core';
 import {authenticatedRoutes, routes} from '../../lib/constants';
+import AuthenticatedDrawerItems from "./AuthenticatedDrawerItems";
 
 const styles = theme => ({
   toolbar: theme.mixins.toolbar,
@@ -38,17 +39,7 @@ export default class extends React.Component {
             ))
           }
         </List>
-        <Divider />
-        {
-          authenticatedRoutes.map(r => (
-            <ListItem key={r.name} button component={Link} to={r.href}>
-              <ListItemIcon>
-                {<r.Icon/>}
-              </ListItemIcon>
-              <ListItemText primary={r.name}/>
-            </ListItem>
-          ))
-        }
+        <AuthenticatedDrawerItems />
       </div>
     )
   }
