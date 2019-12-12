@@ -26,10 +26,6 @@ const styles = theme => ({
 @withStyles(styles)
 @autorun
 export default class extends React.Component {
-  handleShippedClick = e => {
-
-  };
-
   render() {
     const {group, classes} = this.props;
     const user = Meteor.user();
