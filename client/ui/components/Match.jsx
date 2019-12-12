@@ -11,6 +11,8 @@ import { shirtSizes } from '/imports/lib/constants';
 import Button from "@material-ui/core/Button";
 import Grow from "./Grow";
 import ShippedButton from "./ShippedButton";
+import {Link as RouterLink} from "react-router-dom";
+import Link from '@material-ui/core/Link';
 
 const styles = theme => ({
   header: {
@@ -62,6 +64,10 @@ export default class extends React.Component {
           Match
           <Grow />
           <ShippedButton match={match} />
+          <Link component={RouterLink} to={`/messages/${match._id.toHexString()}`}>
+            <Button>Send a message</Button>
+          </Link>
+
         </Typography>
         <Typography variant={"caption"} paragraph>
           You're this person's secret santa!
