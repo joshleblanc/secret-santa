@@ -31,6 +31,19 @@ Meteor.methods({
 });
 
 if(Meteor.isServer) {
+  Meteor.publish('matches', function(userId) {
+    const user = Meteor.users.findOne({ _id: userId });
+    const matches = Matches.find({
+      $or: [
+        { gifter: user.discordUserId },
+        { receiver: user.discordUserId }
+      ],
+      messages: {
+        $exists: true,
+      }
+    });
+    return matches;
+  });
   Meteor.publish('match', function(groupId, discordUserId) {
     const matches = Matches.find({
       gifter: discordUserId,
