@@ -7,18 +7,13 @@ import moment from "moment";
 import PaddedPaper from "./PaddedPaper";
 import MuiLink from '@material-ui/core/Link';
 import { Link } from 'react-router-dom';
+import Grid from "@material-ui/core/Grid";
 
 const styles = theme => ({
-  horizontalView: {
-    display: 'flex',
-    margin: '1rem',
-    width: `calc(100% - 2rem )`,
-    overflow: 'auto',
-    padding: '.2rem',
-  },
   card: {
-    margin: "0 .25rem",
-    width: '240px'
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: theme.contrastText
   }
 });
 
@@ -58,24 +53,27 @@ export class SignUpEndings extends React.Component {
     const today = moment(new Date());
 
     return (
-      <section className={classes.horizontalView}>
+      <Grid container spacing={2}>
         {
           groups.map(group => {
             const end = moment(group.startDate);
             return (
-              <PaddedPaper elevation={1} className={classes.card} key={group._id.toHexString()}>
-                <Typography variant="h6">
-                  <MuiLink component={Link} to={`/groups/${group._id.toHexString()}`} color={"inherit"}>{group.name}</MuiLink>
-                </Typography>
+              <Grid item xs={12} sm={6} md={6} lg={4} xl={3} key={group._id.toHexString()}>
+                <PaddedPaper elevation={0} className={classes.card}>
+                  <Typography variant="h6">
+                    <MuiLink component={Link} to={`/groups/${group._id.toHexString()}`} color={"inherit"}>{group.name}</MuiLink>
+                  </Typography>
 
-                <Typography variant="body2">Signups close in {moment.duration(end.diff(today)).humanize()}</Typography>
-                <br />
-                <Typography variant="body1">Ends on {end.format("YYYY-MM-DD")}</Typography>
-              </PaddedPaper>
+                  <Typography variant="body2">Signups close in {moment.duration(end.diff(today)).humanize()}</Typography>
+                  <br />
+                  <Typography variant="body1">Ends on {end.format("YYYY-MM-DD")}</Typography>
+                </PaddedPaper>
+              </Grid>
+
             );
           })
         }
-      </section>
+      </Grid>
     );
   }
 }
