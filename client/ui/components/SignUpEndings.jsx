@@ -42,6 +42,9 @@ export class SignUpEndings extends React.Component {
         $elemMatch: {
           $eq:  user.discordId
         }
+      },
+      startDate: {
+        $gt: new Date()
       }
     }, {
       sort: {
@@ -49,12 +52,14 @@ export class SignUpEndings extends React.Component {
       },
       limit: 3
     }).fetch();
+
+    console.log(groups);
     const today = moment(new Date());
 
     return (
       <section className={classes.horizontalView}>
         {
-          groups.filter(group => group.startDate > (new Date())).map(group => {
+          groups.map(group => {
             const end = moment(group.startDate);
             return (
               <PaddedPaper elevation={1} className={classes.card}>

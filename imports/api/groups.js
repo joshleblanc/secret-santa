@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { Matches } from './matches';
+import {Matches} from './matches';
 import moment from "moment";
 import {match} from "../lib/match";
 
@@ -79,8 +79,8 @@ if (Meteor.isServer) {
   });
 
   Meteor.publish('group', function (id) {
-    const groups = Groups.find({ _id: id });
-    const group = Groups.findOne({ _id: id });
+    const groups = Groups.find({_id: id});
+    const group = Groups.findOne({_id: id});
 
     const users = Meteor.users.find({
       discordId: {
@@ -98,13 +98,16 @@ if (Meteor.isServer) {
   });
 
   Meteor.publish('groups.ending', function (userId) {
-    const user = Meteor.users.findOne({ _id: userId });
+    const user = Meteor.users.findOne({_id: userId});
 
     return Groups.find({
       participants: {
         $elemMatch: {
           $eq: user.discordId,
         }
+      },
+      startDate: {
+        $gt: new Date()
       }
     }, {
       sort: {
@@ -143,14 +146,14 @@ if (Meteor.isServer) {
         throw new Meteor.Error("Not authorized");
       }
       const id = user.discordId;
-      const group = Groups.findOne({ _id: new Mongo.ObjectID(groupId) });
-      if(group) {
-        if(signupsClosed(group)) {
+      const group = Groups.findOne({_id: new Mongo.ObjectID(groupId)});
+      if (group) {
+        if (signupsClosed(group)) {
           throw new Meteor.Error("Signups have already closed");
-        } else if(group.participants.includes(id)) {
+        } else if (group.participants.includes(id)) {
           throw new Meteor.Error("You're already signed up");
         } else {
-          Groups.update({ _id: new Mongo.ObjectID(groupId) }, {
+          Groups.update({_id: new Mongo.ObjectID(groupId)}, {
             $push: {
               participants: id
             }
@@ -166,12 +169,12 @@ if (Meteor.isServer) {
         throw new Meteor.Error("Not authorized");
       }
       const id = user.services.discord.id;
-      const group = Groups.findOne({ _id: new Mongo.ObjectID(groupId) });
-      if(group) {
-        if(signupsClosed(group)) {
+      const group = Groups.findOne({_id: new Mongo.ObjectID(groupId)});
+      if (group) {
+        if (signupsClosed(group)) {
           throw new Meteor.Error("Signups have already closed");
-        } else if(group.participants.includes(id)) {
-          Groups.update({ _id: new Mongo.ObjectID(groupId) }, {
+        } else if (group.participants.includes(id)) {
+          Groups.update({_id: new Mongo.ObjectID(groupId)}, {
             $pull: {
               participants: id
             }
