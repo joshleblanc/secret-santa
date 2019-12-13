@@ -25,7 +25,7 @@ export default (props) => {
   return(
     <div className={classes.root}>
       <Navbar themeToggleHandler={props.themeToggleHandler} />
-      <Drawer />
+      <Drawer themeToggleHandler={props.themeToggleHandler} />
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Routes />

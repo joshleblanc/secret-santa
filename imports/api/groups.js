@@ -97,6 +97,23 @@ if (Meteor.isServer) {
     return [groups, users];
   });
 
+  Meteor.publish('groups.ending', function (userId) {
+    const user = Meteor.users.findOne({ _id: userId });
+
+    return Groups.find({
+      participants: {
+        $elemMatch: {
+          $eq: user.discordId,
+        }
+      }
+    }, {
+      sort: {
+        startDate: 1
+      },
+      limit: 3
+    })
+  });
+
   Meteor.methods({
     'groups.create'(obj) {
       const user = Meteor.user();

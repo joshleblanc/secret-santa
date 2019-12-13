@@ -9,6 +9,7 @@ import List from "@material-ui/core/List";
 import {withStyles} from '@material-ui/core';
 import { routes } from '../../lib/constants';
 import AuthenticatedDrawerItems from "./AuthenticatedDrawerItems";
+import ThemeIcon from "@material-ui/icons/WbSunny";
 
 const styles = theme => ({
   toolbar: theme.mixins.toolbar,
@@ -37,9 +38,9 @@ export default class extends React.Component {
               </ListItem>
             ))
           }
-          <ListItem button>
+          <ListItem button onClick={this.props.themeToggleHandler}>
             <ListItemIcon>
-              /
+              <ThemeIcon />
             </ListItemIcon>
             <ListItemText primary="Toggle Theme" />
           </ListItem>

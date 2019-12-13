@@ -1,6 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Container from "../components/Container";
+import { SignUpEndings } from '../components/SignUpEndings';
 
 export default class extends React.Component {
     render() {
@@ -16,7 +17,7 @@ export default class extends React.Component {
               <Typography variant="h4">Approaching Deadlines</Typography>
               <br />
               <Typography variant="h5">Sign Ups Ending</Typography>
-              <Typography variant="h5">Shipping Deadlines Ending</Typography>
+              <SignUpEndings />
             </Container>
           </>
         )
