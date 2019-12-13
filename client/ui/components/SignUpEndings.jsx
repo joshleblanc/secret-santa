@@ -5,6 +5,8 @@ import { Groups } from '/imports/api/groups';
 import { CircularProgress, Typography } from "@material-ui/core";
 import moment from "moment";
 import PaddedPaper from "./PaddedPaper";
+import MuiLink from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   horizontalView: {
@@ -63,7 +65,10 @@ export class SignUpEndings extends React.Component {
             const end = moment(group.startDate);
             return (
               <PaddedPaper elevation={1} className={classes.card} key={group._id.toHexString()}>
-                <Typography variant="h6">{group.name}</Typography>
+                <Typography variant="h6">
+                  <MuiLink component={Link} to={`/groups/${group._id.toHexString()}`} color={"inherit"}>{group.name}</MuiLink>
+                </Typography>
+
                 <Typography variant="body2">Signups close in {moment.duration(end.diff(today)).humanize()}</Typography>
                 <br />
                 <Typography variant="body1">Ends on {end.format("YYYY-MM-DD")}</Typography>
