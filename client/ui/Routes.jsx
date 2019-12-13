@@ -6,6 +6,7 @@ import AddGroup from "./pages/AddGroup";
 import Group from "./pages/Group";
 import {Route, Switch} from "react-router-dom";
 import Messages from "./pages/Messages";
+import Message from './pages/Message';
 
 export default () => {
   return(
@@ -16,6 +17,7 @@ export default () => {
       <Route exact path="/groups/add" component={AddGroup} />
       <Route exact path="/groups/:id" component={Group} />
       <Route exact path="/messages" component={Messages} />
+      <Route exact path="/messages/:id" component={Message} />
     </Switch>
   )
 };

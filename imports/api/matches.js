@@ -33,17 +33,41 @@ Meteor.methods({
 if(Meteor.isServer) {
   Meteor.publish('matches', function(userId) {
     const user = Meteor.users.findOne({ _id: userId });
-    const matches = Matches.find({
+    return Matches.find({
       $or: [
-        { gifter: user.discordUserId },
-        { receiver: user.discordUserId }
+        {gifter: user.discordUserId},
+        {receiver: user.discordUserId}
       ],
       messages: {
         $exists: true,
       }
     });
-    return matches;
   });
+
+  Meteor.publish('messages', function(matchId, userId) {
+    const match = Matches.findOne({ _id: new Mongo.ObjectID(matchId) });
+    const user = Meteor.users.findOne({ _id: userId });
+    let gifter = undefined;
+    let receiver = undefined;
+
+    if(match.receiver === user.discordId) {
+      receiver = 1;
+    }
+    if(match.gifter === user.discordId) {
+      gifter = 1;
+    }
+
+    return Matches.find({
+      _id: new Mongo.ObjectID(matchId)
+    }, {
+      fields: {
+        messages: 1,
+        gifter,
+        receiver
+      }
+    });
+  });
+
   Meteor.publish('match', function(groupId, discordUserId) {
     const matches = Matches.find({
       gifter: discordUserId,
