@@ -62,7 +62,7 @@ export class SignUpEndings extends React.Component {
           groups.map(group => {
             const end = moment(group.startDate);
             return (
-              <PaddedPaper elevation={1} className={classes.card}>
+              <PaddedPaper elevation={1} className={classes.card} key={group._id.toHexString()}>
                 <Typography variant="h6">{group.name}</Typography>
                 <Typography variant="body2">Signups close in {moment.duration(end.diff(today)).humanize()}</Typography>
                 <br />
