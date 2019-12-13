@@ -20,7 +20,7 @@ export default class extends React.Component {
         <Container>
           <Typography variant="h4">Approaching Deadlines</Typography>
           <br/>
-          <Typography variant="h5">Sign Ups Ending</Typography>
+          <Typography variant="h5" gutterBottom>Sign Ups Ending</Typography>
           <SignUpEndings/>
         </Container>
       </>
