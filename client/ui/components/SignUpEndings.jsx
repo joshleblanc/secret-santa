@@ -55,7 +55,6 @@ export class SignUpEndings extends React.Component {
       limit: 3
     }).fetch();
 
-    console.log(groups);
     const today = moment(new Date());
 
     return (
