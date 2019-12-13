@@ -64,7 +64,7 @@ export class SignUpEndings extends React.Component {
             return (
               <PaddedPaper elevation={1} className={classes.card}>
                 <Typography variant="h6">{group.name}</Typography>
-                <Typography variant="body2">{end.diff(today, "days")} days remaining</Typography>
+                <Typography variant="body2">Signups close in {moment.duration(end.diff(today)).humanize()}</Typography>
                 <br />
                 <Typography variant="body1">Ends on {end.format("YYYY-MM-DD")}</Typography>
               </PaddedPaper>
