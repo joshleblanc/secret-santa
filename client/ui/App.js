@@ -13,13 +13,13 @@ export default class App extends React.Component {
     theme: 'light'
   };
 
-  toggleTheme() {
-    if(this.state.theme == 'light') {
+  toggleTheme = () => {
+    if(this.state.theme === 'light') {
       this.setState({ theme: 'dark' });
     } else {
       this.setState({ theme: 'light' });
     }
-  }
+  };
 
   render() {
     return (
@@ -28,7 +28,7 @@ export default class App extends React.Component {
           <SnackbarProvider>
             <CssBaseline/>
             <BrowserRouter>
-              <Layout themeToggleHandler={() => this.toggleTheme()} />
+              <Layout themeToggleHandler={this.toggleTheme} />
             </BrowserRouter>
           </SnackbarProvider>
         </ThemeProvider>
