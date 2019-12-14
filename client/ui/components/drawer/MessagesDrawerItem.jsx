@@ -15,7 +15,6 @@ export default class extends React.Component {
     if(!user) {
       return <LinearProgress />
     }
-    console.log(user);
     const unread = user.unreadMessages;
     return (
       <ListItem button component={Link} to={"/messages"}>
