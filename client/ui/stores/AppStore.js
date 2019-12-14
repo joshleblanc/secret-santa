@@ -7,11 +7,17 @@ class AppStore {
   });
 
   get theme() {
-    return this.state.get('theme');
+    const user = Meteor.user();
+    if(user && user.theme) {
+      return user.theme;
+    } else {
+      return this.state.get('theme');
+    }
   }
 
   set theme(str) {
     this.state.set('theme', str);
+    Meteor.call('currentUser.setTheme', str);
   }
 
   get drawerOpen() {
