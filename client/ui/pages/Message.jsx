@@ -35,6 +35,9 @@ export default class extends React.Component {
     const { id } = this.props.match.params;
     const { inputMessage } = this.state;
     Meteor.call('match.sendMessage', id, inputMessage);
+    this.setState({
+      inputMessage: ""
+    });
   };
 
   messagesRef = r => {
@@ -71,16 +74,16 @@ export default class extends React.Component {
     const areSecretSanta = !!match.gifter;
     let title;
     if(areSecretSanta) {
-      title = receiver.discordUsername;
+      title = `You are talking to ${receiver.discordUsername}. They will see you as Secret Santa`;
     } else {
-      title = `Your Secret Santa`;
+      title = `You are talking to your Secret Santa`;
     }
     return(
       <PaddedPaper>
         <Typography variant={"h4"}>
           {group.name}
         </Typography>
-        <Typography variant={"h6"}>
+        <Typography variant={"subtitle2"}>
           {title}
         </Typography>
         <PaddedPaper elevation={0} className={classes.messages} ref={this.messagesRef}>
