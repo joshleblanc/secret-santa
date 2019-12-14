@@ -1,8 +1,8 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import {SignUpEndings} from '../components/SignUpEndings';
 import {autorun} from 'meteor/cereal:reactive-render';
 import PaddedPaper from "../components/PaddedPaper";
+import Dashboard from "../components/Dashboard";
 
 @autorun
 export default class extends React.Component {
@@ -17,12 +17,7 @@ export default class extends React.Component {
             </Typography>
           }
         </PaddedPaper>
-        <PaddedPaper>
-          <Typography variant="h4">Approaching Deadlines</Typography>
-          <br/>
-          <Typography variant="h5" gutterBottom>Sign Ups Ending</Typography>
-          <SignUpEndings/>
-        </PaddedPaper>
+        <Dashboard />
       </>
     )
   }
