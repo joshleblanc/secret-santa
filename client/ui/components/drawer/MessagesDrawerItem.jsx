@@ -11,7 +11,7 @@ export default () => {
 
     <ListItem button component={Link} to={"/messages"}>
       <ListItemIcon>
-        <Badge color={"primary"} badgeContent={""}>
+        <Badge color={"primary"} badgeContent={""} variant={"dot"}>
           <EmailIcon/>
         </Badge>
       </ListItemIcon>

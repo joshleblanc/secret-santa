@@ -33,8 +33,7 @@ export default class extends React.Component {
     e.preventDefault();
     const { id } = this.props.match.params;
     const { inputMessage } = this.state;
-    const user = Meteor.user();
-    Meteor.call('match.sendMessage', id, user._id, inputMessage);
+    Meteor.call('match.sendMessage', id, inputMessage);
   };
 
   messagesRef = r => {
@@ -49,6 +48,8 @@ export default class extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     this.scrollToBottom();
+    const { id } = this.props.match.params;
+    Meteor.call('match.readMessage', id)
   }
 
   render() {

@@ -86,7 +86,8 @@ if(Meteor.isServer) {
         discordId: 1,
         "guilds": 1,
         avatarUrl: 1,
-        theme: 1
+        theme: 1,
+        unreadMessages: 1
       }
     });
   });
