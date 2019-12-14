@@ -2,7 +2,6 @@ import * as yup from 'yup';
 import {Meteor} from "meteor/meteor";
 import {shirtSizes} from "../lib/constants";
 import moment from "moment";
-import {cdnUrl, uploadImage} from "../lib/aws/s3";
 
 export const profileSchema = yup.object().shape({
   address: yup.string().required().max(1000),
@@ -32,6 +31,7 @@ export function sendMessageReminders() {
 }
 
 export async function sync(user) {
+  const { cdnUrl, uploadImage } = import("../lib/aws/s3");
   // default update params
   const updateParams = {
     $set: {

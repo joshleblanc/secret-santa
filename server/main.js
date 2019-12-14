@@ -6,6 +6,8 @@ import {createMatches} from "../imports/api/groups";
 import './migrations';
 import {sendMessageReminders, sync} from "../imports/api/users";
 
+console.log(sync);
+
 ServiceConfiguration.configurations.upsert(
   {service: 'discord'},
   {
