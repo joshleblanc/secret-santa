@@ -46,7 +46,7 @@ export default class extends React.Component {
               keepMounted: true, // Better open performance on mobile.
             }}
           >
-            <DrawerItems themeToggleHandler={this.props.themeToggleHandler} />
+            <DrawerItems />
           </Drawer>
         </Hidden>
       </nav>

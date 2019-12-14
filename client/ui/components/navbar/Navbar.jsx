@@ -57,7 +57,7 @@ export default class extends React.Component {
                     <div className={classes.grow} />
                     <AccountButtons />
                     <Hidden implementation="css" xsDown>
-                        <ThemeToggle themeToggleHandler={this.props.themeToggleHandler} />
+                        <ThemeToggle />
                     </Hidden>
                 </Toolbar>
             </AppBar>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import appStore from '../../stores/AppStore';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -8,10 +9,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ThemeToggle({ themeToggleHandler }) {
+export default function ThemeToggle() {
   const classes = useStyles();
   return (
-    <Button variant="text" onClick={themeToggleHandler} size="small" className={classes.button}>
+    <Button variant="text" onClick={appStore.toggleTheme} size="small" className={classes.button}>
       Toggle Theme
     </Button>
   )

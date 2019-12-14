@@ -25,8 +25,8 @@ export default (props) => {
   const classes = useStyles();
   return(
     <Container maxWidth={"md"}>
-      <Navbar themeToggleHandler={props.themeToggleHandler} />
-      <Drawer themeToggleHandler={props.themeToggleHandler} />
+      <Navbar />
+      <Drawer />
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Routes />

@@ -7,28 +7,19 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import {SnackbarProvider} from "notistack";
 import Layout from "./Layout";
 import getTheme from './lib/theme';
+import appStore from './stores/AppStore';
+import { autorun } from 'meteor/cereal:reactive-render';
 
+@autorun
 export default class App extends React.Component {
-  state = {
-    theme: 'light'
-  };
-
-  toggleTheme = () => {
-    if(this.state.theme === 'light') {
-      this.setState({ theme: 'dark' });
-    } else {
-      this.setState({ theme: 'light' });
-    }
-  };
-
   render() {
     return (
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <ThemeProvider theme={getTheme(this.state.theme)}>
+        <ThemeProvider theme={getTheme(appStore.theme)}>
           <SnackbarProvider>
             <CssBaseline/>
             <BrowserRouter>
-              <Layout themeToggleHandler={this.toggleTheme} />
+              <Layout />
             </BrowserRouter>
           </SnackbarProvider>
         </ThemeProvider>
