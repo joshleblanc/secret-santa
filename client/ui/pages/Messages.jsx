@@ -11,19 +11,13 @@ import {Link} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Badge from "@material-ui/core/Badge";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import EmailIcon from '@material-ui/icons/Email';
 
-const styles = theme => ({
-  badge: {
-    margin: theme.spacing(2, 1)
-  }
-});
-
-@withStyles(styles)
 @autorun
 export default class extends React.Component {
 
   render() {
-    const { classes } = this.props;
     const matchesSubscription = Meteor.subscribe('matches', Meteor.userId());
     const groupsSubscription = Meteor.subscribe('groups', Meteor.userId());
     if (!matchesSubscription.ready() || !groupsSubscription.ready()) {
@@ -52,21 +46,20 @@ export default class extends React.Component {
               let hasUnreadMessage = unreadMessages.map(u => u.toHexString()).includes(m._id.toHexString());
               return (
                 <React.Fragment key={m._id.toHexString()}>
-                  <Badge
-                    color={"primary"}
-                    badgeContent={hasUnreadMessage ? "" : 0}
-                    variant={"dot"}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'left'}}
-                    classes={classes}
-                  >
+
                   <ListItem button component={Link} to={`/messages/${m._id.toHexString()}`}>
-                      <ListItemText primary={
+                    <ListItemIcon>
+                      <Badge
+                        color={"primary"}
+                        badgeContent={hasUnreadMessage ? "" : 0}
+                        variant={"dot"}
+                      >
 
-                          group.name
-                      } secondary={secondary}/>
+                        <EmailIcon/>
+                      </Badge>
+                    </ListItemIcon>
+                    <ListItemText primary={group.name} secondary={secondary}/>
                   </ListItem>
-                  </Badge>
-
                   <Divider/>
                 </React.Fragment>
               )
