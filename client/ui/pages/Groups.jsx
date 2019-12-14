@@ -14,7 +14,7 @@ import {Groups} from '/imports/api/groups';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
-import {withStyles} from '@material-ui/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import moment from "moment";
 
 const styles = theme => ({

@@ -3,17 +3,14 @@ import {Meteor} from 'meteor/meteor';
 import {autorun} from 'meteor/cereal:reactive-render';
 import PaddedPaper from '../components/PaddedPaper';
 import Typography from '@material-ui/core/Typography';
-import {Formik, Form, Field} from 'formik';
-import {TextField} from 'formik-material-ui';
+import { Formik, Form, Field } from 'formik';
+import { TextField } from 'formik-material-ui';
 import Button from '@material-ui/core/Button';
-import {withSnackbar} from 'notistack';
-import Grid from '@material-ui/core/Grid';
+import withSnackbar from 'notistack/build/withSnackbar';
 import {profileSchema} from "/imports/api/users";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import {shirtSizes} from "../../../imports/lib/constants";
-import {withStyles} from '@material-ui/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
   submitButton: {

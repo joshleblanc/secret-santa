@@ -1,6 +1,6 @@
 import React from 'react';
 import {autorun} from 'meteor/cereal:reactive-render';
-import {LinearProgress, withStyles} from "@material-ui/core";
+import LinearProgress from '@material-ui/core/LinearProgress';
 import {Matches} from '/imports/api/matches';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";

@@ -6,7 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import {Link} from "react-router-dom";
 import { autorun } from 'meteor/cereal:reactive-render';
 import List from "@material-ui/core/List";
-import {withStyles} from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { routes } from '../../lib/constants';
 import AuthenticatedDrawerItems from "./AuthenticatedDrawerItems";
 import ThemeIcon from "@material-ui/icons/WbSunny";

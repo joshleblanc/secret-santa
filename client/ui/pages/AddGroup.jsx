@@ -1,12 +1,11 @@
 import React from 'react';
-import Grid from "@material-ui/core/Grid";
 import PaddedPaper from "../components/PaddedPaper";
 import Typography from "@material-ui/core/Typography";
 import {Select, TextField} from "formik-material-ui";
 import {Field, Form, Formik} from "formik";
 import Button from "@material-ui/core/Button";
 import {DatePicker} from "@material-ui/pickers";
-import {insertSchema, Groups} from '/imports/api/groups';
+import {insertSchema} from '/imports/api/groups';
 import moment from "moment";
 import {withSnackbar} from 'notistack';
 import {Meteor} from "meteor/meteor";
@@ -14,7 +13,6 @@ import {autorun} from 'meteor/cereal:reactive-render';
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Container from "@material-ui/core/Container";
 
 @withSnackbar

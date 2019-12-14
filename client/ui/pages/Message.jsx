@@ -3,7 +3,8 @@ import { autorun } from 'meteor/cereal:reactive-render';
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { Matches } from '/imports/api/matches';
 import PaddedPaper from "../components/PaddedPaper";
-import {Typography, withStyles} from "@material-ui/core";
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from "@material-ui/core/TextField";
 import { Groups } from '/imports/api/groups';
 

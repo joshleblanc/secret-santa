@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from './components/navbar/Navbar';
-import { withStyles } from '@material-ui/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Drawer from "./components/drawer/Drawer";
 import Routes from "./Routes";
 import Footer from "./components/Footer";

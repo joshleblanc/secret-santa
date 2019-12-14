@@ -2,7 +2,7 @@ import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import {drawerWidth} from '../../lib/constants';
-import {withStyles} from '@material-ui/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import {autorun} from 'meteor/cereal:reactive-render';
 import DrawerItems from "./DrawerItems";
 import {AppStoreContext} from "../../stores/AppStore";
