@@ -43,7 +43,6 @@ export default class extends React.Component {
             matches.map(m => {
               const group = Groups.findOne({_id: m.groupId});
               let secondary;
-              console.log(m.receiver, user.discordId);
               if (m.receiver === user.discordId) {
                 secondary = "Your secret santa messaged you!"
               } else {
@@ -51,8 +50,6 @@ export default class extends React.Component {
               }
               const unreadMessages = user.unreadMessages || [];
               let hasUnreadMessage = unreadMessages.map(u => u.toHexString()).includes(m._id.toHexString());
-              console.log(user.unreadMessages, m._id);
-              console.log(user.unreadMessages && user.unreadMessages.includes(m._id));
               return (
                 <React.Fragment key={m._id.toHexString()}>
                   <Badge

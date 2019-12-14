@@ -22,10 +22,6 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
 });
 
-Tracker.autorun(() => {
-  console.log(Meteor.userId());
-});
-
 @withStyles(styles)
 @autorun
 export default class extends React.Component {
