@@ -15,6 +15,7 @@ export default ({ match }) => {
   }
   return(
     <Button
+      fullWidth
       variant={"outlined"}
       color={"primary"}
       onClick={handleClick}

@@ -13,10 +13,12 @@ import Grow from "./Grow";
 import ShippedButton from "./ShippedButton";
 import {Link as RouterLink} from "react-router-dom";
 import Link from '@material-ui/core/Link';
+import Grid from "@material-ui/core/Grid";
 
 const styles = theme => ({
   header: {
     display: 'flex',
+    marginTop: theme.spacing(1)
   },
   username: {
     marginTop: 'auto',
@@ -62,16 +64,20 @@ export default class extends React.Component {
       <PaddedPaper>
         <Typography variant={"h4"} className={classes.header}>
           Match
-          <Grow />
-          <ShippedButton match={match} />
-          <Link component={RouterLink} to={`/messages/${match._id.toHexString()}`}>
-            <Button>Send a message</Button>
-          </Link>
-
         </Typography>
         <Typography variant={"caption"} paragraph>
           You're this person's secret santa!
         </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <ShippedButton match={match} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Link component={RouterLink} to={`/messages/${match._id.toHexString()}`}>
+              <Button fullWidth variant={"outlined"}>Send a message</Button>
+            </Link>
+          </Grid>
+        </Grid>
         <div className={classes.header}>
           <Avatar src={avatarUrl(receiver)}/>
           <Typography variant={"subtitle1"} className={classes.username} gutterBottom>
