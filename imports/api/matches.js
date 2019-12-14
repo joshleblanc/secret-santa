@@ -39,7 +39,7 @@ Meteor.methods({
           discordId: match.receiver
         }, {
           $addToSet: {
-            unreadMessages: new Mongo.ObjectID(matchId)
+            unreadMessages: new Mongo.ObjectID(matchId),
           }
         })
       } else {

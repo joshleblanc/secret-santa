@@ -13,6 +13,24 @@ export function avatarUrl(user) {
   return user.avatarUrl;
 }
 
+export function sendMessageReminders() {
+  const users = Meteor.users.find({
+    unreadMessages: {
+      $exists: true,
+      $not: {
+        $size: 0
+      }
+    }
+  }).fetch();
+  Email.send({
+    from: "secret-santa@grep.sh",
+    bcc: users.map(u => u.email),
+    subject: "You have unread messages at secret santa!",
+    text: "Someone's sent you a message on secret santa!\n" +
+      `Head over to ${Meteor.absoluteUrl(`/messages`)} to see what you've missed!`
+  });
+}
+
 export async function sync(user) {
   // default update params
   const updateParams = {
