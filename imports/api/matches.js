@@ -109,6 +109,10 @@ if (Meteor.isServer) {
       receiver = 1;
     }
 
+    if(!gifter && !receiver) {
+      return [];
+    }
+
     const matches = Matches.find({
       _id: new Mongo.ObjectID(matchId)
     }, {
