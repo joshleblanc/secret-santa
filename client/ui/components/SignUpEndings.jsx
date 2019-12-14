@@ -1,23 +1,14 @@
 import React from "react";
 import { autorun } from 'meteor/cereal:reactive-render';
-import { withStyles } from "@material-ui/styles";
 import { Groups } from '/imports/api/groups';
-import { CircularProgress, Typography } from "@material-ui/core";
 import moment from "moment";
-import PaddedPaper from "./PaddedPaper";
 import MuiLink from '@material-ui/core/Link';
 import { Link } from 'react-router-dom';
 import Grid from "@material-ui/core/Grid";
+import BorderedPaper from "./BorderedPaper";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import Typography from "@material-ui/core/Typography";
 
-const styles = theme => ({
-  card: {
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: theme.contrastText
-  }
-});
-
-@withStyles(styles)
 @autorun
 export class SignUpEndings extends React.Component {
   render() {
@@ -30,7 +21,7 @@ export class SignUpEndings extends React.Component {
     const groupsSub = Meteor.subscribe('groups.ending', user._id);
 
     if(!groupsSub.ready()) {
-      return <CircularProgress />
+      return <LinearProgress />
     }
 
     const groups = Groups.find({
@@ -60,7 +51,7 @@ export class SignUpEndings extends React.Component {
               const end = moment(group.startDate);
               return (
                 <Grid item xs={12} sm={6} md={6} lg={4} xl={3} key={group._id.toHexString()}>
-                  <PaddedPaper elevation={0} className={classes.card}>
+                  <BorderedPaper>
                     <Typography variant="h6">
                       <MuiLink component={Link} to={`/groups/${group._id.toHexString()}`}>{group.name}</MuiLink>
                     </Typography>
@@ -68,7 +59,7 @@ export class SignUpEndings extends React.Component {
                     <Typography variant="body2">Signups close in {moment.duration(end.diff(today)).humanize()}</Typography>
                     <br />
                     <Typography variant="body1">Ends on {end.format("YYYY-MM-DD")}</Typography>
-                  </PaddedPaper>
+                  </BorderedPaper>
                 </Grid>
 
               );

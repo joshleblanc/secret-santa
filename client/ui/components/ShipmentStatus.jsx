@@ -23,13 +23,14 @@ const useStyles = makeStyles(theme => ({
     color: orange[500]
   },
   icon: {
+    marginRight: theme.spacing(1),
     verticalAlign: 'bottom'
   }
 }));
 
 const Icon = ({Component, name}) => {
   const classes = useStyles();
-  return <Component className={classNames(classes[name], classes.icon)} fontSize={"large"} />
+  return <Component className={classNames(classes[name], classes.icon)} fontSize={"small"} />
 };
 
 @autorun
@@ -58,9 +59,9 @@ export default class extends React.Component {
       icon = <Icon Component={CancelIcon} name={"cancel"} />
     }
     return(
-      <Typography variant={"h6"}>
-        {text}
+      <Typography variant={"body2"}>
         {icon}
+        {text}
       </Typography>
     )
   }

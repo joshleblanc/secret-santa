@@ -20,6 +20,7 @@ import ShipmentStatus from "../components/ShipmentStatus";
 import Avatar from "@material-ui/core/Avatar";
 import {avatarUrl} from "../../../imports/api/users";
 import Container from "@material-ui/core/Container";
+import BorderedPaper from "../components/BorderedPaper";
 
 const styles = theme => ({
   titleRow: {
@@ -31,9 +32,6 @@ const styles = theme => ({
   username: {
     fontSize: '1rem',
     fontWeight: 500
-  },
-  dateContainer: {
-    margin: '1rem'
   }
 });
 
@@ -65,7 +63,6 @@ export default class extends React.Component {
       }
     }).fetch();
     const matches = Matches.find({groupId}).fetch();
-    const allShipped = matches.every(m => m.shipped);
     return (
       <>
         <Match group={group}/>
@@ -74,24 +71,22 @@ export default class extends React.Component {
             <Typography variant="h4">
               {group.name}
             </Typography>
-            <Grow/>
-            <SignupButtons group={group}/>
-            <ShipmentStatus group={group}/>
           </div>
-
+          <SignupButtons group={group}/>
+          <ShipmentStatus group={group}/>
           <Typography variant="subtitle1">{server.name}</Typography>
           <Grid container spacing={2} justify="center">
             <Grid item xs={12} md={6}>
-              <PaddedPaper className={classes.dateContainer} elevation={3}>
+              <BorderedPaper>
                 <Typography variant="h6" align="center">Signups Deadline</Typography>
                 <Typography align="center">{moment(group.startDate).format("YYYY-MM-DD")}</Typography>
-              </PaddedPaper>
+              </BorderedPaper>
             </Grid>
             <Grid item xs={12} md={6}>
-              <PaddedPaper className={classes.dateContainer} elevation={3}>
+              <BorderedPaper>
                 <Typography variant="h6" align="center">Shipping Deadline</Typography>
                 <Typography align="center">{moment(group.endDate).format("YYYY-MM-DD")}</Typography>
-              </PaddedPaper>
+              </BorderedPaper>
             </Grid>
           </Grid>
           <Typography variant="h6">Participants</Typography>
