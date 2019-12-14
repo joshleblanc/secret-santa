@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import Drawer from "./components/drawer/Drawer";
 import Routes from "./Routes";
 import Footer from "./components/Footer";
+import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 export default (props) => {
   const classes = useStyles();
   return(
-    <div className={classes.root}>
+    <Container maxWidth={"md"}>
       <Navbar themeToggleHandler={props.themeToggleHandler} />
       <Drawer themeToggleHandler={props.themeToggleHandler} />
       <main className={classes.content}>
@@ -31,6 +32,6 @@ export default (props) => {
         <Routes />
       </main>
       <Footer />
-    </div>
+    </Container>
   )
 };
