@@ -14,7 +14,6 @@ export default class Dashboard extends React.Component {
       <PaddedPaper>
         <Typography variant="h4">Approaching Deadlines</Typography>
         <br/>
-        <Typography variant="h5" gutterBottom>Sign Ups Ending</Typography>
         <SignUpEndings/>
       </PaddedPaper>
     )
