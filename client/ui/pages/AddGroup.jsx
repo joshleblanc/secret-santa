@@ -22,14 +22,9 @@ import Container from "@material-ui/core/Container";
 export default class extends React.Component {
   render() {
     const {enqueueSnackbar} = this.props;
-    const subscription = Meteor.subscribe('currentUser', Meteor.userId());
-    const loading = !subscription.ready();
     const user = Meteor.user();
     if (!user) {
       return null;
-    }
-    if (loading) {
-      return <LinearProgress/>
     }
     return (
       <Container>

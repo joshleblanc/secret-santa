@@ -32,10 +32,9 @@ export default class extends React.Component {
     if (!user) {
       return null;
     }
-    const userSub = Meteor.subscribe('currentUser', user._id);
     const groupsSub = Meteor.subscribe('groups', user._id);
 
-    if (!groupsSub.ready() || !userSub.ready()) {
+    if (!groupsSub.ready()) {
       return <LinearProgress/>
     }
     const groups = Groups.find({

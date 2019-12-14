@@ -54,8 +54,7 @@ export default class extends React.Component {
 
     const groupId = new Mongo.ObjectID(id);
     const subscription = Meteor.subscribe('group', groupId);
-    const userSubscription = Meteor.subscribe('currentUser', Meteor.userId());
-    if (!subscription.ready() || !userSubscription.ready() || !user.guilds) {
+    if (!subscription.ready() || !user.guilds) {
       return <LinearProgress/>
     }
     const group = Groups.findOne({_id: groupId});

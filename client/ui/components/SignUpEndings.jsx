@@ -27,10 +27,9 @@ export class SignUpEndings extends React.Component {
       return null;
     }
 
-    const userSub = Meteor.subscribe('currentUser', user._id);
     const groupsSub = Meteor.subscribe('groups.ending', user._id);
 
-    if(!groupsSub.ready() || !userSub.ready()) {
+    if(!groupsSub.ready()) {
       return <CircularProgress />
     }
 

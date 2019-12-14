@@ -27,11 +27,7 @@ const styles = theme => ({
 export default class extends React.Component {
   render() {
     const {enqueueSnackbar, classes} = this.props;
-    const subscription = Meteor.subscribe('currentUser', Meteor.userId());
     const user = Meteor.user();
-    if (!subscription.ready()) {
-      return <LinearProgress/>
-    }
     if (!user) {
       return null;
     }

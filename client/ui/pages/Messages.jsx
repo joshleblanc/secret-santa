@@ -13,7 +13,6 @@ import Divider from "@material-ui/core/Divider";
 
 @autorun
 export default class extends React.Component {
-  state = {};
 
   render() {
     const matchesSubscription = Meteor.subscribe('matches', Meteor.userId());
@@ -27,11 +26,6 @@ export default class extends React.Component {
     // but I can't think of a way to do that while
     // still hiding the gifter id
     const matches = Matches.find({}).fetch();
-    const groups = Groups.find({
-      _id: {
-        $in: matches.map(m => m.groupId)
-      }
-    }).fetch();
     return (
       <PaddedPaper>
         <Typography variant="h6">Messages</Typography>
