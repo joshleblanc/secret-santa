@@ -29,10 +29,7 @@ const useTracker = makeTracker(() => {
 
 export default (props) => {
   const classes = useStyles();
-  const userSub = useTracker();
-  if(!userSub.ready || !userSub.ready()) {
-    return <LinearProgress />
-  }
+  useTracker();
   return(
     <Container maxWidth={"md"}>
       <Navbar />

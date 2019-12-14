@@ -23,18 +23,6 @@ export default class extends React.Component {
     inputMessage: ""
   };
 
-  componentDidMount() {
-    this.setState({
-      matchSubscription: Meteor.subscribe('messages', this.props.match.params.id, Meteor.userId())
-    });
-  }
-
-  componentWillUnmount() {
-    if(this.state.matchSubscription) {
-      this.state.matchSubscription.stop();
-    }
-  }
-
   handleInputChange = e => {
     this.setState({
       inputMessage: e.target.value
@@ -66,7 +54,8 @@ export default class extends React.Component {
   render() {
     const { classes } = this.props;
     const { inputMessage } = this.state;
-    if(!this.state.matchSubscription || !this.state.matchSubscription.ready()) {
+    const matchSubscription = Meteor.subscribe('messages', this.props.match.params.id, Meteor.userId());
+    if(!matchSubscription.ready()) {
       return <LinearProgress />
     }
     const match = Matches.findOne({
