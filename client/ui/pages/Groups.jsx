@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import Grow from "../components/Grow";
 import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
+import MuiLink from '@material-ui/core/Link';
 import {Groups} from '/imports/api/groups';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
@@ -19,11 +20,6 @@ import moment from "moment";
 const styles = theme => ({
   header: {
     display: 'flex'
-  },
-  link: {
-    color: "#4285F4",
-    textDecoration: "none",
-    fontWeight: 500
   }
 });
 
@@ -85,9 +81,9 @@ export default class extends React.Component {
                     return (
                       <TableRow key={g._id.toHexString()}>
                         <TableCell>
-                          <Link className={classes.link} to={`/groups/${g._id.toHexString()}`}>
+                          <MuiLink component={Link} to={`/groups/${g._id.toHexString()}`}>
                             {g.name}
-                          </Link>
+                          </MuiLink>
                         </TableCell>
                         <TableCell>{moment(g.startDate).format("YYYY-MM-DD")}</TableCell>
                         <TableCell>{moment(g.endDate).format("YYYY-MM-DD")}</TableCell>

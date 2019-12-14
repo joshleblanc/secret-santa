@@ -1,14 +1,11 @@
 import React from 'react';
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(theme => ({
   footer: {
     padding: theme.spacing(2)
   },
-  link: {
-    color: "#4285F4",
-    textDecoration: "none"
-  }
 }));
 
 export default () => {
@@ -16,7 +13,7 @@ export default () => {
   return(
     <footer className={classes.footer}>
       <div>
-        Santa Icon made by <a className={classes.link} href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a className={classes.link} href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+        Santa Icon made by <Link href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</Link> from <Link href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</Link>
       </div>
     </footer>
   )

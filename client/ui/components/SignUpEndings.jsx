@@ -61,7 +61,7 @@ export class SignUpEndings extends React.Component {
               <Grid item xs={12} sm={6} md={6} lg={4} xl={3} key={group._id.toHexString()}>
                 <PaddedPaper elevation={0} className={classes.card}>
                   <Typography variant="h6">
-                    <MuiLink component={Link} to={`/groups/${group._id.toHexString()}`} color={"inherit"}>{group.name}</MuiLink>
+                    <MuiLink component={Link} to={`/groups/${group._id.toHexString()}`}>{group.name}</MuiLink>
                   </Typography>
 
                   <Typography variant="body2">Signups close in {moment.duration(end.diff(today)).humanize()}</Typography>
