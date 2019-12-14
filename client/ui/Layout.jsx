@@ -4,12 +4,14 @@ import { makeStyles } from '@material-ui/styles';
 import Drawer from "./components/drawer/Drawer";
 import Routes from "./Routes";
 import Footer from "./components/Footer";
+import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     minHeight: '100vh',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    lineHeight: 1.65
   },
   content: {
     flexGrow: 1,
@@ -19,10 +21,10 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
 }));
 
-export default () => {
+export default (props) => {
   const classes = useStyles();
   return(
-    <div className={classes.root}>
+    <Container maxWidth={"md"}>
       <Navbar />
       <Drawer />
       <main className={classes.content}>
@@ -30,6 +32,6 @@ export default () => {
         <Routes />
       </main>
       <Footer />
-    </div>
+    </Container>
   )
 };

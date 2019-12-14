@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": [
+    "./client/**/*",
+    "./server/**/*",
+    "./tests/**/*",
+    "./imports/**/*"
+  ],
+  "exclude": [
+    "./node_modules/**/*"
+  ]
+}

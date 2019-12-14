@@ -11,7 +11,7 @@ ServiceConfiguration.configurations.upsert(
   {
     $set: {
       loginStyle: "redirect",
-      clientId: "639045709819019264",
+      clientId: Meteor.settings.discord.id,
       secret: Meteor.settings.discord.secret
     }
   }

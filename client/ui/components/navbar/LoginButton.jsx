@@ -12,7 +12,7 @@ export default class extends React.Component {
 
   render() {
     return(
-      <Button color="inherit" onClick={this.handleClick}>Login</Button>
+      <Button color="inherit" size="small" onClick={this.handleClick}>Login</Button>
     )
   }
 }

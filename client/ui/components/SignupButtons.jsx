@@ -39,9 +39,9 @@ export default class extends React.Component {
       return null;
     }
     if(group.participants.includes(user.discordId)) {
-      return <Button variant={"contained"} color="secondary" onClick={this.handleSignout}>Leave Secret Santa</Button>
+      return <Button variant={"contained"} color="secondary" onClick={this.handleSignout} size="small">Leave Secret Santa</Button>
     } else {
-      return <Button variant={"contained"} color="secondary" onClick={this.handleSignup}>Sign up!</Button>
+      return <Button variant={"contained"} color="secondary" onClick={this.handleSignup} size="small">Sign up!</Button>
     }
   }
 }

@@ -1,16 +1,24 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import Container from "../components/Container";
+import {autorun} from 'meteor/cereal:reactive-render';
+import PaddedPaper from "../components/PaddedPaper";
+import Dashboard from "../components/Dashboard";
 
+@autorun
 export default class extends React.Component {
-    render() {
-        return(
-          <Container>
-            <Typography variant={"h4"}>Hello!</Typography>
-            <Typography>
+  render() {
+    return (
+      <>
+        <PaddedPaper>
+          <Typography variant={"h4"}>Hello!</Typography>
+          {
+            !Meteor.userId() && <Typography>
               Login to get started
             </Typography>
-          </Container>
-        )
-    }
+          }
+        </PaddedPaper>
+        <Dashboard />
+      </>
+    )
+  }
 }

@@ -85,12 +85,24 @@ if(Meteor.isServer) {
         shirtSize: 1,
         discordId: 1,
         "guilds": 1,
-        avatarUrl: 1
+        avatarUrl: 1,
+        theme: 1
       }
     });
   });
 
   Meteor.methods({
+    'currentUser.setTheme'(theme) {
+      const user = Meteor.user();
+      if(!user || !['light', 'dark'].includes(theme)) return;
+      Meteor.users.update({
+        _id: user._id
+      }, {
+        $set: {
+          theme
+        }
+      });
+    },
     'users.updateProfile'(address, shirtSize) {
       try {
         profileSchema.validateSync({
@@ -107,7 +119,6 @@ if(Meteor.isServer) {
         console.error(e);
         throw new Meteor.Error("Invalid Document");
       }
-
     }
   });
 }
