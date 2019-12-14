@@ -1,13 +1,34 @@
+import * as React from "react";
+
 class AppStore {
-  _theme = new ReactiveVar('light');
+  state = new ReactiveDict({
+    drawerOpen: false,
+    theme: 'light'
+  });
 
   get theme() {
-    return this._theme.get();
+    return this.state.get('theme');
   }
 
   set theme(str) {
-    this._theme.set(str);
+    this.state.set('theme', str);
   }
+
+  get drawerOpen() {
+    return this.state.get('drawerOpen');
+  }
+
+  set drawerOpen(flag) {
+    this.state.set('drawerOpen', flag)
+  }
+
+  closeDrawer = () => {
+    this.drawerOpen = false;
+  };
+
+  toggleDrawer = () => {
+    this.drawerOpen = !this.drawerOpen;
+  };
 
   toggleTheme = () => {
     if(this.theme === 'light') {
@@ -18,4 +39,7 @@ class AppStore {
   }
 }
 
-export default new AppStore();
+export const AppStoreContext = React.createContext(new AppStore());
+export const useStore = () => {
+  return React.useContext(AppStoreContext);
+};

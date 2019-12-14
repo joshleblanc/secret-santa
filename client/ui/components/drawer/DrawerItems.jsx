@@ -10,7 +10,7 @@ import {withStyles} from '@material-ui/core';
 import { routes } from '../../lib/constants';
 import AuthenticatedDrawerItems from "./AuthenticatedDrawerItems";
 import ThemeIcon from "@material-ui/icons/WbSunny";
-import appStore from '../../stores/AppStore';
+import {AppStoreContext} from "../../stores/AppStore";
 
 const styles = theme => ({
   toolbar: theme.mixins.toolbar,
@@ -22,11 +22,12 @@ const styles = theme => ({
 @withStyles(styles)
 @autorun
 export default class extends React.Component {
-
-
+  static contextType = AppStoreContext;
 
   render() {
     const { classes } = this.props;
+    const { toggleTheme } = this.context;
+
     return(
       <div>
         <div className={classes.toolbar} />
@@ -42,7 +43,7 @@ export default class extends React.Component {
               </ListItem>
             ))
           }
-          <ListItem button onClick={appStore.toggleTheme}>
+          <ListItem button onClick={toggleTheme}>
             <ListItemIcon>
               <ThemeIcon />
             </ListItemIcon>

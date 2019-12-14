@@ -2,10 +2,10 @@ import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import {drawerWidth} from '../../lib/constants';
-import {State} from '../../lib/state';
 import {withStyles} from '@material-ui/styles';
 import {autorun} from 'meteor/cereal:reactive-render';
 import DrawerItems from "./DrawerItems";
+import {AppStoreContext} from "../../stores/AppStore";
 
 const styles = theme => ({
   appBar: {
@@ -27,8 +27,11 @@ const styles = theme => ({
 @withStyles(styles, {withTheme: true})
 @autorun
 export default class extends React.Component {
+  static contextType = AppStoreContext;
+
   render() {
     const {container, classes, theme} = this.props;
+    const { drawerOpen, closeDrawer  } = this.context;
     return (
       <nav>
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -37,8 +40,8 @@ export default class extends React.Component {
             container={container}
             variant="temporary"
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={State.get('drawerOpen')}
-            onClose={() => State.set('drawerOpen', false)}
+            open={drawerOpen}
+            onClose={closeDrawer}
             classes={{
               paper: classes.drawerPaper,
             }}
