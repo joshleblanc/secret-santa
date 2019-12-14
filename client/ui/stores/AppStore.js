@@ -3,7 +3,7 @@ import * as React from "react";
 class AppStore {
   state = new ReactiveDict({
     drawerOpen: false,
-    theme: 'light'
+    theme: localStorage.getItem('theme') || 'light'
   });
 
   get theme() {
@@ -18,6 +18,7 @@ class AppStore {
   set theme(str) {
     this.state.set('theme', str);
     Meteor.call('currentUser.setTheme', str);
+    localStorage.setItem('theme', str);
   }
 
   get drawerOpen() {
