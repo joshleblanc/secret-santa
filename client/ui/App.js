@@ -13,6 +13,8 @@ import { autorun } from 'meteor/cereal:reactive-render';
 @autorun
 export default class App extends React.Component {
   static contextType = AppStoreContext;
+  state = {};
+
   render() {
     const { theme } = this.context;
     return (

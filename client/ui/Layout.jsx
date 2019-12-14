@@ -5,6 +5,8 @@ import Drawer from "./components/drawer/Drawer";
 import Routes from "./Routes";
 import Footer from "./components/Footer";
 import Container from "@material-ui/core/Container";
+import {LinearProgress} from "@material-ui/core";
+import { makeTracker } from 'meteor/cereal:reactive-render';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,8 +23,16 @@ const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
 }));
 
+const useTracker = makeTracker(() => {
+  return Meteor.subscribe('currentUser', Meteor.userId());
+});
+
 export default (props) => {
   const classes = useStyles();
+  const userSub = useTracker();
+  if(!userSub.ready || !userSub.ready()) {
+    return <LinearProgress />
+  }
   return(
     <Container maxWidth={"md"}>
       <Navbar />

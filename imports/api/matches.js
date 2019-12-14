@@ -56,6 +56,13 @@ if(Meteor.isServer) {
       messages: {
         $exists: true,
       }
+    }, {
+      fields: {
+        receiver: 1,
+        _id: 1,
+        groupId: 1,
+        messages: 1
+      }
     });
   });
 
