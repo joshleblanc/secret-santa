@@ -6,7 +6,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Badge from "@material-ui/core/Badge";
 import { autorun } from 'meteor/cereal:reactive-render';
-import {LinearProgress} from "@material-ui/core";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 @autorun
 export default class extends React.Component {
