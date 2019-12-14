@@ -66,6 +66,9 @@ export default class extends React.Component {
     const match = Matches.findOne({
       _id: new Mongo.ObjectID(this.props.match.params.id)
     });
+    if(!match) {
+      return null;
+    }
     const group = Groups.findOne({
       _id: match.groupId
     });
