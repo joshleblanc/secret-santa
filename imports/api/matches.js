@@ -9,6 +9,21 @@ export const schema = yup.object().shape({
 });
 
 Meteor.methods({
+  "match.sendMessage"(matchId, userId, message) {
+    const user = Meteor.users.findOne({ _id: userId });
+    const match = Matches.findOne({ _id: new Mongo.ObjectID(matchId) });
+    if(user && match && message.length < 1000) {
+      Matches.update({ _id: new Mongo.ObjectID(matchId) },{
+        $push: {
+          messages: {
+            sender: userId,
+            message: message
+          }
+        }
+      })
+    }
+  }
+  ,
   "matches.setShipped"(groupId) {
     const user = Meteor.user();
     if(!user) {
@@ -35,8 +50,8 @@ if(Meteor.isServer) {
     const user = Meteor.users.findOne({ _id: userId });
     return Matches.find({
       $or: [
-        {gifter: user.discordUserId},
-        {receiver: user.discordUserId}
+        {gifter: user.discordId},
+        {receiver: user.discordId}
       ],
       messages: {
         $exists: true,
@@ -55,9 +70,10 @@ if(Meteor.isServer) {
     }
     if(match.gifter === user.discordId) {
       gifter = 1;
+      receiver= 1;
     }
 
-    return Matches.find({
+    const matches = Matches.find({
       _id: new Mongo.ObjectID(matchId)
     }, {
       fields: {
@@ -66,6 +82,9 @@ if(Meteor.isServer) {
         receiver
       }
     });
+    const users = Meteor.users.find({ discordId: match.receiver }, { fields: { discordUsername: 1, discordId: 1 }});
+
+    return [matches, users ];
   });
 
   Meteor.publish('match', function(groupId, discordUserId) {

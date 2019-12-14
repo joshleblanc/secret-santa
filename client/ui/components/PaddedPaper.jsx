@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({children, ...props}) => {
+export default React.forwardRef(({children, ...props}, ref) => {
     const classes = useStyles();
-    return <Paper classes={classes} {...props}>{children}</Paper>
-}
+    return <Paper ref={ref} classes={classes} {...props}>{children}</Paper>
+});
