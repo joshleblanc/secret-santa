@@ -90,7 +90,7 @@ export default class extends React.Component {
           }
         </PaddedPaper>
         <form onSubmit={this.handleSubmit}>
-          <TextField label={"Send a message"} value={inputMessage} onChange={this.handleInputChange}/>
+          <TextField label={"Send a message"} fullWidth value={inputMessage} onChange={this.handleInputChange}/>
         </form>
       </PaddedPaper>
     )
