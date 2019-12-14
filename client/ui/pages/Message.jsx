@@ -5,6 +5,7 @@ import { Matches } from '/imports/api/matches';
 import PaddedPaper from "../components/PaddedPaper";
 import {Typography, withStyles} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
+import { Groups } from '/imports/api/groups';
 
 const styles = theme => ({
   messages: {
@@ -62,12 +63,25 @@ export default class extends React.Component {
     const match = Matches.findOne({
       _id: new Mongo.ObjectID(this.props.match.params.id)
     });
+    const group = Groups.findOne({
+      _id: match.groupId
+    });
     const receiver = Meteor.users.findOne({ discordId: match.receiver });
     const user = Meteor.user();
+    const areSecretSanta = !!match.gifter;
+    let title;
+    if(areSecretSanta) {
+      title = receiver.discordUsername;
+    } else {
+      title = `Your Secret Santa`;
+    }
     return(
       <PaddedPaper>
+        <Typography variant={"h4"}>
+          {group.name}
+        </Typography>
         <Typography variant={"h6"}>
-          Messages
+          {title}
         </Typography>
         <PaddedPaper elevation={0} className={classes.messages} ref={this.messagesRef}>
           {

@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import {Groups} from "./groups";
 
 export const Matches = new Mongo.Collection('matches', {idGeneration: "MONGO"});
 
@@ -114,12 +115,13 @@ if (Meteor.isServer) {
       fields: {
         messages: 1,
         gifter,
-        receiver
+        receiver,
+        groupId: 1
       }
     });
     const users = Meteor.users.find({discordId: match.receiver}, {fields: {discordUsername: 1, discordId: 1}});
-
-    return [matches, users];
+    const groups = Groups.find({ _id: match.groupId });
+    return [matches, users, groups];
   });
 
   Meteor.publish('match', function (groupId, discordUserId) {
