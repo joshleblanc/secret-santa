@@ -81,13 +81,13 @@ export default class extends React.Component {
 
           <Typography variant="subtitle1">{server.name}</Typography>
           <Grid container spacing={2} justify="center">
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <PaddedPaper className={classes.dateContainer} elevation={3}>
                 <Typography variant="h6" align="center">Signups Deadline</Typography>
                 <Typography align="center">{moment(group.startDate).format("YYYY-MM-DD")}</Typography>
               </PaddedPaper>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <PaddedPaper className={classes.dateContainer} elevation={3}>
                 <Typography variant="h6" align="center">Shipping Deadline</Typography>
                 <Typography align="center">{moment(group.endDate).format("YYYY-MM-DD")}</Typography>
