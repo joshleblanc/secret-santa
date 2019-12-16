@@ -1,5 +1,5 @@
 import React from 'react';
-import BrowserRouter from 'react-router-dom/BrowserRouter';
+import { BrowserRouter } from 'react-router-dom';
 import MomentUtils from "@date-io/moment";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import MuiPickersUtilsProvider from "@material-ui/pickers/MuiPickersUtilsProvider";
