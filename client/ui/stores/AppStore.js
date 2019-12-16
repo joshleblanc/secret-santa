@@ -33,6 +33,10 @@ class AppStore {
     this.drawerOpen = false;
   };
 
+  openDrawer = () => {
+    this.drawerOpen = true;
+  };
+
   toggleDrawer = () => {
     this.drawerOpen = !this.drawerOpen;
   };

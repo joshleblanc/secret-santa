@@ -6,6 +6,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {autorun} from 'meteor/cereal:reactive-render';
 import DrawerItems from "./DrawerItems";
 import {AppStoreContext} from "../../stores/AppStore";
+import {SwipeableDrawer} from "@material-ui/core";
 
 const styles = theme => ({
   appBar: {
@@ -31,16 +32,17 @@ export default class extends React.Component {
 
   render() {
     const {container, classes, theme} = this.props;
-    const { drawerOpen, closeDrawer  } = this.context;
+    const { drawerOpen, closeDrawer, openDrawer  } = this.context;
     return (
       <nav>
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
-          <Drawer
+          <SwipeableDrawer
             container={container}
             variant="temporary"
             anchor={theme.direction === 'rtl' ? 'right' : 'left'}
             open={drawerOpen}
+            onOpen={openDrawer}
             onClose={closeDrawer}
             classes={{
               paper: classes.drawerPaper,
@@ -50,7 +52,7 @@ export default class extends React.Component {
             }}
           >
             <DrawerItems />
-          </Drawer>
+          </SwipeableDrawer>
         </Hidden>
       </nav>
     )
