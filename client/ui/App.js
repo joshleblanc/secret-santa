@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import MomentUtils from "@date-io/moment";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
-import MuiPickersUtilsProvider from "@material-ui/pickers/MuiPickersUtilsProvider";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import SnackbarProvider from "notistack/build/SnackbarProvider";
 import Layout from "./Layout";

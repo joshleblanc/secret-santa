@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import {Select, TextField} from "formik-material-ui";
 import {Field, Form, Formik} from "formik";
 import Button from "@material-ui/core/Button";
-import {DatePicker} from "@material-ui/pickers";
+import { DatePicker } from "@material-ui/pickers";
 import {insertSchema} from '/imports/api/groups';
 import moment from "moment";
 import {withSnackbar} from 'notistack';
@@ -24,6 +24,7 @@ export default class extends React.Component {
     if (!user) {
       return null;
     }
+    console.log(user);
     return (
       <Container>
         <PaddedPaper>

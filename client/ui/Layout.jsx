@@ -6,6 +6,7 @@ import Routes from "./Routes";
 import Footer from "./components/Footer";
 import Container from "@material-ui/core/Container";
 import { autorun } from 'meteor/cereal:reactive-render';
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const styles = theme => ({
   root: {
@@ -27,7 +28,10 @@ const styles = theme => ({
 export default class extends React.Component {
   render() {
     const { classes } = this.props;
-    Meteor.subscribe('currentUser', Meteor.userId());
+    const subscription = Meteor.subscribe('currentUser', Meteor.userId());
+    if(!subscription.ready()) {
+      return <LinearProgress />
+    }
     return(
       <Container maxWidth={"md"}>
         <Navbar />
