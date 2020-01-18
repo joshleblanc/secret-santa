@@ -131,7 +131,7 @@ if(Meteor.isServer) {
         Meteor.users.update({ _id: Meteor.userId() }, {
           $set: {
             "shipping.address": address,
-            shirtSize: shirtSize
+            shirtSize
           }
         });
       } catch(e) {
