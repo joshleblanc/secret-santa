@@ -60,6 +60,8 @@ mongo-dev-server@1.1.0
 mongo-id@1.0.7
 mongo-livedata@1.0.12
 montiapm:agent@2.38.0
+montiapm:agent-binary-deps@2.0.0
+montiapm:profiler@1.5.0
 npm-mongo@3.3.0
 oauth@1.2.8
 oauth2@1.2.1
