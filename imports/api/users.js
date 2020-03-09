@@ -8,9 +8,39 @@ export const profileSchema = yup.object().shape({
   shirtSize: yup.string().required().oneOf(Object.keys(shirtSizes))
 });
 
+export const addWeightSchema = yup.object().shape({
+  weight: yup.number().required()
+});
+
 export function avatarUrl(user) {
   return user.avatarUrl;
 }
+
+Meteor.methods({
+  'user.addWeight'(weight, measurement) {
+    const user = Meteor.user();
+    if(!user) {
+      throw new Meteor.Error("Not authorized");
+    }
+    try {
+      addWeightSchema.validateSync({ weight, measurement });
+      if(measurement === "kg") {
+        weight = weight * 2.205;
+      }
+      return Meteor.users.update({ _id: user._id }, {
+        $push: {
+          weights: {
+            weight,
+            addedAt: new Date()
+          }
+        }
+      });
+    } catch(e) {
+      console.error(e);
+      throw new Meteor.Error("Invalid Document");
+    }
+  }
+});
 
 export function sendMessageReminders() {
   const users = Meteor.users.find({
@@ -92,7 +122,13 @@ export async function sync(user) {
   }, updateParams);
 }
 
+
 if(Meteor.isServer) {
+  Meteor.publish('users.weight', () => {
+    return Meteor.users.find({}, { fields: { weights: 1 }})
+  });
+
+
   Meteor.publish('currentUser', function (id) {
     return Meteor.users.find({
       _id: id
