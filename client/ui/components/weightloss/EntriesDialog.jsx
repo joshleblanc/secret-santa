@@ -7,6 +7,8 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
 
 @autorun
 export default class EntriesDialog extends React.Component {
@@ -36,8 +38,10 @@ export default class EntriesDialog extends React.Component {
                             </ListItem>
                         ))
                     }
-
                 </MenuList>
+                <DialogActions>
+                    <Button onClick={onClose}>Close</Button>
+                </DialogActions>
             </Dialog>
         )
     }
