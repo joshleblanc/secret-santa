@@ -39,6 +39,19 @@ Meteor.methods({
       console.error(e);
       throw new Meteor.Error("Invalid Document");
     }
+  },
+  'user.deleteWeight'(weight, addedAt) {
+    const user = Meteor.user();
+    if(!user) {
+      throw new Meteor.Error("Not Authorized");
+    }
+    return Meteor.users.update({ _id: user._id }, {
+      $pull: {
+        weights: {
+          weight, addedAt
+        }
+      }
+    })
   }
 });
 
@@ -127,7 +140,6 @@ if(Meteor.isServer) {
   Meteor.publish('users.weight', () => {
     return Meteor.users.find({}, { fields: { weights: 1 }})
   });
-
 
   Meteor.publish('currentUser', function (id) {
     return Meteor.users.find({

@@ -9,6 +9,8 @@ import { autorun } from 'meteor/cereal:reactive-render';
 import MenuItem from "@material-ui/core/MenuItem";
 import {addWeightSchema} from "../../../../imports/api/users";
 import {withSnackbar} from "notistack";
+import {Modal} from "@material-ui/core";
+import EntriesDialog from "./EntriesDialog";
 
 const initialValues = {
     weight: "",
@@ -32,6 +34,10 @@ const styles = theme => ({
 @withSnackbar
 @autorun
 export default class EnterWeight extends React.Component {
+    state = {
+        entriesDialogOpen: false
+    };
+
     handleSubmit = (values, { setSubmitting }) => {
         const { enqueueSnackbar } = this.props;
         setSubmitting(true);
@@ -45,10 +51,19 @@ export default class EnterWeight extends React.Component {
         });
     };
 
+    openEntriesDialog = () => {
+        this.setState({ entriesDialogOpen: true });
+    };
+
+    closeEntriesDialog = () => {
+        this.setState({ entriesDialogOpen: false });
+    };
+
     render() {
         const { classes } = this.props;
         return(
             <PaddedPaper>
+                <EntriesDialog open={this.state.entriesDialogOpen} onClose={this.closeEntriesDialog}/>
                 <Formik initialValues={initialValues} validationSchema={addWeightSchema} onSubmit={this.handleSubmit}>
                     <Form className={classes.container}>
                         <Field
@@ -68,6 +83,7 @@ export default class EnterWeight extends React.Component {
                             <MenuItem value={"lbs"}>Pounds</MenuItem>
                         </Field>
                         <Button className={classes.button} type={"submit"} color="primary" variant={"contained"}>Submit</Button>
+                        <Button className={classes.button} color="secondary" variant={"contained"} onClick={this.openEntriesDialog}>Manage Entries</Button>
                     </Form>
                 </Formik>
             </PaddedPaper>
