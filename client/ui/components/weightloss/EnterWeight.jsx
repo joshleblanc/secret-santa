@@ -19,6 +19,10 @@ const styles = theme => ({
     container: {
         display: 'flex'
     },
+    button: {
+      margin: theme.spacing(1),
+      alignSelf: "flex-end"
+    },
     input: {
         margin: theme.spacing(1)
     }
@@ -63,7 +67,7 @@ export default class EnterWeight extends React.Component {
                             <MenuItem value={"kg"}>Kilograms</MenuItem>
                             <MenuItem value={"lbs"}>Pounds</MenuItem>
                         </Field>
-                        <Button type={"submit"}>Submit</Button>
+                        <Button className={classes.button} type={"submit"} color="primary" variant={"contained"}>Submit</Button>
                     </Form>
                 </Formik>
             </PaddedPaper>
