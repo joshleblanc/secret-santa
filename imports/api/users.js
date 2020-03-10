@@ -18,7 +18,7 @@ export function avatarUrl(user) {
 }
 
 Meteor.methods({
-  'user.addWeight'(weight, measurement) {
+  'user.addWeight'(groupId, weight, measurement) {
     const user = Meteor.user();
     if(!user) {
       throw new Meteor.Error("Not authorized");
@@ -28,6 +28,14 @@ Meteor.methods({
       if(measurement === "kg") {
         weight = weight * 2.205;
       }
+      if(!WeightGroups.findOne(new Mongo.ObjectID(groupId)).userIds.includes(user._id)) {
+        WeightGroups.update({_id: new Mongo.ObjectID(groupId) },{
+          $push: {
+            userIds: user._id
+          }
+        });
+      }
+
       return Meteor.users.update({ _id: user._id }, {
         $push: {
           weights: {
