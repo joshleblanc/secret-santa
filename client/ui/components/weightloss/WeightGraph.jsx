@@ -27,7 +27,7 @@ export default class WeightGraph extends React.Component {
                 name: u.discordUsername,
                 data: u.weights ? u.weights.map(w => ({ x: w.addedAt, y: w.weight })) : []
             });
-        });
+        }).filter(s => s.data.length > 0);
         const options = {
             yaxis: {
                 labels: {
@@ -40,6 +40,9 @@ export default class WeightGraph extends React.Component {
             theme: {
                 mode: theme.palette.type,
                 palette: "palette3"
+            },
+            tooltip: {
+                shared: false
             }
         };
 
