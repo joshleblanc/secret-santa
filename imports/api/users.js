@@ -25,6 +25,8 @@ Meteor.methods({
     }
     try {
       addWeightSchema.validateSync({ weight, measurement });
+
+      // convert to lbs
       if(measurement === "kg") {
         weight = weight * 2.205;
       }
