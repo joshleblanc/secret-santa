@@ -28,6 +28,7 @@ export default class WeightGraph extends React.Component {
                 data: u.weights ? u.weights.map(w => ({ x: w.addedAt, y: w.weight })) : []
             });
         }).filter(s => s.data.length > 0);
+        console.log(series)
         const options = {
             yaxis: {
                 labels: {
