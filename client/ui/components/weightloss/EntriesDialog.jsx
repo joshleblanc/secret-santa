@@ -17,7 +17,7 @@ export default class EntriesDialog extends React.Component {
         const ready = Meteor.subscribe('currentUser.weights').ready();
         const user = Meteor.user();
         if(!ready || !user) return null;
-        const weights = user.weights.sort((a,b) => b.addedAt - a.addedAt);
+        const weights = user.weights ? user.weights.sort((a,b) => b.addedAt - a.addedAt) : [];
         return(
             <Dialog open={open} fullWidth maxWidth={"sm"} onClose={onClose}>
                 <DialogTitle>Weight Entries</DialogTitle>
