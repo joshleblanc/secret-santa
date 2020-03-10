@@ -146,7 +146,7 @@ if(Meteor.isServer) {
       _id: {
         $in: group.userIds
       }
-    }, { fields: { weights: 1 }})
+    }, { fields: { discordUsername: 1, weights: 1 }})
   });
 
   Meteor.publish('currentUser.weights', function() {
