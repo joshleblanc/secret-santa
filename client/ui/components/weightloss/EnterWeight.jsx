@@ -97,6 +97,7 @@ export default class EnterWeight extends React.Component {
                         >
                             <MenuItem value={"kg"}>Kilograms</MenuItem>
                             <MenuItem value={"lbs"}>Pounds</MenuItem>
+                            <MenuItem value={'stone'}>Stones</MenuItem>
                         </Field>
                         <Button className={classes.button} type={"submit"} color="primary" variant={"contained"}>Submit</Button>
                         <Button className={classes.button} color="secondary" variant={"contained"} onClick={this.openEntriesDialog}>Manage Entries</Button>
