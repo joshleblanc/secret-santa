@@ -8,7 +8,9 @@ import {Route, Switch} from "react-router-dom";
 import Messages from "./pages/Messages";
 import Message from './pages/Message';
 import { autorun } from 'meteor/cereal:reactive-render';
-import WeightLoss from "./pages/WeightLoss";
+import WeightGroupList from "./pages/WeightGroupList";
+import WeightGroup from "./pages/WeightGroup";
+import AddWeightGroup from "./pages/AddWeightGroup";
 
 @autorun
 export default class extends React.Component {
@@ -24,7 +26,9 @@ export default class extends React.Component {
           <Route exact path="/groups/:id" component={Group} />
           <Route exact path="/messages" component={Messages} />
           <Route exact path="/messages/:id" component={Message} />
-          <Route exact path="/weightloss" component={WeightLoss} />
+          <Route exact path="/weight_groups" component={WeightGroupList} />
+          <Route exact path="/weight_groups/add" component={AddWeightGroup} />
+          <Route exact path="/weight_groups/:id" component={WeightGroup} />
         </Switch>
       )
     } else {

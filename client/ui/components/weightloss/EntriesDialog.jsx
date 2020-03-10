@@ -14,7 +14,7 @@ import Button from "@material-ui/core/Button";
 export default class EntriesDialog extends React.Component {
     render() {
         const { open, onClose } = this.props;
-        const ready = Meteor.subscribe('users.weight').ready();
+        const ready = Meteor.subscribe('currentUser.weights').ready();
         const user = Meteor.user();
         if(!ready || !user) return null;
         const weights = user.weights.sort((a,b) => b.addedAt - a.addedAt);

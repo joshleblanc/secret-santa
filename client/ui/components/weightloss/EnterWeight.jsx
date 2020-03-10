@@ -45,7 +45,7 @@ export default class EnterWeight extends React.Component {
            if(err) {
                enqueueSnackbar("Something went wrong D:", {variant: "error"});
            } else {
-               enqueueSnackbar("Weight added!", {variant: "success"});
+               enqueueSnackbar("WeightGroup added!", {variant: "success"});
            }
            setSubmitting(false);
         });

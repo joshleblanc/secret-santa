@@ -20,8 +20,8 @@ export const authenticatedRoutes = [
     Icon: SantaIcon
   },
   {
-    name: "Weight Loss",
-    href: "/weightloss",
+    name: "WeightGroup Loss",
+    href: "/weight_groups",
     Icon: PeopleIcon
   },
   {

@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 import {Meteor} from "meteor/meteor";
 import {shirtSizes} from "../lib/constants";
+import { WeightGroups } from './weight_groups';
 import moment from "moment";
 
 export const profileSchema = yup.object().shape({
@@ -137,8 +138,24 @@ export async function sync(user) {
 
 
 if(Meteor.isServer) {
-  Meteor.publish('users.weight', () => {
-    return Meteor.users.find({}, { fields: { weights: 1 }})
+  Meteor.publish('users.weight', groupId => {
+    console.log(new Mongo.ObjectID(groupId));
+    const group = WeightGroups.findOne(new Mongo.ObjectID(groupId));
+    return Meteor.users.find({
+      _id: {
+        $in: group.userIds
+      }
+    }, { fields: { weights: 1 }})
+  });
+
+  Meteor.publish('currentUser.weights', function() {
+    return Meteor.users.find({
+      _id: this.userId
+    }, {
+      fields: {
+        weights: 1
+      }
+    })
   });
 
   Meteor.publish('currentUser', function (id) {

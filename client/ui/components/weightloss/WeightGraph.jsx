@@ -8,8 +8,8 @@ import { autorun } from 'meteor/cereal:reactive-render';
 @autorun
 export default class WeightGraph extends React.Component {
     render() {
-        const { theme } = this.props;
-        const ready = Meteor.subscribe('users.weight').ready();
+        const { theme, groupId } = this.props;
+        const ready = Meteor.subscribe('users.weight', groupId).ready();
         if(!ready) {
             return <LinearProgress />
         }

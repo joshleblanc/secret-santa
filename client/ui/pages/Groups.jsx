@@ -1,29 +1,19 @@
 import React from 'react';
 import {autorun} from 'meteor/cereal:reactive-render';
-import Grid from "@material-ui/core/Grid";
 import PaddedPaper from "../components/PaddedPaper";
 import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
-import Grow from "../components/Grow";
-import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
 import MuiLink from '@material-ui/core/Link';
 import {Groups} from '/imports/api/groups';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
-import withStyles from '@material-ui/core/styles/withStyles';
 import moment from "moment";
+import Header from "../components/Header";
 
-const styles = theme => ({
-  header: {
-    display: 'flex'
-  }
-});
-
-@withStyles(styles)
 @autorun
 export default class extends React.Component {
   render() {
@@ -50,19 +40,7 @@ export default class extends React.Component {
     }).fetch();
     return (
       <PaddedPaper>
-        <div className={classes.header}>
-          <Typography variant={"h4"}>Secret Santas</Typography>
-          <Grow/>
-          <Button
-            size="small"
-            component={Link}
-            variant="contained"
-            to="/groups/add"
-            color={"secondary"}
-          >
-            Create Secret Santa
-          </Button>
-        </div>
+        <Header title={"Secret Santas"} to={"/groups/add"} linkLabel={"Create Secret Santa"} />
         {
           groups.length === 0
             ? <Typography>You haven't signed up for any secret santas!</Typography>
