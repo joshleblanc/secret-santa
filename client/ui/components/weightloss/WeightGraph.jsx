@@ -3,6 +3,7 @@ import Chart from 'react-apexcharts';
 import PaddedPaper from "../PaddedPaper";
 import {LinearProgress, withTheme} from "@material-ui/core";
 import { autorun } from 'meteor/cereal:reactive-render';
+import { WeightGroups} from "../../../../imports/api/weight_groups";
 
 @withTheme
 @autorun
@@ -10,10 +11,17 @@ export default class WeightGraph extends React.Component {
     render() {
         const { theme, groupId } = this.props;
         const ready = Meteor.subscribe('users.weight', groupId).ready();
-        if(!ready) {
+        const groupReady = Meteor.subscribe('weight_group', groupId).ready();
+        if(!ready || !groupReady) {
             return <LinearProgress />
         }
-        const users = Meteor.users.find({});
+        const group = WeightGroups.findOne(new Mongo.ObjectID(groupId));
+        console.log(group);
+        const users = Meteor.users.find({
+            _id: {
+                $in: group.userIds
+            }
+        });
         const series = users.map(u => {
             return({
                 name: u.discordUsername,

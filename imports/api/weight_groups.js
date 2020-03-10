@@ -38,10 +38,53 @@ Meteor.methods({
             throw new Meteor.Error("Not Authorized");
         }
         return WeightGroups.remove({ _id: id });
+    },
+    "weight_groups.join"(groupId) {
+        const id = new Mongo.ObjectID(groupId);
+        const user = Meteor.user();
+        if(!user) {
+            throw new Meteor.Error("Not Authorized");
+        }
+        const group = WeightGroups.findOne(id);
+        if(!group) {
+            throw new Meteor.Error("No group found");
+        }
+        if(group.userIds.includes(user._id)) {
+            throw new Meteor.Error("Already a member");
+        } else {
+            return WeightGroups.update({ _id: id }, {
+                $push: {
+                    userIds: user._id
+                }
+            })
+        }
+    },
+    "weight_groups.leave"(groupId) {
+        const id = new Mongo.ObjectID(groupId);
+        const user = Meteor.user();
+        if(!user) {
+            throw new Meteor.Error("Not Authorized");
+        }
+        const group = WeightGroups.findOne(id);
+        if(!group) {
+            throw new Meteor.Error("No group found");
+        }
+        if(group.userIds.includes(user._id)) {
+            return WeightGroups.update({ _id: id }, {
+                $pull: {
+                    userIds: user._id
+                }
+            });
+        } else {
+            throw new Meteor.Error("Not a member");
+        }
     }
 });
 
 if(Meteor.isServer) {
+    Meteor.publish("weight_group", function(groupId) {
+        return WeightGroups.find({ _id: new Mongo.ObjectID(groupId) });
+    });
     Meteor.publish("weight_groups", function() {
         return WeightGroups.find({
             userIds: {

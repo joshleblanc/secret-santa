@@ -9,8 +9,9 @@ import { autorun } from 'meteor/cereal:reactive-render';
 import MenuItem from "@material-ui/core/MenuItem";
 import {addWeightSchema} from "../../../../imports/api/users";
 import {withSnackbar} from "notistack";
-import {Modal} from "@material-ui/core";
+import {LinearProgress, Modal} from "@material-ui/core";
 import EntriesDialog from "./EntriesDialog";
+import {WeightGroups} from "../../../../imports/api/weight_groups";
 
 const initialValues = {
     weight: "",
@@ -59,8 +60,23 @@ export default class EnterWeight extends React.Component {
         this.setState({ entriesDialogOpen: false });
     };
 
+    join = () => {
+        Meteor.call("weight_groups.join", this.props.groupId);
+    };
+
+    leave = () => {
+        Meteor.call("weight_groups.leave", this.props.groupId);
+    };
+
     render() {
-        const { classes } = this.props;
+        const { classes, groupId } = this.props;
+        const ready = Meteor.subscribe('weight_group', groupId).ready();
+        if(!ready) {
+            return <LinearProgress />
+        }
+        const group = WeightGroups.findOne(new Mongo.ObjectID(groupId));
+        const isMember = group.userIds.includes(Meteor.userId());
+
         return(
             <PaddedPaper>
                 <EntriesDialog open={this.state.entriesDialogOpen} onClose={this.closeEntriesDialog}/>
@@ -84,6 +100,11 @@ export default class EnterWeight extends React.Component {
                         </Field>
                         <Button className={classes.button} type={"submit"} color="primary" variant={"contained"}>Submit</Button>
                         <Button className={classes.button} color="secondary" variant={"contained"} onClick={this.openEntriesDialog}>Manage Entries</Button>
+                        {
+                            isMember
+                                ? <Button className={classes.button} color="secondary" variant={"contained"} onClick={this.leave}>Leave</Button>
+                                : <Button className={classes.button} color="secondary" variant={"contained"} onClick={this.join}>Join</Button>
+                        }
                     </Form>
                 </Formik>
             </PaddedPaper>

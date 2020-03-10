@@ -34,7 +34,7 @@ export default class WeightGroupList extends React.Component {
 
         return (
             <PaddedPaper>
-                <Header title={"WeightGroup Loss Groups"} to={'/weight_groups/add'} linkLabel={"Create WeightGroup Loss Group"} />
+                <Header title={"Weight Loss Groups"} to={'/weight_groups/add'} linkLabel={"Create WeightGroup Loss Group"} />
                 {
                     weightGroups.length === 0
                         ? <Typography>You don't have any groups!</Typography>
