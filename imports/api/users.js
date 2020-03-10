@@ -158,7 +158,8 @@ if(Meteor.isServer) {
     })
   });
 
-  Meteor.publish('currentUser', function (id) {
+  Meteor.publish('currentUser', function () {
+    const id = this.userId;
     return Meteor.users.find({
       _id: id
     }, {

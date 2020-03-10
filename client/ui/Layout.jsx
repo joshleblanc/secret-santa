@@ -28,7 +28,7 @@ const styles = theme => ({
 export default class extends React.Component {
   render() {
     const { classes } = this.props;
-    const subscription = Meteor.subscribe('currentUser', Meteor.userId());
+    const subscription = Meteor.subscribe('currentUser');
     if(!subscription.ready()) {
       return <LinearProgress />
     }
