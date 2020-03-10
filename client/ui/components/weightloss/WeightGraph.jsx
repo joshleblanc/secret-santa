@@ -40,6 +40,9 @@ export default class WeightGraph extends React.Component {
             theme: {
                 mode: theme.palette.type,
                 palette: "palette3"
+            },
+            tooltip: {
+                shared: false
             }
         };
 
