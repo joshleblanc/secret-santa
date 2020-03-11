@@ -25,8 +25,12 @@ Meteor.methods({
     }
     try {
       addWeightSchema.validateSync({ weight, measurement });
+
+      // convert to lbs
       if(measurement === "kg") {
         weight = weight * 2.205;
+      } else if(measurement === 'stone') {
+        weight = weight * 14;
       }
 
       return Meteor.users.update({ _id: user._id }, {

@@ -31,7 +31,11 @@ export default class WeightGraph extends React.Component {
         const options = {
             yaxis: {
                 labels: {
-                    formatter: value => `${value}lbs`
+                    formatter: value => {
+                        if(value) {
+                            return `${value.toFixed(2)}lbs`;
+                        }
+                    }
                 }
             },
             xaxis: {

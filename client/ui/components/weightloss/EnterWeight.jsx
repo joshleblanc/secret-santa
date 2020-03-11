@@ -99,6 +99,8 @@ export default class EnterWeight extends React.Component {
                 >
                   <MenuItem value={"kg"}>Kilograms</MenuItem>
                   <MenuItem value={"lbs"}>Pounds</MenuItem>
+                  <MenuItem value={'stone'}>Stones</MenuItem>
+
                 </Field>
               </Grid>
               <Grid item xs={12} sm={3}>
