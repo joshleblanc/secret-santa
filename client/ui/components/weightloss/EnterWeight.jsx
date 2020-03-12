@@ -38,9 +38,9 @@ export default class EnterWeight extends React.Component {
     };
 
     handleSubmit = (values, {setSubmitting}) => {
-        const {enqueueSnackbar, groupId} = this.props;
+        const {enqueueSnackbar, group} = this.props;
         setSubmitting(true);
-        Meteor.call('user.addWeight', groupId, values.weight, values.measurement, err => {
+        Meteor.call('user.addWeight', group._id, values.weight, values.measurement, err => {
             if (err) {
                 enqueueSnackbar("Something went wrong D:", {variant: "error"});
             } else {
@@ -67,12 +67,7 @@ export default class EnterWeight extends React.Component {
     };
 
     render() {
-        const { groupId } = this.props;
-        const ready = Meteor.subscribe('weight_group', groupId).ready();
-        if (!ready) {
-            return <LinearProgress/>
-        }
-        const group = WeightGroups.findOne(new Mongo.ObjectID(groupId));
+        const { group } = this.props;
         const isMember = group.userIds.includes(Meteor.userId());
 
         return (

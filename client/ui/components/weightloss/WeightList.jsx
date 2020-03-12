@@ -11,18 +11,7 @@ import List from "@material-ui/core/List";
 @autorun
 export default class WeightList extends React.Component {
     render() {
-        const { groupId } = this.props;
-        const ready = Meteor.subscribe('users.weight', groupId).ready();
-        const groupReady = Meteor.subscribe('weight_group', groupId).ready();
-        if(!ready || !groupReady) {
-            return <LinearProgress />
-        }
-        const group = WeightGroups.findOne(new Mongo.ObjectID(groupId));
-        const users = Meteor.users.find({
-            _id: {
-                $in: group.userIds
-            }
-        });
+        const { users } = this.props;
         return(
             <PaddedPaper>
                 <Typography variant={"h4"}>Participants</Typography>

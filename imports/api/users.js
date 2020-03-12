@@ -144,7 +144,6 @@ export async function sync(user) {
 
 if(Meteor.isServer) {
   Meteor.publish('users.weight', groupId => {
-    console.log(new Mongo.ObjectID(groupId));
     const group = WeightGroups.findOne(new Mongo.ObjectID(groupId));
     return Meteor.users.find({
       _id: {
