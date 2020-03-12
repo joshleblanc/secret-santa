@@ -86,6 +86,7 @@ export default class EnterWeight extends React.Component {
                   label={"Current weight"}
                   name={"weight"}
                   component={TextField}
+                  margin={"normal"}
                   fullWidth
                 />
               </Grid>
@@ -94,6 +95,7 @@ export default class EnterWeight extends React.Component {
                   label={"Measurement"}
                   name={"measurement"}
                   component={TextField}
+                  margin={"normal"}
                   fullWidth
                   select
                 >
@@ -103,13 +105,12 @@ export default class EnterWeight extends React.Component {
 
                 </Field>
               </Grid>
+            </Grid>
+            <Grid container spacing={1}>
               <Grid item xs={12} sm={3}>
                 <Button fullWidth type={"submit"} color="primary"
                         variant={"contained"}>Submit</Button>
               </Grid>
-            </Grid>
-            <Grid container spacing={1}>
-
               <Grid item xs={12} sm={3}>
                 <Button  color="secondary" variant={"contained"} fullWidth
                         onClick={this.openEntriesDialog}>Manage Entries</Button>
