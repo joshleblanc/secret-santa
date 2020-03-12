@@ -13,6 +13,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableBody from '@material-ui/core/TableBody';
 import moment from "moment";
 import Header from "../components/Header";
+import StyledTable from "../components/StyledTable";
 
 @autorun
 export default class extends React.Component {
@@ -44,7 +45,7 @@ export default class extends React.Component {
         {
           groups.length === 0
             ? <Typography>You haven't signed up for any secret santas!</Typography>
-            : <Table>
+            : <StyledTable>
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
@@ -69,7 +70,7 @@ export default class extends React.Component {
                   })
                 }
               </TableBody>
-            </Table>
+            </StyledTable>
         }
       </PaddedPaper>
 

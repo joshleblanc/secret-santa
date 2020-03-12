@@ -14,6 +14,7 @@ import MuiLink from '@material-ui/core/Link';
 import Header from "../components/Header";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
+import StyledTable from "../components/StyledTable";
 
 @autorun
 export default class WeightGroupList extends React.Component {
@@ -30,7 +31,6 @@ export default class WeightGroupList extends React.Component {
                 }
             }
         }).fetch();
-        console.log(WeightGroups.find({}).fetch());
 
         return (
             <PaddedPaper>
@@ -38,7 +38,7 @@ export default class WeightGroupList extends React.Component {
                 {
                     weightGroups.length === 0
                         ? <Typography>You don't have any groups!</Typography>
-                        : <Table>
+                        : <StyledTable>
                         <TableHead>
                             <TableRow>
                                 <TableCell>Name</TableCell>
@@ -76,7 +76,7 @@ export default class WeightGroupList extends React.Component {
                                 })
                             }
                         </TableBody>
-                        </Table>
+                        </StyledTable>
                 }
             </PaddedPaper>
         )
