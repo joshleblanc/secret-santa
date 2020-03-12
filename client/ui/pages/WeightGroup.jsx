@@ -2,6 +2,8 @@ import React from 'react';
 import EnterWeight from "../components/weightloss/EnterWeight";
 import WeightGraph from "../components/weightloss/WeightGraph";
 import Button from "@material-ui/core/Button";
+import {Hidden} from "@material-ui/core";
+import WeightList from "../components/weightloss/WeightList";
 
 export default class WeightGroup extends React.Component {
     render() {
@@ -10,7 +12,10 @@ export default class WeightGroup extends React.Component {
         return(
             <>
                 <EnterWeight groupId={id} />
-                <WeightGraph groupId={id} />
+                <Hidden xsDown>
+                    <WeightGraph groupId={id} />
+                </Hidden>
+                <WeightList groupId={id} />
             </>
         )
     }
