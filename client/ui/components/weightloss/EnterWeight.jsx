@@ -13,6 +13,7 @@ import {LinearProgress, Modal} from "@material-ui/core";
 import EntriesDialog from "./EntriesDialog";
 import {WeightGroups} from "../../../../imports/api/weight_groups";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
 const initialValues = {
     weight: "",
@@ -72,6 +73,7 @@ export default class EnterWeight extends React.Component {
 
         return (
             <PaddedPaper>
+                <Typography variant={"h4"}>Check-in</Typography>
                 <EntriesDialog open={this.state.entriesDialogOpen} onClose={this.closeEntriesDialog}/>
                 <Formik initialValues={initialValues} validationSchema={addWeightSchema} onSubmit={this.handleSubmit}>
                     <Form>
