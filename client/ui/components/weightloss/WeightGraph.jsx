@@ -16,7 +16,6 @@ export default class WeightGraph extends React.Component {
             return <LinearProgress />
         }
         const group = WeightGroups.findOne(new Mongo.ObjectID(groupId));
-        console.log(group);
         const users = Meteor.users.find({
             _id: {
                 $in: group.userIds
@@ -47,6 +46,9 @@ export default class WeightGraph extends React.Component {
             },
             tooltip: {
                 shared: false
+            },
+            markers: {
+                size: 4
             }
         };
 
