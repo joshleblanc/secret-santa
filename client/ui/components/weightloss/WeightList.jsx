@@ -36,7 +36,7 @@ export default class WeightList extends React.Component {
                                 status = `${weightDiff.toFixed(2)}lbs`;
                             }
                             return(
-                                <ListItem key={u.id}>
+                                <ListItem key={u._id}>
                                     <ListItemText primary={u.discordUsername} />
                                     <ListItemSecondaryAction>
                                         <Typography variant={"h6"}>
