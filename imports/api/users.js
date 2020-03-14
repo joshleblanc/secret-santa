@@ -18,7 +18,7 @@ export function avatarUrl(user) {
 }
 
 Meteor.methods({
-  'user.addWeight'(groupId, weight, measurement) {
+  'user.addWeight'(weight, measurement) {
     const user = Meteor.user();
     if(!user) {
       throw new Meteor.Error("Not authorized");
