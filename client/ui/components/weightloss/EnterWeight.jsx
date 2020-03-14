@@ -60,11 +60,11 @@ export default class EnterWeight extends React.Component {
     };
 
     join = () => {
-        Meteor.call("weight_groups.join", this.props.groupId);
+        Meteor.call("weight_groups.join", this.props.group._id);
     };
 
     leave = () => {
-        Meteor.call("weight_groups.leave", this.props.groupId);
+        Meteor.call("weight_groups.leave", this.props.group._id);
     };
 
     render() {
