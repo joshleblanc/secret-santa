@@ -10,7 +10,7 @@ export const profileSchema = yup.object().shape({
 });
 
 export const addWeightSchema = yup.object().shape({
-  weight: yup.number().required()
+  weight: yup.number().required().typeError("Weight must be a number")
 });
 
 export function avatarUrl(user) {
