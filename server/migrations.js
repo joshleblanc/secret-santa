@@ -158,23 +158,28 @@ Migrations.add({
   up: function() {
     Meteor.users.find({}).fetch().forEach(user => {
       const weights = user.weights;
-      weights.forEach(w => w.weight = parseFloat(w.weight));
-      Meteor.users.update({ _id: user._id }, {
-        $set: {
-          weights
-        }
-      })
+      if(weights) {
+        weights.forEach(w => w.weight = parseFloat(w.weight));
+        Meteor.users.update({ _id: user._id }, {
+          $set: {
+            weights
+          }
+        })
+      }
     })
   },
   down: function() {
     Meteor.users.find({}).fetch().forEach(user => {
       const weights = user.weights;
-      weights.forEach(w => `${w.weight}`);
-      Meteor.users.update({ _id: user._id }, {
-        $set: {
-          weights
-        }
-      })
+      if(weights) {
+        weights.forEach(w => `${w.weight}`);
+        Meteor.users.update({ _id: user._id }, {
+          $set: {
+            weights
+          }
+        })
+      }
+
     })
   }
 })
