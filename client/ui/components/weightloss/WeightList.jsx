@@ -20,13 +20,16 @@ export default class WeightList extends React.Component {
                         users.map(u => {
                             const weights = u.weights ? u.weights : [];
                             let status = "No Data";
+                            let firstWeight = "No Data";
                             if(weights.length > 0) {
-                                const weightDiff = weights[weights.length - 1].weight - weights[0].weight
+                                firstWeight = weights[weights.length - 1].weight;
+                                const weightDiff = firstWeight - weights[0].weight;
                                 status = `${weightDiff.toFixed(2)}lbs`;
+                                firstWeight = `${firstWeight.toFixed(2)}lbs`;
                             }
                             return(
                                 <ListItem key={u._id}>
-                                    <ListItemText primary={u.discordUsername} />
+                                    <ListItemText primary={u.discordUsername} secondary={firstWeight}/>
                                     <ListItemSecondaryAction>
                                         <Typography variant={"h6"}>
                                             {status}
