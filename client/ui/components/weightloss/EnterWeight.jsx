@@ -41,7 +41,7 @@ export default class EnterWeight extends React.Component {
     handleSubmit = (values, {setSubmitting}) => {
         const {enqueueSnackbar} = this.props;
         setSubmitting(true);
-        Meteor.call('user.addWeight', values.weight, values.measurement, err => {
+        Meteor.call('user.addWeight', parseFloat(values.weight), values.measurement, err => {
             if (err) {
                 enqueueSnackbar("Something went wrong D:", {variant: "error"});
             } else {
