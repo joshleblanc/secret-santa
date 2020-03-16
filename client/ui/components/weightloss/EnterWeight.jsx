@@ -76,52 +76,54 @@ export default class EnterWeight extends React.Component {
                 <Typography variant={"h4"}>Check-in</Typography>
                 <EntriesDialog open={this.state.entriesDialogOpen} onClose={this.closeEntriesDialog}/>
                 <Formik initialValues={initialValues} validationSchema={addWeightSchema} onSubmit={this.handleSubmit}>
-                    <Form>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={3}>
-                                <Field
-                                    label={"Current weight"}
-                                    name={"weight"}
-                                    component={TextField}
-                                    margin={"normal"}
-                                    fullWidth
-                                />
+                    {({ isValid }) => (
+                        <Form>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={3}>
+                                    <Field
+                                        label={"Current weight"}
+                                        name={"weight"}
+                                        component={TextField}
+                                        margin={"normal"}
+                                        fullWidth
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={3}>
+                                    <Field
+                                        label={"Measurement"}
+                                        name={"measurement"}
+                                        component={TextField}
+                                        margin={"normal"}
+                                        fullWidth
+                                        select
+                                    >
+                                        <MenuItem value={"kg"}>Kilograms</MenuItem>
+                                        <MenuItem value={"lbs"}>Pounds</MenuItem>
+                                        <MenuItem value={'stone'}>Stones</MenuItem>
+                                    </Field>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} sm={3}>
-                                <Field
-                                    label={"Measurement"}
-                                    name={"measurement"}
-                                    component={TextField}
-                                    margin={"normal"}
-                                    fullWidth
-                                    select
-                                >
-                                    <MenuItem value={"kg"}>Kilograms</MenuItem>
-                                    <MenuItem value={"lbs"}>Pounds</MenuItem>
-                                    <MenuItem value={'stone'}>Stones</MenuItem>
-                                </Field>
+                            <Grid container spacing={1}>
+                                <Grid item xs={12} sm={3}>
+                                    <Button fullWidth type={"submit"} color="primary" disabled={!isValid}
+                                            variant={"contained"}>Submit</Button>
+                                </Grid>
+                                <Grid item xs={12} sm={3}>
+                                    <Button color="secondary" variant={"contained"} fullWidth
+                                            onClick={this.openEntriesDialog}>Manage Entries</Button>
+                                </Grid>
+                                <Grid item xs={12} sm={3}>
+                                    {
+                                        isMember
+                                            ? <Button fullWidth color="secondary" variant={"contained"}
+                                                      onClick={this.leave}>Leave</Button>
+                                            : <Button fullWidth color="secondary" variant={"contained"}
+                                                      onClick={this.join}>Join</Button>
+                                    }
+                                </Grid>
                             </Grid>
-                        </Grid>
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} sm={3}>
-                                <Button fullWidth type={"submit"} color="primary"
-                                        variant={"contained"}>Submit</Button>
-                            </Grid>
-                            <Grid item xs={12} sm={3}>
-                                <Button color="secondary" variant={"contained"} fullWidth
-                                        onClick={this.openEntriesDialog}>Manage Entries</Button>
-                            </Grid>
-                            <Grid item xs={12} sm={3}>
-                                {
-                                    isMember
-                                        ? <Button fullWidth color="secondary" variant={"contained"}
-                                                  onClick={this.leave}>Leave</Button>
-                                        : <Button fullWidth color="secondary" variant={"contained"}
-                                                  onClick={this.join}>Join</Button>
-                                }
-                            </Grid>
-                        </Grid>
-                    </Form>
+                        </Form>
+                    )}
                 </Formik>
             </PaddedPaper>
         )
