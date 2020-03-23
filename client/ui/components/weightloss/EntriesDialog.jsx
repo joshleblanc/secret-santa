@@ -25,7 +25,7 @@ export default class EntriesDialog extends React.Component {
                     {
                         weights.map((w, i) => (
                             <ListItem key={`${w.weight}${w.addedAt.toLocaleString()}`}>
-                                <ListItemText primary={`${w.weight}lbs`} secondary={w.addedAt.toLocaleString()} />
+                                <ListItemText primary={`${w.weight.toFixed(2)}lbs`} secondary={w.addedAt.toLocaleString()} />
                                 <ListItemSecondaryAction onClick={() => {
                                     if(window.confirm("Are you sure you want to delete this?")) {
                                         Meteor.call('user.deleteWeight', w.weight, w.addedAt)
