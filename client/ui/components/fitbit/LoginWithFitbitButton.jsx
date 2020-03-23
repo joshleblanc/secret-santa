@@ -6,9 +6,10 @@ import { autorun } from 'meteor/cereal:reactive-render';
 @autorun
 export default class LoginWithFitbitButton extends React.Component {
     handleLogin = () => {
-        Meteor.loginWithFitbit({
+        Meteor.linkWithFitbit({
             requestPermissions: ['profile', 'weight']
         }, (err, res) => {
+            console.log(err);
             if(!err) {
                 Meteor.call('users.subscribeToFitbit');
             }
