@@ -18,24 +18,30 @@ JsonRoutes.add('get', "/fitbit/webhook", function (req, res, next) {
 JsonRoutes.add('post', "/fitbit/webhook", function (req, res, next) {
   const json = req.body;
   const lastRecord = json[json.length - 1];
-  console.log(json);
-  console.log(lastRecord);
-  console.log(`https://api.fitbit.com/1/user/${lastRecord.ownerId}/body/date/${lastRecord.date}.json`);
-  HTTP.get(`https://api.fitbit.com/1/user/${lastRecord.ownerId}/body/date/${lastRecord.date}.json`, (err, resp) => {
-    const weights = resp.data.weight;
-    console.log(resp, err);
-    if (weights && weights.length > 0) {
-      const weight = parseFloat(weights[0]);
-      Meteor.users.update({"services.fitbit.id": lastRecord.ownerId}, {
-        $push: {
-          weights: {
-            weight: weight.weight * 2.205,
-            addedAt: new Date(`${weight.date} ${weight.time}`)
+  const user = Meteor.users.findOne({ "services.fitbit.id": lastRecord.ownerId});
+  if(user) {
+    console.log(`https://api.fitbit.com/1/user/${lastRecord.ownerId}/body/date/${lastRecord.date}.json`);
+    HTTP.get(`https://api.fitbit.com/1/user/${lastRecord.ownerId}/body/date/${lastRecord.date}.json`, {
+      headers: {
+        Authorization: `Bearer ${user.services.fitbit.accessToken}`
+      }
+    },(err, resp) => {
+      const weights = resp.data.weight;
+      console.log(resp, err);
+      if (weights && weights.length > 0) {
+        const weight = parseFloat(weights[0]);
+        Meteor.users.update({"services.fitbit.id": lastRecord.ownerId}, {
+          $push: {
+            weights: {
+              weight: weight.weight * 2.205,
+              addedAt: new Date(`${weight.date} ${weight.time}`)
+            }
           }
-        }
-      })
-    }
-  })
+        })
+      }
+    })
+  }
+
   JsonRoutes.sendResult(res, {
     code: 204
   });
