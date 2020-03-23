@@ -16,8 +16,7 @@ JsonRoutes.add('get', "/fitbit/webhook", function (req, res, next) {
 });
 
 JsonRoutes.add('post', "/fitbit/webhook", function (req, res, next) {
-  console.log(req.body);
-  const json = JSON.parse(req.body);
+  const json = req.body;
   const lastRecord = json[json.length - 1];
   HTTP.get(`https://api.fitbit.com/1/user/${lastRecord.ownerId}/body/date/${lastRecord.date}.json`, (err, resp) => {
     const weights = resp.data.weight;
