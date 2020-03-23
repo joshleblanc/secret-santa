@@ -147,7 +147,7 @@ if(Meteor.isServer) {
     'users.subscribeToFitbit'() {
       const user = Meteor.user();
       if(!user || !user.services.fitbit) return;
-      HTTP.post("https://api.fitbit.com/1/user/-/body/apiSubscriptions/default.json", {
+      HTTP.post("https://api.fitbit.com/1/user/-/body/apiSubscriptions/1.json", {
         headers: {
           Authorization: `Bearer ${user.services.fitbit.accessToken}`
         }
