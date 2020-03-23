@@ -143,6 +143,18 @@ export async function sync(user) {
 
 
 if(Meteor.isServer) {
+  Meteor.methods({
+    'users.subscribeToFitbit'() {
+      const user = Meteor.user();
+      if(!user || !user.services.fitbit) return;
+      HTTP.post("https://api.fitbit.com/1/user/-/body/apiSubscriptions/default.json", {
+        headers: {
+          Authorization: `Bearer ${user.services.fitbit.accessToken}`
+        }
+      });
+    },
+  });
+
   Meteor.publish('users.weight', groupId => {
     const group = WeightGroups.findOne(new Mongo.ObjectID(groupId));
     return Meteor.users.find({
@@ -175,7 +187,8 @@ if(Meteor.isServer) {
         "guilds": 1,
         avatarUrl: 1,
         theme: 1,
-        unreadMessages: 1
+        unreadMessages: 1,
+        services: 1
       }
     });
   });
@@ -189,6 +202,17 @@ if(Meteor.isServer) {
       }, {
         $set: {
           theme
+        }
+      });
+    },
+    'users.disconnectFitbit'() {
+      const user = Meteor.user();
+      if(!user) return;
+      Meteor.users.update({
+        _id: user._id
+      }, {
+        $unset: {
+          "services.fitbit": ""
         }
       });
     },
