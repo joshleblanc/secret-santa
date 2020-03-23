@@ -5,9 +5,13 @@ JsonRoutes.add('get', "/fitbit/webhook", function (req, res, next) {
   const code = Meteor.settings.fitbit.verificationCode;
   const verify = req.query.verify;
   if (code === verify) {
-    res.status(204);
+    JsonRoutes.sendResult(res, {
+      code: 204
+    });
   } else {
-    res.status(404);
+    JsonRoutes.sendResult(res, {
+      code: 404
+    });
   }
 });
 
@@ -28,7 +32,9 @@ JsonRoutes.add('post', "/fitbit/webhook", function (req, res, next) {
       })
     }
   })
-  res.status(204);
+  JsonRoutes.sendResult(res, {
+    code: 204
+  });
 });
 
 JsonRoutes.add("get", "/api/groups", function (req, res, next) {
