@@ -26,15 +26,13 @@ JsonRoutes.add('post', "/fitbit/webhook", function (req, res, next) {
         Authorization: `Bearer ${user.services.fitbit.accessToken}`
       }
     },(err, resp) => {
-      const weights = resp.data.weight;
-      console.log(resp, err);
-      if (weights && weights.length > 0) {
-        const weight = parseFloat(weights[0]);
+      if(!err) {
+        const body = resp.data.body;
         Meteor.users.update({"services.fitbit.id": lastRecord.ownerId}, {
           $push: {
             weights: {
-              weight: weight.weight * 2.205,
-              addedAt: new Date(`${weight.date} ${weight.time}`)
+              weight: body.weight * 2.205,
+              addedAt: new Date()
             }
           }
         })
