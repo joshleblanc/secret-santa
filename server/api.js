@@ -18,9 +18,34 @@ JsonRoutes.add('get', "/fitbit/webhook", function (req, res, next) {
 JsonRoutes.add('post', "/fitbit/webhook", function (req, res, next) {
   const json = req.body;
   const lastRecord = json[json.length - 1];
-  const user = Meteor.users.findOne({ "services.fitbit.id": lastRecord.ownerId});
+  let user = Meteor.users.findOne({ "services.fitbit.id": lastRecord.ownerId});
   if(user) {
     console.log(`https://api.fitbit.com/1/user/${lastRecord.ownerId}/body/date/${lastRecord.date}.json`);
+    const expiresDate = new Date(user.services.fitbit.expiresIn);
+    if(new Date() > expiresDate) {
+      const auth = Buffer.from(`${Meteor.settings.fitbit.id}:${Meteor.settings.fitbit.secret}`).toString('base64');
+
+      const refreshResponse = HTTP.post("https://api.fitbit.com/oauth2/token", {
+        headers: {
+          Authorization: `Basic ${auth}`,
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        params: {
+          grant_type: "refresh_token",
+          refresh_token: user.services.fitbit.refreshToken
+        }
+      });
+      console.log(refreshResponse.data);
+      Meteor.users.update({
+        _id: user._id
+      }, {
+        "services.fitbit.accessToken": refreshResponse.data.access_token,
+        "services.fitbit.refreshToken": refreshResponse.data.refresh_token,
+        "services.fitbit.expiresIn": refreshResponse.data.expires_in4
+      })
+    }
+
+    user = Meteor.users.findOne({ "services.fitbit.id": lastRecord.ownerId});
     HTTP.get(`https://api.fitbit.com/1/user/${lastRecord.ownerId}/body/date/${lastRecord.date}.json`, {
       headers: {
         Authorization: `Bearer ${user.services.fitbit.accessToken}`
