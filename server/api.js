@@ -39,9 +39,11 @@ JsonRoutes.add('post', "/fitbit/webhook", function (req, res, next) {
       Meteor.users.update({
         _id: user._id
       }, {
-        "services.fitbit.accessToken": refreshResponse.data.access_token,
-        "services.fitbit.refreshToken": refreshResponse.data.refresh_token,
-        "services.fitbit.expiresIn": refreshResponse.data.expires_in4
+        $set: {
+          "services.fitbit.accessToken": refreshResponse.data.access_token,
+          "services.fitbit.refreshToken": refreshResponse.data.refresh_token,
+          "services.fitbit.expiresIn": refreshResponse.data.expires_in
+        }
       })
     }
 
