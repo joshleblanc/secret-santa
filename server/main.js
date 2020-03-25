@@ -6,8 +6,7 @@ import {createMatches} from "../imports/api/groups";
 import './migrations';
 import {sendMessageReminders, sync} from "../imports/api/users";
 import '../imports/api/weight_groups';
-
-console.log(sync);
+import 'meteor/cereal:accounts-fitbit';
 
 ServiceConfiguration.configurations.upsert(
   {service: 'discord'},
@@ -19,6 +18,16 @@ ServiceConfiguration.configurations.upsert(
     }
   }
 );
+
+ServiceConfiguration.configurations.upsert(
+    { service: "fitbit" },
+    {
+      $set: {
+        clientId: Meteor.settings.fitbit.id,
+        secret: Meteor.settings.fitbit.secret
+      }
+    }
+)
 
 // get servers
 Accounts.onLogin(async () => {
