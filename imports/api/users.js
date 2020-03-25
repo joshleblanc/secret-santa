@@ -80,6 +80,7 @@ export function sendMessageReminders() {
 }
 
 export async function sync(user) {
+  let userIn = user;
   const { cdnUrl, uploadImage } = import("../lib/aws/s3");
   // default update params
   const updateParams = {
@@ -123,21 +124,46 @@ export async function sync(user) {
   if (getGuilds) {
     let guildsResponse;
     const api_url = "https://discordapp.com/api";
+    const config = ServiceConfiguration.configurations.findOne({service: 'discord'});
+    if(new Date() > new Date(user.services.discord.expiresIn)) { // access token is expired
+      const refreshTokenResponse = HTTP.post(`${api_url}/oauth2/token`, {
+        params: {
+          client_id: Meteor.settings.discord.id,
+          client_secret: Meteor.settings.discord.secret,
+          grant_type: 'refresh_token',
+          redirect_url: OAuth._redirectUri('discord', config),
+          scope: user.services.discord.scope
+        },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
+      Meteor.users.update({
+        _id: user._id
+      }, {
+        $set: {
+          "services.discord.accessToken": refreshTokenResponse.data.access_token,
+          "services.discord.expiresIn": refreshTokenResponse.data.expires_in,
+        }
+      });
+      userIn = Meteor.users.findOne({ _id: user._id });
+    }
+
     try {
       guildsResponse = HTTP.get(`${api_url}/users/@me/guilds`, {
         headers: {
-          Authorization: `Bearer ${user.services.discord.accessToken}`
+          Authorization: `Bearer ${userIn.services.discord.accessToken}`
         }
       });
       updateParams['$set'].guilds = guildsResponse.data;
     } catch (e) {
       console.log(e);
-      console.error(`${user.discordId} needs to sign in again, can't sync servers`);
+      console.error(`${userIn.discordId} needs to sign in again, can't sync servers`);
     }
   }
 
   Meteor.users.update({
-    _id: user._id
+    _id: userIn._id
   }, updateParams);
 }
 
