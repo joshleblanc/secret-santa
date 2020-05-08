@@ -12,6 +12,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import {shirtSizes} from "../../../imports/lib/constants";
 import withStyles from '@material-ui/core/styles/withStyles';
 import LoginWithFitbitButton from "../components/fitbit/LoginWithFitbitButton";
+import {LinearProgress} from "@material-ui/core";
 
 const styles = theme => ({
   submitButton: {

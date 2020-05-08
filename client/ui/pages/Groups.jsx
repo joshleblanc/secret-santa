@@ -18,7 +18,6 @@ import StyledTable from "../components/StyledTable";
 @autorun
 export default class extends React.Component {
   render() {
-    const {classes} = this.props;
     const user = Meteor.user();
     if (!user) {
       return null;
