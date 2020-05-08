@@ -26,6 +26,8 @@
     "meteor-node-stubs": "^1.0.0",
     "moment": "^2.24.0",
     "notistack": "^0.9.9",
+    "pluralize": "^8.0.0",
+    "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-apexcharts": "^1.3.6",
     "react-dom": "^16.13.0",

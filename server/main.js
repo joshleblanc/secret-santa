@@ -6,6 +6,7 @@ import {createMatches} from "../imports/api/groups";
 import './migrations';
 import {sendMessageReminders, sync} from "../imports/api/users";
 import '../imports/api/weight_groups';
+import '../imports/api/bell_groups';
 import 'meteor/cereal:accounts-fitbit';
 
 ServiceConfiguration.configurations.upsert(

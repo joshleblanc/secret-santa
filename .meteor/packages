@@ -32,3 +32,5 @@ montiapm:profiler
 cereal:accounts-fitbit
 bozhao:link-accounts
 cereal:ui
+react-meteor-data
+typescript
