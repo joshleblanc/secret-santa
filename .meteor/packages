@@ -31,3 +31,4 @@ montiapm:agent
 montiapm:profiler
 cereal:accounts-fitbit
 bozhao:link-accounts
+cereal:ui

@@ -50,14 +50,6 @@ export default class extends React.Component {
                     <Typography variant="h6" noWrap>
                         Secret Santa
                     </Typography>
-                    <Hidden xsDown implementation="css">
-                        {
-                            routes.map(r => (
-                              <NavbarButton key={r.name} to={r.href}>{r.name}</NavbarButton>
-                            ))
-                        }
-                        <AuthenticatedNavbarItems />
-                    </Hidden>
                     <div className={classes.grow} />
                     <AccountButtons />
                     <Hidden implementation="css" xsDown>
