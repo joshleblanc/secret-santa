@@ -4,7 +4,7 @@ import Profile from "./pages/Profile";
 import Groups from "./pages/Groups";
 import AddGroup from "./pages/AddGroup";
 import Group from "./pages/Group";
-import {Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import Messages from "./pages/Messages";
 import Message from './pages/Message';
 import {autorun} from 'meteor/cereal:reactive-render';
@@ -30,6 +30,9 @@ export default class extends React.Component {
           <Route exact path="/weight_groups" component={WeightGroupList}/>
           <Route exact path="/weight_groups/add" component={AddWeightGroup}/>
           <Route exact path="/weight_groups/:id" component={WeightGroup}/>
+          <Route exact path="/login">
+            <Redirect to={"/"} />
+          </Route>
         </Switch>
       )
     } else {
