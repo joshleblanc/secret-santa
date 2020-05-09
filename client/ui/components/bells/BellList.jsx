@@ -26,7 +26,7 @@ const BellList = ({users}) => {
 
   users.forEach(u => {
     let bells = u.bells || [];
-    bells = u.bells.filter(bell => date.isBefore(moment(bell.expiresAt)));
+    bells = bells.filter(bell => date.isBefore(moment(bell.expiresAt)));
     if (bells.length > 0) {
       bells = bells.sort((a, b) => b.addedAt - a.addedAt);
       bellListData.push({
