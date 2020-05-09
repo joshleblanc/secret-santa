@@ -11,7 +11,7 @@ export default class EntriesDialog extends React.Component {
     if(!ready || !user) return null;
     return(
       <BaseEntriesDialog
-        title={"Bell Entries"}
+        title={"Turnip price entries"}
         open={open}
         onClose={onClose}
         array={user.bells}

@@ -7,7 +7,7 @@ export const BellGroupList = () => {
     <BaseGroupList
       subscription={"bell_groups"}
       collection={BellGroups}
-      addLinkLabel={"Create Bell Group"}
+      addLinkLabel={"Create Turnip Group"}
       addUrl={"/bells/groups/add"}
       createGroupUrl={id => `/bells/groups/${id.toHexString()}`}
       deleteMethod={"bell_groups.delete"}

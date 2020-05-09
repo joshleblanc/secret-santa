@@ -26,7 +26,7 @@ export const authenticatedRoutes = [
     Icon: PeopleIcon
   },
   {
-    name: "Bell Groups",
+    name: "Turnip Groups",
     href: "/bells/groups",
     Icon: NotificationsIcon
   },

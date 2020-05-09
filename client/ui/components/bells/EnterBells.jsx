@@ -44,14 +44,14 @@ export const EnterBells = ({ group }) => {
       if(err) {
         enqueueSnackbar("Something went wrong", {variant: "error"});
       } else {
-        enqueueSnackbar("Bell price added!", {variant: "success"});
+        enqueueSnackbar("Turnip price added!", {variant: "success"});
       }
       setSubmitting(false);
     })
   }, []);
   return(
     <PaddedPaper>
-      <Typography variant={"h4"}>Enter Your Current Bell Price</Typography>
+      <Typography variant={"h4"}>Enter Your Current Turnip Price</Typography>
       <BellEntriesDialog open={dialogOpen} onClose={handleDialogClose} />
       <Formik initialValues={initialValues} validationSchema={addBellsSchema} onSubmit={handleSubmit}>
         {({ isValid }) => (
@@ -59,7 +59,7 @@ export const EnterBells = ({ group }) => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={3}>
                 <Field
-                  label={"Current bell price"}
+                  label={"Current turnip price"}
                   name={"price"}
                   component={TextField}
                   margin={"normal"}

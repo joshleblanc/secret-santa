@@ -44,7 +44,7 @@ const BellList = ({users}) => {
   bellListData.sort((a,b) => b.bell.price - a.bell.price)
   return (
     <PaddedPaper>
-      <Typography variant={"h4"}>Current Bell Prices</Typography>
+      <Typography variant={"h4"}>Current Turnip Prices</Typography>
       <List>
         {
           bellListData.map(({user: u, bell: latestBell}) => {
