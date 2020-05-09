@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 import {BellGroupList} from "./pages/BellGroupList";
 import {AddBellGroup} from "./pages/AddBellGroup";
 import {AddWeightGroup} from "./pages/AddWeightGroup";
+import {BellGroup} from "./pages/BellGroup";
 
 @autorun
 export default class extends React.Component {
@@ -34,6 +35,7 @@ export default class extends React.Component {
           <Route exact path="/weight_groups/:id" component={WeightGroup}/>
           <Route exact path={"/bells/groups"} component={BellGroupList} />
           <Route exact path={"/bells/groups/add"} component={AddBellGroup} />
+          <Route exact path={"/bells/groups/:id"} component={BellGroup} />
           <Route exact path="/login">
             <Redirect to={"/"} />
           </Route>

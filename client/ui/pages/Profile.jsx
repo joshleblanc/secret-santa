@@ -12,7 +12,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import {shirtSizes} from "../../../imports/lib/constants";
 import withStyles from '@material-ui/core/styles/withStyles';
 import LoginWithFitbitButton from "../components/fitbit/LoginWithFitbitButton";
-import {LinearProgress} from "@material-ui/core";
 
 const styles = theme => ({
   submitButton: {
@@ -46,12 +45,13 @@ export default class extends React.Component {
           <Formik
             initialValues={{
               address: (user.shipping && user.shipping.address) || "",
-              shirtSize: (user.shirtSize) || "m"
+              shirtSize: (user.shirtSize) || "m",
+              dodoCode: ""
             }}
             validationSchema={profileSchema}
             onSubmit={(values, {setSubmitting}) => {
               setSubmitting(true);
-              Meteor.call('users.updateProfile', values.address, values.shirtSize, (err, res) => {
+              Meteor.call('users.updateProfile', values.address, values.shirtSize, values.dodoCode, (err, res) => {
                 if (err) {
                   console.error(err);
                   enqueueSnackbar("Something went wrong D:", {variant: "error"});
@@ -95,6 +95,17 @@ export default class extends React.Component {
                     ))
                   }
                 </Field>
+                <Field
+                  name="dodoCode"
+                  type="text"
+                  component={TextField}
+                  fullWidth
+                  multiline
+                  margin="normal"
+                  label="Dodo Code"
+                  variant="filled"
+                  helperText={errors.dodoCode && touched.dodoCode ? errors.dodoCode : null}
+                />
                 <Button type="submit" className={classes.submitButton}>Submit</Button>
               </Form>
             )}

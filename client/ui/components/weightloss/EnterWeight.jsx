@@ -1,6 +1,5 @@
 import React from 'react';
 import PaddedPaper from "../PaddedPaper";
-import * as yup from 'yup';
 import {Field, Form, Formik} from "formik";
 import {TextField} from "formik-material-ui";
 import Button from "@material-ui/core/Button";
@@ -9,11 +8,10 @@ import {autorun} from 'meteor/cereal:reactive-render';
 import MenuItem from "@material-ui/core/MenuItem";
 import {addWeightSchema} from "../../../../imports/api/users";
 import {withSnackbar} from "notistack";
-import {LinearProgress, Modal} from "@material-ui/core";
 import EntriesDialog from "./EntriesDialog";
-import {WeightGroups} from "../../../../imports/api/weight_groups";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import {BaseAccessButton} from "../groups/BaseAccessButton";
 
 const initialValues = {
     weight: "",
@@ -59,18 +57,8 @@ export default class EnterWeight extends React.Component {
         this.setState({entriesDialogOpen: false});
     };
 
-    join = () => {
-        Meteor.call("weight_groups.join", this.props.group._id.toHexString());
-    };
-
-    leave = () => {
-        Meteor.call("weight_groups.leave", this.props.group._id.toHexString());
-    };
-
     render() {
         const { group } = this.props;
-        const isMember = group.userIds.includes(Meteor.userId());
-
         return (
             <PaddedPaper>
                 <Typography variant={"h4"}>Check-in</Typography>
@@ -113,13 +101,10 @@ export default class EnterWeight extends React.Component {
                                             onClick={this.openEntriesDialog}>Manage Entries</Button>
                                 </Grid>
                                 <Grid item xs={12} sm={3}>
-                                    {
-                                        isMember
-                                            ? <Button fullWidth color="secondary" variant={"contained"}
-                                                      onClick={this.leave}>Leave</Button>
-                                            : <Button fullWidth color="secondary" variant={"contained"}
-                                                      onClick={this.join}>Join</Button>
-                                    }
+                                    <BaseAccessButton
+                                        group={group}
+                                        collectionName={"weight_groups"}
+                                    />
                                 </Grid>
                             </Grid>
                         </Form>

@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
+import BaseEntriesDialog from "../groups/BaseEntriesDialog";
 
 @autorun
 export default class EntriesDialog extends React.Component {
@@ -17,32 +18,17 @@ export default class EntriesDialog extends React.Component {
         const ready = Meteor.subscribe('currentUser.weights').ready();
         const user = Meteor.user();
         if(!ready || !user) return null;
-        const weights = user.weights ? user.weights.sort((a,b) => b.addedAt - a.addedAt) : [];
         return(
-            <Dialog open={open} fullWidth maxWidth={"sm"} onClose={onClose}>
-                <DialogTitle>Weight Entries</DialogTitle>
-                <MenuList>
-                    {
-                        weights.map((w, i) => (
-                            <ListItem key={`${w.weight}${w.addedAt.toLocaleString()}`}>
-                                <ListItemText primary={`${w.weight.toFixed(2)}lbs`} secondary={w.addedAt.toLocaleString()} />
-                                <ListItemSecondaryAction onClick={() => {
-                                    if(window.confirm("Are you sure you want to delete this?")) {
-                                        Meteor.call('user.deleteWeight', w.weight, w.addedAt)
-                                    }
-                                }}>
-                                    <IconButton edge="end" aria-label="delete">
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                        ))
-                    }
-                </MenuList>
-                <DialogActions>
-                    <Button onClick={onClose}>Close</Button>
-                </DialogActions>
-            </Dialog>
+          <BaseEntriesDialog
+            title={"Weight Entries"}
+            open={open}
+            onClose={onClose}
+            array={user.weights}
+            createPrimaryText={w => `${w.weight.toFixed(2)}lbs`}
+            createSecondaryText={w => w.addedAt.toLocaleString()}
+            createKey={w => `${w.weight}${w.addedAt.toLocaleString()}`}
+            onDelete={w => Meteor.call('user.deleteWeight', w.weight, w.addedAt)}
+          />
         )
     }
 }
