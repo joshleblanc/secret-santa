@@ -4,7 +4,6 @@ import List from "@material-ui/core/List";
 import moment from "moment";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import DodoCode from "./DodoCode";
 import {ListItemSecondaryAction} from "@material-ui/core";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -52,8 +51,7 @@ const BellList = ({users}) => {
             return (
               <ListItem key={u._id} button onClick={() => openHistory(u)}>
                 <ListItemText primary={u.discordUsername} secondary={
-                  <><DodoCode code={u.dodoCode}/> - Expires
-                    in {moment.duration(date.diff(latestBell.expiresAt)).humanize()}</>
+                  <>Expires in {moment.duration(date.diff(latestBell.expiresAt)).humanize()}</>
                 }/>
                 <ListItemSecondaryAction>
                   <Typography component={"span"}>

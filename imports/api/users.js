@@ -8,7 +8,6 @@ import { BellGroups } from '/imports/api/bell_groups';
 export const profileSchema = yup.object().shape({
   address: yup.string().required().max(1000),
   shirtSize: yup.string().required().oneOf(Object.keys(shirtSizes)),
-  dodoCode: yup.string().max(5)
 });
 
 export const addWeightSchema = yup.object().shape({
@@ -241,7 +240,6 @@ if (Meteor.isServer) {
     }, {
       fields: {
         discordUsername: 1,
-        dodoCode: 1,
         bells: 1
       }
     });
@@ -284,7 +282,6 @@ if (Meteor.isServer) {
         theme: 1,
         unreadMessages: 1,
         services: 1,
-        dodoCode: 1
       }
     });
   });
@@ -317,13 +314,11 @@ if (Meteor.isServer) {
         profileSchema.validateSync({
           address: address,
           shirtSize: shirtSize,
-          dodoCode: dodoCode
         });
         Meteor.users.update({_id: Meteor.userId()}, {
           $set: {
             "shipping.address": address,
-            shirtSize,
-            dodoCode
+            shirtSize
           }
         });
       } catch (e) {

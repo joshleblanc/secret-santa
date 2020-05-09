@@ -1,19 +1,10 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
-import {LinearProgress, ListItemSecondaryAction} from "@material-ui/core";
+import {LinearProgress} from "@material-ui/core";
 import {useTracker} from 'meteor/react-meteor-data';
 import {BellGroups} from '/imports/api/bell_groups';
-import PaddedPaper from 'meteor/cereal:ui/components/PaddedPaper';
-import Typography from "@material-ui/core/Typography";
 import {EnterBells} from "../components/bells/EnterBells";
-import List from "@material-ui/core/List";
-import moment from "moment";
-import ListItem from "@material-ui/core/ListItem";
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Grid from "@material-ui/core/Grid";
-import DodoCode from "../components/bells/DodoCode";
 import BellList from "../components/bells/BellList";
 
 export const BellGroup = () => {

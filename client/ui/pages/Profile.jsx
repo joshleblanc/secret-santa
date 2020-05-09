@@ -46,7 +46,6 @@ export default class extends React.Component {
             initialValues={{
               address: (user.shipping && user.shipping.address) || "",
               shirtSize: (user.shirtSize) || "m",
-              dodoCode: ""
             }}
             validationSchema={profileSchema}
             onSubmit={(values, {setSubmitting}) => {
@@ -95,17 +94,6 @@ export default class extends React.Component {
                     ))
                   }
                 </Field>
-                <Field
-                  name="dodoCode"
-                  type="text"
-                  component={TextField}
-                  fullWidth
-                  multiline
-                  margin="normal"
-                  label="Dodo Code"
-                  variant="filled"
-                  helperText={errors.dodoCode && touched.dodoCode ? errors.dodoCode : null}
-                />
                 <Button type="submit" className={classes.submitButton}>Submit</Button>
               </Form>
             )}
