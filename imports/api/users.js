@@ -64,6 +64,13 @@ Meteor.methods({
       date.setHours(0,0,0,0);
       const modifier = {};
       if(price !== null) {
+        Meteor.users.update({ _id: user._id }, {
+          $pull: {
+            bells: {
+              addedAt: date
+            }
+          }
+        })
         modifier['$push'] = {
           bells: {
             price: parseInt(price, 10),
