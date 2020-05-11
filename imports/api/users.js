@@ -60,7 +60,6 @@ Meteor.methods({
     try {
       addBellsSchema.validateSync({price});
       const date = new Date();
-      date.setHours(0,0,0,0);
       const modifier = {};
       if(price !== null) {
         modifier['$push'] = {
