@@ -76,16 +76,20 @@ export const EnterBells = ({ group }) => {
                 <Button color="secondary" variant={"contained"} fullWidth
                         onClick={handleDialogOpen}>Manage Entries</Button>
               </Grid>
-              <Grid item xs={12} sm={3}>
-                <BaseAccessButton
-                  group={group}
-                  collectionName={"bell_groups"}
-                />
-              </Grid>
+              {
+                group &&
+                <Grid item xs={12} sm={3}>
+                  <BaseAccessButton
+                    group={group}
+                    collectionName={"bell_groups"}
+                  />
+                </Grid>
+              }
             </Grid>
           </Form>
         )}
-      </Formik>    </PaddedPaper>
+      </Formik>
+    </PaddedPaper>
   )
 }
 
