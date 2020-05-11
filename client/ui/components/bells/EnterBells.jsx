@@ -6,16 +6,14 @@ import {Field, Form, Formik} from "formik";
 import {addBellsSchema, addWeightSchema} from "../../../../imports/api/users";
 import Grid from "@material-ui/core/Grid";
 import {TextField} from "formik-material-ui";
-import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import {BaseAccessButton} from "../groups/BaseAccessButton";
 import BellEntriesDialog from "./BellEntriesDialog";
 import {useSnackbar} from "notistack";
 import moment from "moment";
+import { useUser } from 'meteor/cereal:ui/hooks/useUser.ts';
 
-const initialValues = {
-  price: ""
-}
+
 
 export const EnterBells = ({ group }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -40,7 +38,15 @@ export const EnterBells = ({ group }) => {
       beforeNoon = false;
       expiresIn = closingTime.diff(date);
     }
-    Meteor.call('user.addBell', parseInt(values.price), beforeNoon, expiresIn, err => {
+    let price = values.price;
+    let turnipBuyPrice = values.turnipBuyPrice;
+    if(values.price.length === 0) {
+      price = null;
+    }
+    if(values.turnipBuyPrice.length === 0) {
+      turnipBuyPrice = null;
+    }
+    Meteor.call('user.addBell', price, beforeNoon, expiresIn, turnipBuyPrice, err => {
       if(err) {
         enqueueSnackbar("Something went wrong", {variant: "error"});
       } else {
@@ -49,6 +55,13 @@ export const EnterBells = ({ group }) => {
       setSubmitting(false);
     })
   }, []);
+
+  const user = useUser();
+  const initialValues = {
+    price: "",
+    turnipBuyPrice: user.turnipBuyPrice
+  }
+
   return(
     <PaddedPaper>
       <Typography variant={"h4"}>Enter Your Current Turnip Price</Typography>
@@ -59,8 +72,17 @@ export const EnterBells = ({ group }) => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={3}>
                 <Field
-                  label={"Current turnip price"}
+                  label={"Current Turnip Sell Price"}
                   name={"price"}
+                  component={TextField}
+                  margin={"normal"}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Field
+                  label={"Current Turnip Buy Price"}
+                  name={"turnipBuyPrice"}
                   component={TextField}
                   margin={"normal"}
                   fullWidth

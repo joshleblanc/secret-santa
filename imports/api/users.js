@@ -3,7 +3,7 @@ import {Meteor} from "meteor/meteor";
 import {shirtSizes} from "../lib/constants";
 import {WeightGroups} from './weight_groups';
 import moment from "moment";
-import { BellGroups } from '/imports/api/bell_groups';
+import {BellGroups} from '/imports/api/bell_groups';
 
 export const profileSchema = yup.object().shape({
   address: yup.string().required().max(1000),
@@ -15,8 +15,9 @@ export const addWeightSchema = yup.object().shape({
 });
 
 export const addBellsSchema = yup.object().shape({
-  price: yup.number().required().typeError("Bell price must be a number")
-})
+  price: yup.number().nullable().typeError("Bell price must be a number"),
+  turnipBuyPrice: yup.number().nullable().typeError("Turnip buy price must be a number")
+});
 
 export function avatarUrl(user) {
   return user.avatarUrl;
@@ -51,7 +52,7 @@ Meteor.methods({
       throw new Meteor.Error("Invalid Document");
     }
   },
-  'user.addBell'(price, beforeNoon, expiresIn) {
+  'user.addBell'(price, beforeNoon, expiresIn, turnipBuyPrice) {
     const user = Meteor.user();
     if (!user) {
       throw new Meteor.Error("Not authorized");
@@ -59,8 +60,9 @@ Meteor.methods({
     try {
       addBellsSchema.validateSync({price});
       const date = new Date();
-      return Meteor.users.update({_id: user._id}, {
-        $push: {
+      const modifier = {};
+      if(price !== null) {
+        modifier['$push'] = {
           bells: {
             price: parseInt(price, 10),
             beforeNoon,
@@ -68,7 +70,14 @@ Meteor.methods({
             addedAt: date
           }
         }
-      });
+      }
+      if(turnipBuyPrice !== null) {
+        modifier['$set'] = {
+          turnipBuyPrice: parseInt(turnipBuyPrice, 10)
+        }
+      }
+      Meteor.users.update({_id: user._id}, modifier);
+
     } catch (e) {
       console.error(e);
       throw new Meteor.Error("Invalid Document");
@@ -240,7 +249,8 @@ if (Meteor.isServer) {
     }, {
       fields: {
         discordUsername: 1,
-        bells: 1
+        bells: 1,
+        turnipBuyPrice: 1
       }
     });
   });
@@ -260,9 +270,8 @@ if (Meteor.isServer) {
       _id: this.userId
     }, {
       fields: {
-        price: 1,
-        beforeNoon: 1,
-        expiresAt: 1
+        bells: 1,
+        turnipBuyPrice: 1
       }
     })
   });
@@ -282,6 +291,7 @@ if (Meteor.isServer) {
         theme: 1,
         unreadMessages: 1,
         services: 1,
+        turnipBuyPrice: 1
       }
     });
   });
