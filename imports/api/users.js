@@ -60,13 +60,15 @@ Meteor.methods({
     try {
       addBellsSchema.validateSync({price});
       const date = new Date();
+      const expiresAt = new Date(date.getTime() + expiresIn);
+      date.setHours(0,0,0,0);
       const modifier = {};
       if(price !== null) {
         modifier['$push'] = {
           bells: {
             price: parseInt(price, 10),
             beforeNoon,
-            expiresAt: new Date(date.getTime() + expiresIn),
+            expiresAt: expiresAt,
             addedAt: date
           }
         }
