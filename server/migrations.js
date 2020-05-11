@@ -183,3 +183,21 @@ Migrations.add({
     })
   }
 })
+
+Migrations.add({
+  version: 8,
+  up: function() {
+    Meteor.users.find({}).fetch().forEach(user => {
+      const turnips = user.bells;
+      if(turnips) {
+        turnips.forEach(turnip => turnip.addedAt.setHours(0,0,0,0))
+        Meteor.users.update({ _id: user._id }, {
+          $set: {
+            bells: turnips
+          }
+        })
+      }
+    })
+  }
+});
+
