@@ -37,7 +37,7 @@ const BellList = ({users}) => {
   if (bellListData.length === 0) {
     return (
       <PaddedPaper>
-        <Typography variant={"h5"}>No users have entered their bell prices</Typography>
+        <Typography variant={"h5"}>No users have entered their turnip prices</Typography>
       </PaddedPaper>
     )
   }

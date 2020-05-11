@@ -14,7 +14,7 @@ export const BellGroupList = () => {
         addUrl={"/bells/groups/add"}
         createGroupUrl={id => `/bells/groups/${id.toHexString()}`}
         deleteMethod={"bell_groups.delete"}
-        title={"Bell Groups"}
+        title={"Turnip Groups"}
       />
     </>
   )
