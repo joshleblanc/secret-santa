@@ -67,7 +67,8 @@ Meteor.methods({
         Meteor.users.update({ _id: user._id }, {
           $pull: {
             bells: {
-              addedAt: date
+              addedAt: date,
+              beforeNoon
             }
           }
         })
