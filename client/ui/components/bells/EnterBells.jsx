@@ -40,10 +40,10 @@ export const EnterBells = ({ group }) => {
     }
     let price = values.price;
     let turnipBuyPrice = values.turnipBuyPrice;
-    if(values.price.length === 0) {
+    if(!values.price || values.price.length === 0) {
       price = null;
     }
-    if(values.turnipBuyPrice.length === 0) {
+    if(!values.turnipBuyPrice || values.turnipBuyPrice.length === 0) {
       turnipBuyPrice = null;
     }
     Meteor.call('user.addBell', price, beforeNoon, expiresIn, turnipBuyPrice, err => {
