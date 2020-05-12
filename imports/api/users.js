@@ -85,7 +85,9 @@ Meteor.methods({
           turnipBuyPrice: parseInt(turnipBuyPrice, 10)
         }
       }
-      Meteor.users.update({_id: user._id}, modifier);
+      if(Object.keys(modifier).length > 0) {
+        Meteor.users.update({_id: user._id}, modifier);
+      }
 
     } catch (e) {
       console.error(e);
