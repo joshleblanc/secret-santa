@@ -9,6 +9,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import PaddedPaper from 'meteor/cereal:ui/components/PaddedPaper';
 import BellHistory from "./BellHistory";
+import ExpiresIn from "./ExpiresIn";
 
 const BellList = ({users}) => {
   const date = moment();
@@ -32,6 +33,15 @@ const BellList = ({users}) => {
         bell: bells[0],
         user: u
       })
+    } else {
+      bellListData.push({
+        bell: {
+          price: 0,
+          expiresAt: 0,
+          noData: true
+        },
+        user: u
+      })
     }
   });
   if (bellListData.length === 0) {
@@ -50,16 +60,17 @@ const BellList = ({users}) => {
           bellListData.map(({user: u, bell: latestBell}) => {
             return (
               <ListItem key={u._id} button onClick={() => openHistory(u)}>
-                <ListItemText primary={u.discordUsername} secondary={
-                  <>Expires in {moment.duration(date.diff(latestBell.expiresAt)).humanize()}</>
-                }/>
+                <ListItemText primary={u.discordUsername} secondary={<ExpiresIn item={latestBell} />}/>
                 <ListItemSecondaryAction>
                   <Typography component={"span"}>
                     <ListItemIcon>
-                      <>
-                        <NotificationsIcon/>
-                        <strong>{latestBell.price}</strong>
-                      </>
+                      {
+                        latestBell.noData ? null :
+                          <>
+                            <NotificationsIcon/>
+                            <strong>{latestBell.price}</strong>
+                          </>
+                      }
                     </ListItemIcon>
                   </Typography>
                 </ListItemSecondaryAction>
