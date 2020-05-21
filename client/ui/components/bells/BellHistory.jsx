@@ -3,6 +3,7 @@ import Chart from 'react-apexcharts';
 import {useTheme} from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import PropTypes from 'prop-types';
+import DialogContent from "@material-ui/core/DialogContent";
 
 const BellHistory = ({ bells, onClose, open }) => {
   if(!bells) return null;
@@ -37,7 +38,10 @@ const BellHistory = ({ bells, onClose, open }) => {
   }
   return(
     <Dialog open={open} onClose={onClose} maxWidth={"sm"} fullWidth>
-      <Chart series={series} type={"line"} options={options} />
+      <DialogContent>
+        <Chart series={series} type={"line"} options={options} />
+      </DialogContent>
+
     </Dialog>
   )
 }
