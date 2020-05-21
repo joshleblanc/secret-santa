@@ -4,6 +4,9 @@ import {useTheme} from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import PropTypes from 'prop-types';
 import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
 
 const BellHistory = ({ bells, onClose, open }) => {
   if(!bells) return null;
@@ -38,10 +41,15 @@ const BellHistory = ({ bells, onClose, open }) => {
   }
   return(
     <Dialog open={open} onClose={onClose} maxWidth={"sm"} fullWidth>
+      <DialogTitle>
+        Turnip Price History
+      </DialogTitle>
       <DialogContent>
         <Chart series={series} type={"line"} options={options} />
       </DialogContent>
-
+      <DialogActions>
+        <Button onClick={onClose}>Close</Button>
+      </DialogActions>
     </Dialog>
   )
 }
