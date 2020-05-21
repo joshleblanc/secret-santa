@@ -9,30 +9,33 @@ import ListItem from "@material-ui/core/ListItem";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import PropTypes from 'prop-types';
+import DialogContent from "@material-ui/core/DialogContent";
 
 const BaseEntriesDialog = ({ title, open, onDelete, onClose, array, createPrimaryText, createSecondaryText, createKey }) => {
   const values = array ? array.sort((a,b) => b.addedAt - a.addedAt) : [];
   return(
     <Dialog open={open} fullWidth maxWidth={"sm"} onClose={onClose}>
       <DialogTitle>{title}</DialogTitle>
-      <MenuList>
-        {
-          values.map(v => (
-            <ListItem key={createKey(v)}>
-              <ListItemText primary={createPrimaryText(v)} secondary={createSecondaryText(v)} />
-              <ListItemSecondaryAction onClick={() => {
-                if(window.confirm("Are you sure you want to delete this?")) {
-                  onDelete(v);
-                }
-              }}>
-                <IconButton edge="end" aria-label="delete">
-                  <DeleteIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))
-        }
-      </MenuList>
+      <DialogContent>
+        <MenuList>
+          {
+            values.map(v => (
+              <ListItem key={createKey(v)}>
+                <ListItemText primary={createPrimaryText(v)} secondary={createSecondaryText(v)} />
+                <ListItemSecondaryAction onClick={() => {
+                  if(window.confirm("Are you sure you want to delete this?")) {
+                    onDelete(v);
+                  }
+                }}>
+                  <IconButton edge="end" aria-label="delete">
+                    <DeleteIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))
+          }
+        </MenuList>
+      </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Close</Button>
       </DialogActions>
