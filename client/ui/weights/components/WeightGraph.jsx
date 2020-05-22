@@ -1,6 +1,6 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
-import PaddedPaper from "../PaddedPaper";
+import PaddedPaper from "../../components/PaddedPaper";
 import { withTheme } from "@material-ui/core";
 import { autorun } from 'meteor/cereal:reactive-render';
 
@@ -9,7 +9,7 @@ import { autorun } from 'meteor/cereal:reactive-render';
 export default class WeightGraph extends React.Component {
     render() {
         const { users, theme } = this.props;
-        
+
         const series = users.map(u => {
             return({
                 name: u.discordUsername,

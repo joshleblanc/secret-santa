@@ -1,6 +1,6 @@
 import React from 'react';
-import {WeightGroups} from "../../../imports/api/weight_groups";
-import {BaseGroupList} from "../components/groups/BaseGroupList";
+import {WeightGroups} from "../../../../imports/api/weight_groups";
+import {BaseGroupList} from "../../components/groups/BaseGroupList";
 
 export const WeightGroupList = () => {
     return(

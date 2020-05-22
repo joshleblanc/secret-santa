@@ -1,6 +1,6 @@
 import React from 'react';
 import { autorun } from 'meteor/cereal:reactive-render';
-import PaddedPaper from "../PaddedPaper";
+import PaddedPaper from "../../components/PaddedPaper";
 import Typography from "@material-ui/core/Typography";
 import {LinearProgress, ListItemSecondaryAction} from "@material-ui/core";
 import {WeightGroups} from "../../../../imports/api/weight_groups";

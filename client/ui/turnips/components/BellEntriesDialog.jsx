@@ -1,6 +1,6 @@
 import React from 'react';
 import { autorun } from 'meteor/cereal:reactive-render';
-import BaseEntriesDialog from "../groups/BaseEntriesDialog";
+import BaseEntriesDialog from "../../components/groups/BaseEntriesDialog";
 
 @autorun
 export default class EntriesDialog extends React.Component {

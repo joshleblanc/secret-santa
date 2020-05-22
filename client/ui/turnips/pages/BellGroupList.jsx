@@ -1,7 +1,7 @@
 import React from 'react';
-import {BaseGroupList} from "../components/groups/BaseGroupList";
-import {BellGroups} from "../../../imports/api/bell_groups";
-import {EnterBells} from "../components/bells/EnterBells";
+import {BaseGroupList} from "../../components/groups/BaseGroupList";
+import {BellGroups} from "../../../../imports/api/bell_groups";
+import {EnterBells} from "../components/EnterBells";
 import Grid from "@material-ui/core/Grid";
 
 export const BellGroupList = () => {

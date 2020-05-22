@@ -7,7 +7,7 @@ import {addBellsSchema, addWeightSchema} from "../../../../imports/api/users";
 import Grid from "@material-ui/core/Grid";
 import {TextField} from "formik-material-ui";
 import Button from "@material-ui/core/Button";
-import {BaseAccessButton} from "../groups/BaseAccessButton";
+import {BaseAccessButton} from "../../components/groups/BaseAccessButton";
 import BellEntriesDialog from "./BellEntriesDialog";
 import {useSnackbar} from "notistack";
 import moment from "moment";

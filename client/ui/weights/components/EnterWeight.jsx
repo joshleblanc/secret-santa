@@ -1,5 +1,5 @@
 import React from 'react';
-import PaddedPaper from "../PaddedPaper";
+import PaddedPaper from "../../components/PaddedPaper";
 import {Field, Form, Formik} from "formik";
 import {TextField} from "formik-material-ui";
 import Button from "@material-ui/core/Button";
@@ -11,7 +11,7 @@ import {withSnackbar} from "notistack";
 import EntriesDialog from "./EntriesDialog";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import {BaseAccessButton} from "../groups/BaseAccessButton";
+import {BaseAccessButton} from "../../components/groups/BaseAccessButton";
 
 const initialValues = {
     weight: "",

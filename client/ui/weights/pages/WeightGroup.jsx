@@ -1,9 +1,9 @@
 import React from 'react';
-import EnterWeight from "../components/weightloss/EnterWeight";
-import WeightGraph from "../components/weightloss/WeightGraph";
+import EnterWeight from "../components/EnterWeight";
+import WeightGraph from "../components/WeightGraph";
 import {Hidden, LinearProgress} from "@material-ui/core";
-import WeightList from "../components/weightloss/WeightList";
-import {WeightGroups} from "../../../imports/api/weight_groups";
+import WeightList from "../components/WeightList";
+import {WeightGroups} from "../../../../imports/api/weight_groups";
 import { autorun } from 'meteor/cereal:reactive-render';
 
 @autorun
