@@ -28,7 +28,7 @@ export const EnterBells = ({ group }) => {
     setSubmitting(true);
     const date = moment();
     const noon = moment({ hour: 12, minute: 0 });
-    const closingTime = moment({ hour: 20, minute: 0 });
+    const closingTime = moment({ hour: 22, minute: 0 });
     let expiresIn;
     let beforeNoon;
     if(date.isBefore(noon)) {
