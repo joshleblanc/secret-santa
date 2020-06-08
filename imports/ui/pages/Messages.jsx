@@ -4,7 +4,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import {Matches} from '/imports/api/matches';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import {Groups} from "../../../imports/api/groups";
+import {Groups} from "../../api/groups";
 import ListItemText from "@material-ui/core/ListItemText";
 import PaddedPaper from "../components/PaddedPaper";
 import {Link} from "react-router-dom";

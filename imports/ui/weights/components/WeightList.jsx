@@ -3,7 +3,7 @@ import { autorun } from 'meteor/cereal:reactive-render';
 import PaddedPaper from "../../components/PaddedPaper";
 import Typography from "@material-ui/core/Typography";
 import {LinearProgress, ListItemSecondaryAction} from "@material-ui/core";
-import {WeightGroups} from "../../../../imports/api/weight_groups";
+import {WeightGroups} from "../../../api/weight_groups";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";

@@ -3,7 +3,7 @@ import EnterWeight from "../components/EnterWeight";
 import WeightGraph from "../components/WeightGraph";
 import {Hidden, LinearProgress} from "@material-ui/core";
 import WeightList from "../components/WeightList";
-import {WeightGroups} from "../../../../imports/api/weight_groups";
+import {WeightGroups} from "../../../api/weight_groups";
 import {autorun} from 'meteor/cereal:reactive-render';
 import Grid from "@material-ui/core/Grid";
 

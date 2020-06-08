@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import withSnackbar from 'notistack/build/withSnackbar';
 import {profileSchema} from "/imports/api/users";
 import MenuItem from "@material-ui/core/MenuItem";
-import {shirtSizes} from "../../../imports/lib/constants";
+import {shirtSizes} from "../../lib/constants";
 import withStyles from '@material-ui/core/styles/withStyles';
 import LoginWithFitbitButton from "../components/fitbit/LoginWithFitbitButton";
 
