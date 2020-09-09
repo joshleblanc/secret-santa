@@ -19,6 +19,7 @@ JsonRoutes.add('post', "/fitbit/webhook", function (req, res, next) {
   const json = req.body;
   const lastRecord = json[json.length - 1];
   let user = Meteor.users.findOne({ "services.fitbit.id": lastRecord.ownerId});
+  console.log("receiving fitbit information", json, user);
   if(user) {
     console.log(`https://api.fitbit.com/1/user/${lastRecord.ownerId}/body/date/${lastRecord.date}.json`);
     const expiresDate = new Date(user.services.fitbit.expiresIn);
@@ -53,7 +54,9 @@ JsonRoutes.add('post', "/fitbit/webhook", function (req, res, next) {
         Authorization: `Bearer ${user.services.fitbit.accessToken}`
       }
     },(err, resp) => {
-      if(!err) {
+      if(err) {
+        console.log(err);
+      } else {
         const body = resp.data.body;
         Meteor.users.update({"services.fitbit.id": lastRecord.ownerId}, {
           $push: {
