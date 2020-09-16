@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './navbar/Navbar';
 import { Route, Switch } from 'react-router-dom';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Index from '../pages';
+import Index from '../pages/Index';
 import Profile from "../pages/Profile";
 import Groups from '../pages/Groups';
 import AddGroup from "../pages/AddGroup";

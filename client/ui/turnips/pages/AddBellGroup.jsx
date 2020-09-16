@@ -1,6 +1,6 @@
 import React from 'react';
 import {BaseAddGroup} from "../../components/groups/BaseAddGroup";
-import {createBellGroupSchema} from "../../../api/bell_groups";
+import {createBellGroupSchema} from "../../../../imports/api/bell_groups";
 
 export const AddBellGroup = () => {
   return(

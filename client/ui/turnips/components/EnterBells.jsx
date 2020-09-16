@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PaddedPaper from 'meteor/cereal:ui/components/PaddedPaper';
 import Typography from "@material-ui/core/Typography";
 import {Field, Form, Formik} from "formik";
-import {addBellsSchema, addWeightSchema} from "../../../api/users";
+import {addBellsSchema, addWeightSchema} from "../../../../imports/api/users";
 import Grid from "@material-ui/core/Grid";
 import {TextField} from "formik-material-ui";
 import Button from "@material-ui/core/Button";

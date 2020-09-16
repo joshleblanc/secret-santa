@@ -18,7 +18,7 @@ import Match from "../components/Match";
 import SignupButtons from "../components/SignupButtons";
 import ShipmentStatus from "../components/ShipmentStatus";
 import Avatar from "@material-ui/core/Avatar";
-import {avatarUrl} from "../../api/users";
+import {avatarUrl} from "../../../imports/api/users";
 import Container from "@material-ui/core/Container";
 import BorderedPaper from "../components/BorderedPaper";
 

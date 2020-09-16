@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import {withStyles} from "@material-ui/styles";
 import {autorun} from 'meteor/cereal:reactive-render';
 import MenuItem from "@material-ui/core/MenuItem";
-import {addWeightSchema} from "../../../api/users";
+import {addWeightSchema} from "../../../../imports/api/users";
 import {withSnackbar} from "notistack";
 import EntriesDialog from "./EntriesDialog";
 import Grid from "@material-ui/core/Grid";

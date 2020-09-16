@@ -1,7 +1,7 @@
 import React from 'react';
 import { autorun } from 'meteor/cereal:reactive-render';
 import LinearProgress from "@material-ui/core/LinearProgress";
-import {Matches} from "../../api/matches";
+import {Matches} from "../../../imports/api/matches";
 import Typography from "@material-ui/core/Typography";
 import CheckIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
