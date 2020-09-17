@@ -143,7 +143,7 @@ export function sendMessageReminders() {
 
 export async function sync(user) {
   let userIn = user;
-  const {cdnUrl, uploadImage} = import("../lib/aws/s3");
+  const {cdnUrl, uploadImage} = await import("../lib/aws/s3");
   // default update params
   const updateParams = {
     $set: {
@@ -173,6 +173,7 @@ export async function sync(user) {
     const result = await uploadImage(file.content, `${user.services.discord.id}.png`);
     uploadKey = result.key;
   } catch (e) {
+    console.log(e);
     console.log(`Error getting avatar for ${user._id}`);
   }
 
