@@ -40,7 +40,7 @@ export default class extends React.Component {
               if (m.receiver === user.discordId) {
                 secondary = "Your secret santa messaged you!"
               } else {
-                secondary = "You message your recipient!"
+                secondary = "You messaged your recipient!"
               }
               const unreadMessages = user.unreadMessages || [];
               let hasUnreadMessage = unreadMessages.map(u => u.toHexString()).includes(m._id.toHexString());
