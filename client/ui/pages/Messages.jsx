@@ -28,7 +28,7 @@ export default class extends React.Component {
     // The query should be duplicated here
     // but I can't think of a way to do that while
     // still hiding the gifter id
-    const matches = Matches.find({}).fetch();
+    const matches = Matches.find({}, { sort: { groupId: 1 }}).fetch();
     return (
       <PaddedPaper>
         <Typography variant="h6">Messages</Typography>
