@@ -17,7 +17,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.9.0",
-    "apexcharts": "^3.16.1",
+    "apexcharts": "^3.24.0",
     "aws-sdk": "^2.639.0",
     "classnames": "^2.2.6",
     "deploy-app": "^1.0.3",
