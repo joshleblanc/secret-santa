@@ -11,6 +11,7 @@ import {autorun} from 'meteor/cereal:reactive-render';
 import Login from "./pages/Login";
 import { Routes as TurnipRoutes } from './turnips/Routes';
 import { Routes as WeightRoutes } from './weights/Routes';
+import { Routes as ListRoutes } from './lists/Routes';
 
 @autorun
 export default class extends React.Component {
@@ -26,6 +27,9 @@ export default class extends React.Component {
           <Route exact path="/groups/:id" component={Group}/>
           <Route exact path="/messages" component={Messages}/>
           <Route exact path="/messages/:id" component={Message}/>
+          <Route path="/lists">
+            <ListRoutes />
+          </Route>
           <Route path={"/weight_groups"}>
             <WeightRoutes />
           </Route>
