@@ -25,7 +25,7 @@ export class List extends React.Component {
               <EnterListItem list={list}/>
             </Grid>
             <Grid item xs={12}>
-              <ListItems list={list}/>
+              <ListItems list={list} />
             </Grid>
           </Grid>
         )

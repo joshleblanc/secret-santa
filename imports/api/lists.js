@@ -1,4 +1,5 @@
 import {createGroup} from "../lib/groups";
+import { Random } from 'meteor/random';
 
 const { collection, createSchema } = createGroup("lists");
 
@@ -17,6 +18,7 @@ Meteor.methods({
                 $push: {
                     listItems: {
                         title,
+                        id: Random.id(),
                         index: (list.listItems || []).length
                     }
                 }
@@ -48,5 +50,23 @@ Meteor.methods({
             })
 
         }
+    },
+    "list.reorder"(id, sourceIndex, destinationIndex) {
+        const list = Lists.findOne(id);
+        const user = Meteor.user();
+
+        if(!list) return;
+
+        const items = list.listItems.sort((a,b) => a.index - b.index);
+        const tmp = items[sourceIndex].index;
+
+        items[sourceIndex].index = destinationIndex;
+        items[destinationIndex].index = tmp;
+
+        Lists.update({ _id: id }, {
+            $set: {
+                listItems: items
+            }
+        })
     }
 });
