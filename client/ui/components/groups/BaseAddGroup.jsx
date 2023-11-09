@@ -38,6 +38,7 @@ export const BaseAddGroup = ({ method, createUrl, title, schema }) => {
             label={"Name"}
             margin={"normal"}
             component={TextField}
+
           />
           <Button type={"submit"} variant={"contained"} color={"primary"}>Submit</Button>
         </Form>

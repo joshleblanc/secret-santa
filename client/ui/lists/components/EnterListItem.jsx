@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import PaddedPaper from '../../components/PaddedPaper';
 import { Field, Form, Formik } from 'formik';
 import { Grid, Typography, Button } from '@material-ui/core';
@@ -14,7 +14,14 @@ const initialValues = {
 @withSnackbar
 @autorun
 export class EnterListItem extends React.Component {
-    handleSubmit = (values, { setSubmitting }) => {
+
+    constructor(props) {
+        super(props);
+
+        this.titleRef = createRef();
+    }
+
+    handleSubmit = (values, { setSubmitting, resetForm }) => {
         const { enqueueSnackbar, list } = this.props;
         setSubmitting(true);
         Meteor.call('list.addItem', list._id, values.title, err => {
@@ -25,6 +32,11 @@ export class EnterListItem extends React.Component {
             }
             setSubmitting(false);
         });
+
+        resetForm();
+        if(this.titleRef.current) {
+            this.titleRef.current.focus();
+        }
     };
 
     render() {
@@ -37,13 +49,14 @@ export class EnterListItem extends React.Component {
                     {({ isValid }) => (
                         <Form>
                             <Grid container spacing={2}>
-                                <Grid item xs={12} sm={3}>
+                                <Grid item xs={12}>
                                     <Field 
                                         label={"Title"}
                                         name="title"
                                         component={TextField}
                                         margin="normal"
                                         fullWidth
+                                        inputRef={this.titleRef}
                                     />
                                 </Grid>
                             </Grid>
