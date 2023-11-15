@@ -57,7 +57,7 @@ export function createMatches() {
       }
     });
     Email.send({
-      from: "secret-santa@grep.sh",
+      from: "secret-santa@monolith.sh",
       bcc: users.map(u => u.email),
       subject: "Your secret santa match has been made!",
       text: "You're a secret santa!\n" +

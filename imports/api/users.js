@@ -133,7 +133,7 @@ export function sendMessageReminders() {
     }
   }).fetch();
   Email.send({
-    from: "secret-santa@grep.sh",
+    from: "secret-santa@monolith.sh",
     bcc: users.map(u => u.email),
     subject: "You have unread messages at secret santa!",
     text: "Someone's sent you a message on secret santa!\n" +
