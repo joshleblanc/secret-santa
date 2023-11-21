@@ -1,0 +1,47 @@
+{
+  // These tasks will run in order when initializing your CodeSandbox project.
+  "setupTasks": [
+    {
+      "name": "Install Dependencies",
+      "command": "npm install -g meteor"
+    },
+    {
+      "command": "meteor npm install",
+      "name": "m"
+    }
+  ],
+
+  // These tasks can be run from CodeSandbox. Running one will open a log in the app.
+  "tasks": {
+    "start": {
+      "name": "start",
+      "command": "npm run start",
+      "runAtStart": true
+    },
+    "test": {
+      "name": "test",
+      "command": "npm run test",
+      "runAtStart": false
+    },
+    "test-app": {
+      "name": "test-app",
+      "command": "npm run test-app",
+      "runAtStart": false
+    },
+    "visualize": {
+      "name": "visualize",
+      "command": "npm run visualize",
+      "runAtStart": false
+    },
+    "deploy": {
+      "name": "deploy",
+      "command": "npm run deploy",
+      "runAtStart": false
+    },
+    "meteor --settings settings.json": {
+      "name": "meteor --settings settings.json",
+      "command": "meteor --settings settings.json",
+      "runAtStart": true
+    }
+  }
+}
