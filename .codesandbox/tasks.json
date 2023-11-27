@@ -2,7 +2,7 @@
   // These tasks will run in order when initializing your CodeSandbox project.
   "setupTasks": [
     {
-      "name": "Install Meteor,
+      "name": "Install Meteor",
       "command": "curl https://install.meteor.com/ | sh"
     },
     {
