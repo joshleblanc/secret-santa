@@ -59,7 +59,7 @@ export function createMatches() {
 
     users.forEach(u => {
       Email.send({
-        from: "secret-santa@monolith.sh",
+        from: "admin@secret-santa.monolith.sh",
         to: u.email,
         subject: "Your secret santa match has been made!",
         text: "You're a secret santa!\n" +

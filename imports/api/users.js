@@ -135,7 +135,7 @@ export function sendMessageReminders() {
   
   users.forEach(u => {
     Email.send({
-      from: "secret-santa@monolith.sh",
+      from: "admin@secret-santa.monolith.sh",
       to: u.email,
       subject: "You have unread messages at secret santa!",
       text: "Someone's sent you a message on secret santa!\n" +
