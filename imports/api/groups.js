@@ -56,13 +56,17 @@ export function createMatches() {
         hasMatches: true
       }
     });
-    Email.send({
-      from: "secret-santa@monolith.sh",
-      bcc: users.map(u => u.email),
-      subject: "Your secret santa match has been made!",
-      text: "You're a secret santa!\n" +
-        `Head over to ${Meteor.absoluteUrl(`/groups/${group._id.toHexString()}`)} to check it out!`
-    });
+
+    users.forEach(u => {
+      Email.send({
+        from: "secret-santa@monolith.sh",
+        to: u.email,
+        subject: "Your secret santa match has been made!",
+        text: "You're a secret santa!\n" +
+          `Head over to ${Meteor.absoluteUrl(`/groups/${group._id.toHexString()}`)} to check it out!`
+      });
+    })
+    
   });
 }
 

@@ -132,13 +132,17 @@ export function sendMessageReminders() {
       }
     }
   }).fetch();
-  Email.send({
-    from: "secret-santa@monolith.sh",
-    bcc: users.map(u => u.email),
-    subject: "You have unread messages at secret santa!",
-    text: "Someone's sent you a message on secret santa!\n" +
-      `Head over to ${Meteor.absoluteUrl(`/messages`)} to see what you've missed!`
-  });
+  
+  users.forEach(u => {
+    Email.send({
+      from: "secret-santa@monolith.sh",
+      to: u.email,
+      subject: "You have unread messages at secret santa!",
+      text: "Someone's sent you a message on secret santa!\n" +
+        `Head over to ${Meteor.absoluteUrl(`/messages`)} to see what you've missed!`
+    });
+  })
+  
 }
 
 export async function sync(user) {
