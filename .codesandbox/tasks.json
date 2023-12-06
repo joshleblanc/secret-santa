@@ -37,11 +37,6 @@
       "name": "deploy",
       "command": "npm run deploy",
       "runAtStart": false
-    },
-    "meteor --settings settings.json": {
-      "name": "meteor --settings settings.json",
-      "command": "meteor --settings settings.json",
-      "runAtStart": true
     }
   }
 }
