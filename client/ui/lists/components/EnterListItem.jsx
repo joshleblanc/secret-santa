@@ -65,12 +65,6 @@ export class EnterListItem extends React.Component {
                                         <Button fullWidth type={"submit"} color="primary" disabled={!isValid}
                                                 variant={"contained"}>Submit</Button>
                                     </Grid>
-                                    <Grid item xs={12} sm={3}>
-                                        <BaseAccessButton
-                                            group={list}
-                                            collectionName={"lists"}
-                                        />
-                                    </Grid>
                                 </Grid>
                         </Form>
                     )}
