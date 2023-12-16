@@ -6,8 +6,8 @@
       "command": "curl https://install.meteor.com/ | sh"
     },
     {
-      "command": "meteor npm install",
-      "name": "m"
+      "name": "Install dependencies",
+      "command": "meteor npm install"
     }
   ],
 

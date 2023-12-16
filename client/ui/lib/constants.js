@@ -3,6 +3,7 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SantaIcon from "../components/SantaIcon";
 import PeopleIcon from '@material-ui/icons/People';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import ListIcon from '@material-ui/icons/List'
 
 export const drawerWidth = 240;
 
@@ -34,5 +35,10 @@ export const authenticatedRoutes = [
     name: "Profile",
     href: "/profile",
     Icon: AccountBoxIcon
+  },
+  {
+    name: "Lists",
+    href: "/lists",
+    Icon: ListIcon
   }
 ];
