@@ -70,8 +70,8 @@ Meteor.methods({
     const items = list.listItems.sort((a, b) => a.index - b.index);
     const tmp = items[sourceIndex].index;
 
-    items[sourceIndex].indexHistory = items[sourceIndex] || [];
-    items[destinationIndex].indexHistory = items[destinationIndex] || [];
+    items[sourceIndex].indexHistory = items[sourceIndex].indexHistory || [];
+    items[destinationIndex].indexHistory = items[destinationIndex].indexHistory || [];
 
     items[sourceIndex].indexHistory.push(items[sourceIndex].index);
     items[destinationIndex].indexHistory.push(items[destinationIndex].index);
