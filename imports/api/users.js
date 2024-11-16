@@ -198,7 +198,7 @@ export async function sync(user) {
           client_id: Meteor.settings.discord.id,
           client_secret: Meteor.settings.discord.secret,
           grant_type: 'refresh_token',
-          redirect_url: OAuth._redirectUri('discord', config),
+          redirect_url: Package.oauth.OAuth._redirectUri('discord', config),
           scope: user.services.discord.scope
         },
         headers: {
