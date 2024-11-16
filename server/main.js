@@ -38,7 +38,11 @@ Accounts.onLogin(async () => {
     throw new Meteor.Error("Not authorized");
   }
 
-  await sync(user);
+  try  {
+    await sync(user);
+  } catch(e) {
+    console.error(e);
+  }
 });
 
 SyncedCron.add({
